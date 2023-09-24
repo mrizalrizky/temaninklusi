@@ -21,7 +21,7 @@
   </h3>
 
   {{-- Benefit Card --}}
-  <div class="d-flex pt-5">
+  <div class="row pt-5">
     <div class="card" style="width: 18rem;">
         <div class="d-flex justify-content-center align-items-center py-4">
         <img src="{{ asset('assets/img/benefitimg.svg')}}" class="card-img-top" alt="event banner" style="max-width: 10rem;" >
@@ -49,7 +49,7 @@
   </h3>
 
   {{-- Event Card --}}
-  <div class="d-flex pt-5">
+  <div class="row pt-5">
     <div class="card" style="width: 18rem;">
         <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top" alt="event banner">
         <div class="card-body">
