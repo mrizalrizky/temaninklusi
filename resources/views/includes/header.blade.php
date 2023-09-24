@@ -4,9 +4,9 @@
       >
         <div class="container">
           <a
-            class="navbar-brand fw-bold"
+            class="navbar-brand"
             href="/"
-            style="font-size: 28px, color: #01676C"
+            style="font-size: 24px; font-weight: bold; color: #01676C"
           >
             TemuInklusi
           </a>
