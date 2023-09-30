@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="m-3 mt-5 d-flex justify-content-between flex-wrap gap-4 p-4 rounded-3" style="background-color: #01676C">
+    <div class="m-3 mt-5 d-flex justify-content-between flex-wrap gap-4 p-4 rounded-3" style="background-color: #01676C; min-height: 10rem;">
         <div class="text-white">
             <h4 class="m-0 text-white">Punya Pertanyaan?</h4>
             <p>organize@temuinklusi.com</p>

@@ -21,9 +21,9 @@
   </h3>
 
   {{-- Benefit Card --}}
-  <div class="row pt-5">
-    <div class="card" style="width: 18rem;">
-        <div class="d-flex justify-content-center align-items-center py-4">
+  <div class="row pt-5 gap-4 justify-content-center">
+    <div class="card col-12 col-md-4">
+        <div class="d-flex justify-content-center align-items-center py-3">
         <img src="{{ asset('assets/img/benefitimg.svg')}}" class="card-img-top" alt="event banner" style="max-width: 10rem;" >
         </div>
         <div class="card-body text-center px-5">
@@ -31,8 +31,8 @@
         <p style="color: black; font-size: 16px">Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place.</p>
         </div>
     </div>
-    <div class="card" style="width: 18rem;">
-        <div class="d-flex justify-content-center align-items-center py-4">
+    <div class="card col-12 col-md-4">
+        <div class="d-flex justify-content-center align-items-center py-3">
         <img src="{{ asset('assets/img/benefitimg.svg')}}" class="card-img-top" alt="event banner" style="max-width: 10rem;" >
         </div>
         <div class="card-body text-center px-5">
@@ -49,18 +49,18 @@
   </h3>
 
   {{-- Event Card --}}
-  <div class="row pt-5">
-    <div class="card" style="width: 18rem;">
-        <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top" alt="event banner">
-        <div class="card-body">
+  <div class="row pt-5 justify-content-center gap-3">
+    <div class="card col-12 col-md-4 p-0">
+        <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
+        <div class="card-body px-3">
             <h5 class="card-title" style="color: #01676C">Power of Words</h5>
             <p style="color: black; font-size: 12px">8 Agustus 2024</p>
         </div>
     </div>
 
-    <div class="card " style="width: 18rem;">
-        <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top" alt="event banner">
-        <div class="card-body">
+    <div class="card  col-12 col-md-4 p-0">
+        <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
+        <div class="card-body px-3">
             <h5 class="card-title" style="color: #01676C">Power of Words</h5>
             <p style="color: black; font-size: 12px">8 Agustus 2024</p>
         </div>

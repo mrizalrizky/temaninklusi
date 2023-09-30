@@ -17,18 +17,18 @@
 </head>
 
 <body>
-    <main>
+    <div class="screen">
         @include('includes.header')
-        <section class="mb-5" style="max-width: 1920px;">
+        <main class="mb-5" style="max-width: 1920px;">
             @yield('content')
-        </section>
+        </main>
         @include('includes.footer')
 
         @stack('before-script')
 
         @include('includes.script')
         @stack('after-script')
-    </main>
+    </div>
 
 </body>
 
