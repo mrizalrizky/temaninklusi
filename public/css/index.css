@@ -12,6 +12,7 @@
     margin: 0;
     padding: 0;
     font-family: var(--font-type);
+    box-sizing: border-box;
 }
 
 html {
@@ -41,6 +42,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
+.fw-bold {
+    font-weight: 600;
+}
+
 .navbar-brand:hover {
     color: var(--hover-color);
     transition: .2s all linear !important;
@@ -61,6 +66,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-brand {
     color: var(--main-color);
+    font-size: 1.2rem;
 }
 
 .btn-primary {

@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-md bg-primary py-4">
-    <div class="container-lg">
-        <a class="navbar-brand fw-bold" href="{{ route('home') }}">MaiBoutique</a>
+<nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
+    <div class="container-lg px-4 px-md-3">
+        <a class="navbar-brand fw-bolder" href="{{ route('home') }}">TemuInklusi</a>
         <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse" style="background: transparent; border-color: transparent !important"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
             <span data-feather="menu" class="text-primary"></span>
         </button>
 
-        <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-            <ul class="navbar-nav gap-md-4">
+        <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">
+            <ul class="navbar-nav gap-sm-3 mt-2 px-2">
                 <li class="nav-item"><a href="" class="nav-link text-primary fw-semibold">Home</a>
                 </li>
                 <li class="nav-item"><a href=""
@@ -17,8 +17,6 @@
                 {{-- @if (Auth::user()->role_id == 2) --}}
                     <li class="nav-item"><a href=""
                             class="nav-link text-primary fw-semibold">Cart</a></li>
-                    <li class="nav-item"><a href=""
-                            class="nav-link text-primary fw-semibold">History</a></li>
                 {{-- @endif --}}
 
                 <li class="nav-item"><a href=""
@@ -57,84 +55,3 @@
         </div>
     </div>
 </nav>
-
-
-<nav
-        class="navbar navbar-expand-lg py-5"
-        style="background-color:#CCE1E2"
-      >
-        <div class="container">
-          <a
-            class="navbar-brand"
-            href="/"
-            style="font-size: 24px; font-weight: bold; color: #01676C"
-          >
-            TemuInklusi
-          </a>
-
-          {{-- Mobile desktop sandwich menu --}}
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarText"
-            aria-controls="navbarText"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 list-inline mx-auto">
-              <li class="list-inline-item me-5">
-                <a
-                  class="nav-link fw-bold"
-                  aria-current="page"
-                  href="#"
-                  style="color: #01676C"
-                >
-                  Home
-                </a>
-              </li>
-              <li class="list-inline-item me-5">
-                <a
-                  class="nav-link fw-bold"
-                  href="#"
-                  style="color: #01676C"
-                >
-                  Event
-                </a>
-              </li>
-              <li class="list-inline-item me-5">
-                <a
-                  class="nav-link fw-bold"
-                  href="#"
-                  style="color: #01676C"
-                >
-                  Blog
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a
-                  class="nav-link fw-bold"
-                  href="#"
-                  style="color:#01676C"
-                >
-                  About
-                </a>
-              </li>
-            </ul>
-
-            <span>
-              <a
-                class="btn rounded-pill px-5 text-white"
-                style="background-color: #01676C"
-                href="#"
-                role="button"
-              >
-                Login
-              </a>
-            </span>
-          </div>
-        </div>
-      </nav>
