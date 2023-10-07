@@ -11,7 +11,7 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
@@ -51,7 +51,13 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
+
+                        <x-auth-input label="Full name" name="full_name" type="text" />
+                        <x-auth-input label="Username" name="username" type="text" />
+                        <x-auth-input label="Email address" name="full_name" type="email" />
+                        <x-auth-input label="Password" name="password" type="password" />
+                        {{-- <x-auth-input label="Confirm password" name="password_confirm" type="password" /> --}}
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>

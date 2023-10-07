@@ -39,31 +39,17 @@
             </h5>
 
             <div class="row px-md-0 justify-content-center gap-3 gap-md-4">
+            @foreach ($events as $event)
                 <div class="card col-12 col-md p-0">
-                    <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
-                    <div class="card-body px-3">
-                        <h6 class="card-title text-primary">Power of Words</h6>
-                        <p class="text-dark" style="font-size: 12px">8 Agustus 2024</p>
-                    </div>
-                </div>
-
-                <div class="card col-12 col-md p-0">
-                    <a class="text-decoration-none" href="#">
+                    <a href="{{ $event->eventDetails['slug'] }}">
                         <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
                         <div class="card-body px-3">
-                            <h6 class="card-title text-primary">Power of Words</h6>
-                            <p class="text-dark" style="font-size: 12px">8 Agustus 2024</p>
+                            <h6 class="card-title text-primary">{{ $event->eventDetails['title']}}</h6>
+                            <p class="text-dark" style="font-size: 12px">{{ $event->eventDetails['start_date']->format('d M Y') }}</p>
                         </div>
                     </a>
                 </div>
-
-                <div class="card col-12 col-md p-0">
-                    <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
-                    <div class="card-body px-3">
-                        <h6 class="card-title text-primary">Power of Words</h6>
-                        <p class="text-dark" style="font-size: 12px">8 Agustus 2024</p>
-                    </div>
-                </div>
+            @endforeach
             </div>
         </section>
 
