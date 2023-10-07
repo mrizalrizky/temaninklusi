@@ -21,25 +21,10 @@
   </h3>
 
   {{-- Benefit Card --}}
-  <div class="row pt-5 gap-4 justify-content-center">
-    <div class="card col-12 col-md-4">
-        <div class="d-flex justify-content-center align-items-center py-3">
-        <img src="{{ asset('assets/img/benefitimg.svg')}}" class="card-img-top" alt="event banner" style="max-width: 10rem;" >
-        </div>
-        <div class="card-body text-center px-5">
-        <h5 class="card-title" style="color: #01676C">Aksesibilitas</h5>
-        <p style="color: black; font-size: 16px">Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place.</p>
-        </div>
-    </div>
-    <div class="card col-12 col-md-4">
-        <div class="d-flex justify-content-center align-items-center py-3">
-        <img src="{{ asset('assets/img/benefitimg.svg')}}" class="card-img-top" alt="event banner" style="max-width: 10rem;" >
-        </div>
-        <div class="card-body text-center px-5">
-        <h5 class="card-title" style="color: #01676C">Aksesibilitas</h5>
-        <p style="color: black; font-size: 16px">Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place.</p>
-        </div>
-    </div>
+  <div class="d-md-flex flex-row pt-5 gap-3 justify-content-center">
+    <x-benefit-card title="Aksesibilitas" description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place."/>
+    <x-benefit-card title="Aksesibilitas" description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place."/>
+    <x-benefit-card title="Aksesibilitas" description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place."/>
   </div>
 </section>
 
@@ -49,7 +34,7 @@
   </h3>
 
   {{-- Event Card --}}
-  <div class="row pt-5 justify-content-center gap-3">
+  <div class="d-md-flex flex-row pt-5 justify-content-center gap-3">
     <div class="card col-12 col-md-4 p-0">
         <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
         <div class="card-body px-3">
@@ -59,6 +44,19 @@
     </div>
 
     <div class="card col-12 col-md-4 p-0">
+<<<<<<< HEAD
+=======
+        <a class="text-decoration-none" href="#">
+            <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
+            <div class="card-body px-3">
+                <h5 class="card-title" style="color: #01676C">Power of Words</h5>
+                <p style="color: black; font-size: 12px">8 Agustus 2024</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="card col-12 col-md-4 p-0">
+>>>>>>> b7cb6f51d7a6323773b4e6b96846c2b6cefc9fe4
         <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
         <div class="card-body px-3">
             <h5 class="card-title" style="color: #01676C">Power of Words</h5>
@@ -68,7 +66,15 @@
   </div>
 </section>
 
-<section class="container d-flex justify-content-center">
-    <img src="{{ asset('assets/img/ctabanner1.png') }}" style="width: 100%;"/>
+<section class="container d-flex flex-row justify-content-between p-5" style="background-color: #01676C; border-radius: 20px">
+    <div class=" align-self-center">
+        <h3 style="color: #ffffff">
+            Yuk upload event di TemuInklusi!
+        </h3>
+        <p style="color: #ffffff">organize@TemuInklusi.com</p>
+    </div>
+    <div>
+        <img src="{{ asset('assets/img/asd.svg') }}" class="img-fluid" style="width: 25rem;"/>
+    </div>
 </section>
 @endsection
