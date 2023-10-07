@@ -3,7 +3,7 @@
         <img src="{{ asset('assets/img/benefitimg.svg')}}" class="card-img-top" alt="event banner" style="max-width: 10rem;" >
     </div>
     <div class="card-body text-center px-4">
-        <h6 class="card-title" style="color: #01676C">{{ $title }}</h6>
-        <p style="color: black; font-size: 14px">{{ $description }}</p>
+        <h6 class="card-title text-primary">{{ $title }}</h6>
+        <p class="text-dark" style="font-size: 14px">{{ $description }}</p>
     </div>
 </div>

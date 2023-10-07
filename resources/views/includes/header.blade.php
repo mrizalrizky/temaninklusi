@@ -9,23 +9,23 @@
 
         <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">
             <ul class="navbar-nav gap-sm-3 mt-2 px-2">
-                <li class="nav-item"><a href="" class="nav-link text-primary fw-semibold">Home</a>
+                <li class="nav-item">
+                    <a href="" class="nav-link text-primary fw-semibold">Home</a>
                 </li>
-                <li class="nav-item"><a href=""
-                        class="nav-link text-primary fw-semibold">Search</a></li>
+                <li class="nav-item">
+                    <a href="" class="nav-link text-primary fw-semibold">Event</a>
+                </li>
 
-                {{-- @if (Auth::user()->role_id == 2) --}}
-                    <li class="nav-item"><a href=""
-                            class="nav-link text-primary fw-semibold">Cart</a></li>
-                {{-- @endif --}}
+                <li class="nav-item">
+                    <a href="" class="nav-link text-primary fw-semibold">Blog</a>
+                </li>
 
-                <li class="nav-item"><a href=""
-                        class="nav-link text-primary fw-semibold">Profile</a></li>
+                <li class="nav-item">
+                    <a href="" class="nav-link text-primary fw-semibold">About</a>
+                </li>
+
                 <li class="nav-item mt-2">
-                    {{-- @if (Auth::user()->role_id == 1) --}}
-                        <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-3"
-                            href="">Add Item</a>
-                    {{-- @endif --}}
+                    <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill" href="">Login</a>
                 </li>
 
                 @if (Auth::check())
@@ -44,9 +44,9 @@
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <div class="ms-auto d-flex">
                 {{-- @if (Auth::check()) --}}
-                    <form action="}" method="POST">
+                    <form action="" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-sm btn-primary d-none d-md-flex rounded-5" style="padding-left: 2.2rem; padding-right: 2.2rem">
+                        <button type="submit" class="btn btn-sm btn-primary d-none d-md-flex rounded-5 px-5 py-2" style="padding: 0 2.2rem">
                             Login
                         </button>
                     </form>
