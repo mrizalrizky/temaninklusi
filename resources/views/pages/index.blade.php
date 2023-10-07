@@ -44,8 +44,6 @@
     </div>
 
     <div class="card col-12 col-md-4 p-0">
-<<<<<<< HEAD
-=======
         <a class="text-decoration-none" href="#">
             <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
             <div class="card-body px-3">
@@ -56,7 +54,6 @@
     </div>
 
     <div class="card col-12 col-md-4 p-0">
->>>>>>> b7cb6f51d7a6323773b4e6b96846c2b6cefc9fe4
         <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
         <div class="card-body px-3">
             <h5 class="card-title" style="color: #01676C">Power of Words</h5>
