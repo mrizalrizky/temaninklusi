@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <div class="card  col-12 col-md-4 p-0">
+    <div class="card col-12 col-md-4 p-0">
         <img src="{{ asset('assets/img/cardimg.png')}}" class="card-img-top img-fluid" alt="event banner">
         <div class="card-body px-3">
             <h5 class="card-title" style="color: #01676C">Power of Words</h5>

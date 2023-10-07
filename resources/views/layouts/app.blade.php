@@ -32,4 +32,8 @@
 
 </body>
 
+<script>
+    feather.replace()
+</script>
+
 </html>
