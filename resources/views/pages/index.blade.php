@@ -39,7 +39,8 @@
             </h5>
 
             <div class="row px-md-0 justify-content-center gap-3 gap-md-4">
-            @foreach ($events as $event)
+            @if ($events)
+                @foreach ($events as $event)
                 <div class="card col-12 col-md p-0">
                     <a href="{{ $event->eventDetails['slug'] }}">
                         <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
@@ -49,7 +50,8 @@
                         </div>
                     </a>
                 </div>
-            @endforeach
+                @endforeach
+            @endif
             </div>
         </section>
 
