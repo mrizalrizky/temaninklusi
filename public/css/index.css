@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Plus Jakarta Sans');
+@import url("https://fonts.googleapis.com/css?family=Plus Jakarta Sans");
 
 :root {
-    --main-color: #01676C;
+    --main-color: #01676c;
     --hover-color: #01484c;
-    --bg-color: #CCE1E2;
-    --secondary-color: #F4F4F4;
-    --font-type: 'Plus Jakarta Sans';
+    --bg-color: #cce1e2;
+    --secondary-color: #f4f4f4;
+    --font-type: "Plus Jakarta Sans";
 }
 
 * {
@@ -36,7 +36,12 @@ body{
     justify-content: center;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--main-color);
     font-weight: 600;
 }
@@ -71,7 +76,7 @@ h6{
 
 .navbar-brand:hover {
     color: var(--hover-color);
-    transition: .2s all linear !important;
+    transition: 0.2s all linear !important;
 }
 
 .navbar-brand:active {
@@ -84,7 +89,7 @@ h6{
 
 .text-primary:hover {
     color: var(--hover-color) !important;
-    transition: .2s all linear !important;
+    transition: 0.2s all linear !important;
 }
 
 .navbar-brand {
@@ -100,7 +105,7 @@ h6{
     --bs-btn-hover-background: #fff;
     --bs-btn-hover-bg: #fff;
     --bs-btn-hover-border-color: var(--bs-btn-bg);
-    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
     --bs-btn-active-color: #fff;
     --bs-btn-active-bg: var(--bs-btn-bg);
     --bs-btn-active-border-color: var(--bs-btn-bg);
@@ -126,43 +131,44 @@ h6{
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
 } */
 
-.btn-group-sm>.btn, .btn-sm {
+.btn-group-sm > .btn,
+.btn-sm {
     --bs-btn-padding-y: 0.4rem;
     --bs-btn-padding-x: 1.7rem;
     --bs-btn-font-size: 0.875rem;
 }
 
 .text-bg-primary {
-    color: #fff!important;
-    background-color: var(--main-color)!important;
+    color: #fff !important;
+    background-color: var(--main-color) !important;
 }
 
 .text-bg-primary:hover {
-    color: var(--main-color)!important;
-    background-color: white!important;
-    border: 1px solid #0E185F;
+    color: var(--main-color) !important;
+    background-color: white !important;
+    border: 1px solid #0e185f;
 }
 
 .text-bg-danger {
-    color: #fff!important;
-    background-color: #dc3545!important;
+    color: #fff !important;
+    background-color: #dc3545 !important;
     border: 1px solid #dc3545;
 }
 
 .text-bg-danger:hover {
-    color: #dc3545!important;
-    background-color: white!important;
+    color: #dc3545 !important;
+    background-color: white !important;
 }
 
 .text-bg-success {
-    color: #fff!important;
-    background-color: #3FA24F!important;
-    border: 1px solid #3FA24F;
+    color: #fff !important;
+    background-color: #3fa24f !important;
+    border: 1px solid #3fa24f;
 }
 
 .text-bg-success:hover {
-    color: #3FA24F!important;
-    background-color: white!important;
+    color: #3fa24f !important;
+    background-color: white !important;
 }
 
 .bg-primary {
@@ -171,8 +177,8 @@ h6{
 
 .alert-number {
     width: 100%;
-    margin-top: .25rem;
-    font-size: .875em;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
     color: #dc3545;
 }
 
@@ -195,7 +201,7 @@ h6{
     --bs-pagination-hover-border-color: #dee2e6;
     --bs-pagination-focus-color: var(--bs-link-hover-color);
     --bs-pagination-focus-bg: #e9ecef;
-    --bs-pagination-focus-box-shadow: 0 0 0 0.25remrgba(13, 110, 253, 0.25);
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25remrgba (13, 110, 253, 0.25);
     --bs-pagination-active-color: #fff;
     --bs-pagination-active-bg: var(--bs-color);
     --bs-pagination-active-border-color: var(--bs-color);
@@ -230,7 +236,7 @@ h6{
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: var(--bs-btn-color);
     --bs-btn-hover-border-color: var(--bs-btn-color);
-    --bs-btn-focus-shadow-rgb: 13,110,253;
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
     --bs-btn-active-color: #fff;
     --bs-btn-active-bg: var(--bs-btn-color);
     --bs-btn-active-border-color: var(--bs-btn-color);
