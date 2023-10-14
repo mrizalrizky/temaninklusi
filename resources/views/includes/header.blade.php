@@ -4,7 +4,7 @@
         <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse" style="background: transparent; border-color: transparent !important"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
-            <span data-feather="menu" class="text-primary"></span>
+            <i data-feather="menu" class="text-primary w-75 icon"></i>
         </button>
 
         <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">

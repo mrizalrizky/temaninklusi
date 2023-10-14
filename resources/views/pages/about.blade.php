@@ -23,6 +23,6 @@
             <h4 class="m-0 text-white">Punya Pertanyaan?</h4>
             <p>organize@temuinklusi.com</p>
         </div>
-        <img src="assets/about/needHelp.png" class="img-fluid object-fit-contain" style="max-width:14rem" alt="">
+        <img src="assets/about/needHelp.png" class="img-fluid object-fit-contain d-none d-sm-flex" style="max-width:14rem" alt="">
     </div>
 @endsection

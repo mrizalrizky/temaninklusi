@@ -31,15 +31,38 @@ html {
 }
 
 body{
-    width: calc(max(260px, 100%));
+    /* width: calc(max(506px, 100%)); */
     display: flex;
     justify-content: center;
-
 }
 
 h1, h2, h3, h4, h5, h6 {
     color: var(--main-color);
     font-weight: 600;
+}
+
+h1{
+    font-size: 2rem;
+}
+
+h2{
+    font-size: 1.5rem;
+}
+
+h3{
+    font-size: 1.17rem;
+}
+
+h4{
+    font-size: 1.33rem;
+}
+
+h5{
+    font-size: .83rem;
+}
+
+h6{
+    font-size: .67rem;
 }
 
 .fw-bold {
@@ -217,3 +240,25 @@ h1, h2, h3, h4, h5, h6 {
     --bs-btn-disabled-border-color: var(--bs-btn-color);
     --bs-gradient: none;
 }
+
+@media only screen and (max-width: 547px) {
+    html {
+      font-size: 75% !important;
+    }
+  }
+
+  @media only screen and (max-width:284px) {
+    html {
+      font-size: 50% !important;
+    }
+
+    .icon {
+        width: 45% !important;
+    }
+  }
+
+  @media only screen and (max-width:150px) {
+    html {
+      font-size: 27% !important;
+    }
+  }

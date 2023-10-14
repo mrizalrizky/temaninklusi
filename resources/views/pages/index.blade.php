@@ -22,7 +22,7 @@
             </h5>
 
             {{-- Benefit Card --}}
-            <div class="row gap-3 gap-md-4 justify-content-center">
+            <div class="row g-3 g-md-4 justify-content-center">
                 <x-benefit-card title="Aksesibilitas"
                     description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place." />
                 <x-benefit-card title="Aksesibilitas"
@@ -38,30 +38,37 @@
             </h5>
 
             {{-- Event Card --}}
-            <div class="row px-md-0 justify-content-center gap-3 gap-md-4">
-                <div class="card col-12 col-md p-0">
-                    <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
-                    <div class="card-body px-3">
-                        <h6 class="card-title text-primary">Power of Words</h6>
-                        <p style="color: black; font-size: 12px">8 Agustus 2024</p>
-                    </div>
-                </div>
-
-                <div class="card col-12 col-md p-0">
-                    <a class="text-decoration-none" href="#">
+            <div class="row px-md-0 justify-content-center g-3 g-md-4">
+                <div class="col-12 col-md-4">
+                    <div class="card p-0">
                         <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
                         <div class="card-body px-3">
                             <h6 class="card-title text-primary">Power of Words</h6>
                             <p style="color: black; font-size: 12px">8 Agustus 2024</p>
                         </div>
-                    </a>
+                    </div>
                 </div>
 
-                <div class="card col-12 col-md p-0">
-                    <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
-                    <div class="card-body px-3">
-                        <h6 class="card-title text-primary">Power of Words</h6>
-                        <p style="color: black; font-size: 12px">8 Agustus 2024</p>
+                <div class="col-12 col-md-4">
+                    <div class="card p-0">
+                        <a class="text-decoration-none" href="#">
+                            <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid"
+                                alt="event banner">
+                            <div class="card-body px-3">
+                                <h6 class="card-title text-primary">Power of Words</h6>
+                                <p style="color: black; font-size: 12px">8 Agustus 2024</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card col-12 col-md p-0">
+                        <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
+                        <div class="card-body px-3">
+                            <h6 class="card-title text-primary">Power of Words</h6>
+                            <p style="color: black; font-size: 12px">8 Agustus 2024</p>
+                        </div>
                     </div>
                 </div>
             </div>

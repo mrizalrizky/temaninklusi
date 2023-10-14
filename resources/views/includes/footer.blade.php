@@ -1,4 +1,4 @@
-<footer class="d-flex mt-auto justify-content-between flex-wrap align-items-center p-3">
+<footer class="d-flex mt-auto justify-content-between flex-wrap align-items-center p-3 gap-3">
     <div class="">
         <h5 class="fw-bold">TemuInklusi</h5>
         <small>
