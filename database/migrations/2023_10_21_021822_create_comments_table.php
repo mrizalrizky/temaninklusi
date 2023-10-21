@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMasterStatusesTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateMasterStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('master_statuses', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('event_id')->references("id")->on('events')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->text('content');
 
             $table->timestamps();
         });
@@ -28,6 +30,6 @@ class CreateMasterStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('master_statuses');
+        Schema::dropIfExists('comments');
     }
 }

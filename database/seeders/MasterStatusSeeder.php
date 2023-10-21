@@ -16,10 +16,10 @@ class MasterStatusSeeder extends Seeder
     {
         DB::table('master_statuses')->insert([
             [
-                'name' => 'On Progress',
+                'label' => 'On Progress',
             ],
             [
-                'name' => 'Verified'
+                'label' => 'Verified'
             ]
         ]);
     }

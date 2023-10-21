@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index() {
-        $events = Event::with(['eventDetails','users','status'])->get();
+        $events = Event::with(['eventDetails','users','status', 'eventFiles'])->get();
 
         return view('pages.index', compact('events'));
     }

@@ -30,7 +30,7 @@ html {
     min-height: 100vh;
 }
 
-body{
+body {
     /* width: calc(max(506px, 100%)); */
     display: flex;
     justify-content: center;
@@ -46,28 +46,32 @@ h6 {
     font-weight: 600;
 }
 
-h1{
+h1 {
     font-size: 2rem;
 }
 
-h2{
+h2 {
     font-size: 1.5rem;
 }
 
-h3{
-    font-size: 1.17rem;
-}
-
-h4{
+h3 {
     font-size: 1.33rem;
 }
 
-h5{
-    font-size: .83rem;
+h4 {
+    font-size: 1.17rem;
 }
 
-h6{
-    font-size: .67rem;
+h5 {
+    font-size: 0.83rem;
+}
+
+h6 {
+    font-size: 0.67rem;
+}
+
+a {
+    text-decoration: none;
 }
 
 .fw-bold {
@@ -249,22 +253,22 @@ h6{
 
 @media only screen and (max-width: 547px) {
     html {
-      font-size: 75% !important;
+        font-size: 75% !important;
     }
-  }
+}
 
-  @media only screen and (max-width:284px) {
+@media only screen and (max-width: 284px) {
     html {
-      font-size: 50% !important;
+        font-size: 50% !important;
     }
 
     .icon {
         width: 45% !important;
     }
-  }
+}
 
-  @media only screen and (max-width:150px) {
+@media only screen and (max-width: 150px) {
     html {
-      font-size: 27% !important;
+        font-size: 27% !important;
     }
-  }
+}

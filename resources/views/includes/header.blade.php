@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
+<nav class="navbar navbar-expand-md py-4 top-0 position-md-relative z-3 {{ request()->route()->named('index') ? 'bg-primary' : ''}}">
     <div class="container-lg px-4 px-md-3">
-        <a class="navbar-brand fw-bolder" href="{{ route('index') }}">TemuInklusi</a>
+        <a class="navbar-brand fw-bolder" href="{{ route('index') }}">{{ config('app.name') }}</a>
         <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse" style="background: transparent; border-color: transparent !important"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -13,15 +13,15 @@
                     <a href="{{ route('index') }}" class="nav-link text-primary fw-semibold">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-primary fw-semibold">Event</a>
+                    <a href="{{ route('event.index') }}" class="nav-link text-primary fw-semibold">Event</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-primary fw-semibold">Blog</a>
+                    <a href="{{ route('blog') }}" class="nav-link text-primary fw-semibold">Blog</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/about" class="nav-link text-primary fw-semibold">About</a>
+                    <a href="{{ route('about') }}" class="nav-link text-primary fw-semibold">About</a>
                 </li>
 
                 <li class="nav-item mt-2">

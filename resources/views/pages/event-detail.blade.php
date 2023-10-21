@@ -1,53 +1,31 @@
 @extends('layouts.app')
-@section('title', 'Event Detail')
 
 @section('content')
 <div class="container-lg">
-    <div>
-        <img src="{{asset('assets/about/aboutBanner.png')}}" alt="">
+    <div id="carouselFade" class="carousel slide carousel-fade">
+        <div class="carousel-inner">
+            @foreach ($event->eventFiles as $eventBanner)
+            <div style="height: 27.5rem;" class="carousel-item active w-100 overflow-hidden border-0 rounded-4 my-5">
+                <img src="{{ $eventBanner->files['file_path']}}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
+            </div>
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
-    <div class="d-flex flex-row">
-        <div>
-            <p>8 Agustus 2024</p>
-            <h4>
-            Power of Words
-            </h4>
+    <div class="d-md-flex justify-content-between">
+        <div class="text-center text-md-start">
+            <p style="font-size: 0.85rem">{{ $event->eventDetails['start_date']->format('d M Y') }}</p>
+            <h3>{{ $event->eventDetails['title'] }}</h3>
         </div>
-
-        <div class="border border-1 rounded-4 p-5 d-grid gap-5">
-            {{-- EO Name Section --}}
-            <div class="d-flex justify-content-center align-items-center gap-3">
-                <div class="p-2 rounded-3 bg-dark">
-                    <h5 class="text-center text-white mb-0">TU</h5>
-                </div>
-                <div>
-                    <h5 class="mb-1 text-dark fw-bold text-center">TernakUang</h5>
-                    <p class="m-0" style="font-size: 12px">Verified organizer</p>
-                </div>
-            </div>
-
-            {{-- Event Details Section --}}
-            <ul class="d-grid gap-4">
-                <li class="d-flex align-items-center gap-3" style="width: fit-content">
-                    <iconify-icon icon="bytesize:location" height="1.5em" class="text-primary"></iconify-icon>
-                    <p class="m-0">Sahid Sudirman Center</p>
-                </li>
-                <li class="d-flex align-items-center gap-3" style="width: fit-content">
-                    <iconify-icon icon="fontisto:date" height="1.5em" class="text-primary"></iconify-icon>
-                    <p class="m-0">Rabu, 8 Agustus 2024</p>
-                </li>
-                <li class="d-flex align-items-center gap-3" style="width: fit-content">
-                    <iconify-icon icon="ph:clock-fill" height="1.5em" class="text-primary "></iconify-icon>
-                    <p class="m-0">07.00 - 14.00 WIB</p>
-                </li>
-            </ul>
-
-            {{-- Register button --}}
-            <div class="d-flex justify-content-center">
-                <button class="btn btn-sm btn-primary rounded-pill w-75 py-2" href="#">Daftar Sekarang</button>
-            </div>
-        </div>
+        <x-event-detail-box :event="$event"/>
     </div>
 </div>
 @endsection

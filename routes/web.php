@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PageTitleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +17,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', [HomeController::class, 'index'])->name('index');
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-Route::get('/event-detail', function() {
-    return view('pages.event-detail');
-});
-Route::get('/about', function() {
+Route::get('/about', function () {
     return view('pages.about');
+})->name('about');
+
+Route::get('/blog', function () {
+    return view('pages.blog');
+})->name('blog');
+
+Route::prefix('events')->group(function () {
+    Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
+    Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'eventDetails'])->name('event.details');
+});
+
+Route::prefix('profile')->group(function () {
+    Route::get('/')->name('profile.index');
+    Route::get('/events')->name('profile.events');
 });
 
 Auth::routes();

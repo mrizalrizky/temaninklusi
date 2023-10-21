@@ -5,20 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventDetail extends Model
+class File extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'description',
-        'location',
-        'slug',
+        'file_name',
+        'file_type',
+        'file_path'
     ];
-
-    protected $dates = [
-        'start_date',
-        'end_date'
-    ];
-
 }

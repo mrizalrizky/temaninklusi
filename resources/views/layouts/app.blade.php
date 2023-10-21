@@ -4,7 +4,7 @@
 <head>
     @include('includes.meta')
 
-    <title>@yield('title') | TemuInklusi</title>
+    <title>{{ $pageTitle }} - TemuInklusi</title>
 
     <link rel="apple-touch-icon" href="">
     <link rel="shortcut icon" href="" type="image/x-icon">
