@@ -9,20 +9,18 @@
 
         <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">
             <ul class="navbar-nav gap-sm-3 mt-2 px-2">
-                <li class="nav-item">
-                    <a href="{{ route('index') }}" class="nav-link text-primary fw-semibold">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('event.index') }}" class="nav-link text-primary fw-semibold">Event</a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('blog') }}" class="nav-link text-primary fw-semibold">Blog</a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('about') }}" class="nav-link text-primary fw-semibold">About</a>
-                </li>
+                <x-navbar-item href="{{ route('index') }}">
+                    Home
+                </x-navbar-item>
+                <x-navbar-item href="{{ route('event.index')}}">
+                    Event
+                </x-navbar-item>
+                <x-navbar-item href="{{ route('blog.index') }}">
+                    Blog
+                </x-navbar-item>
+                <x-navbar-item href="{{ route('about') }}">
+                    About
+                </x-navbar-item>
 
                 <li class="nav-item mt-2">
                     <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill" href="{{ route('login') }}">Login</a>

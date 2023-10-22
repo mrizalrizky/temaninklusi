@@ -24,9 +24,10 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::get('/blog', function () {
-    return view('pages.blog');
-})->name('blog');
+Route::prefix('blogs')->group(function () {
+    Route::get('/', [App\Http\Controllers\ArticleController::class, 'getAllArticles'])->name('blog.index');
+    Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'getArticleDetails'])->name('blog.details');
+});
 
 Route::prefix('events')->group(function () {
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');

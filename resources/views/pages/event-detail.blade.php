@@ -12,11 +12,9 @@
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselFade" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselFade" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
         </button>
     </div>
 
@@ -25,7 +23,7 @@
             <p style="font-size: 0.85rem">{{ $event->eventDetails['start_date']->format('d M Y') }}</p>
             <h3>{{ $event->eventDetails['title'] }}</h3>
         </div>
-        <x-event-detail-box :event="$event"/>
+        <x-event-detail-container :event="$event"/>
     </div>
 </div>
 @endsection

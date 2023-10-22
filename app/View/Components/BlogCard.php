@@ -4,17 +4,17 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class EventListItem extends Component
+class BlogCard extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $icon;
-    public function __construct($icon)
+    public $article;
+    public function __construct($article)
     {
-        $this->icon = $icon;
+        $this->article = $article;
     }
 
     /**
@@ -24,6 +24,6 @@ class EventListItem extends Component
      */
     public function render()
     {
-        return view('components.event-list-item');
+        return view('components.blog-card');
     }
 }

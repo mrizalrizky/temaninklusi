@@ -4,17 +4,18 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class EventDetailBox extends Component
+class NavbarItem extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $event;
-    public function __construct($event)
+
+    public $href;
+    public function __construct($href)
     {
-        $this->event = $event;
+        $this->href = $href;
     }
 
     /**
@@ -24,6 +25,6 @@ class EventDetailBox extends Component
      */
     public function render()
     {
-        return view('components.event-detail-box');
+        return view('components.navbar-item');
     }
 }

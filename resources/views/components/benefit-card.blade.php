@@ -5,8 +5,8 @@
                 style="max-width: 10rem;">
         </div>
         <div class="card-body text-center px-4">
-            <h6 class="card-title" style="color: #01676C">{{ $title }}</h6>
-            <p style="color: black; font-size: 14px">{{ $description }}</p>
+            <h5 class="card-title" style="color: #01676C">{{ $title }}</h5>
+            <p class="text-dark" style="font-size: 0.85rem">{{ $description }}</p>
         </div>
     </div>
 </div>

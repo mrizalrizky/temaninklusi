@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
-
 @section('content')
     <div class="bg-primary">
         <div class="container-lg text-center pt-4 pb-4">
@@ -18,11 +16,9 @@
     {{-- Benefit Card Section --}}
     <div class="container-lg px-4 px-lg-3">
         <section>
-            <div class="text-center my-5">
-                <h4 class="text-primary">
-                    Kenapa TemuInklusi?
-                </h4>
-            </div>
+            <h4 class="text-primary text-center my-5">
+                Kenapa TemuInklusi?
+            </h4>
 
             {{-- Benefit Card --}}
             <div class="row g-3 g-md-4 justify-content-center">
@@ -37,17 +33,16 @@
 
         {{-- Event Card Section --}}
         <section class="mb-5">
-            <div class="text-center my-5">
-                <h4 class="text-center">
-                    Event Pilihan
-                </h4>
-            </div>
+            <h4 class="text-primary text-center my-5">
+                Event Pilihan
+            </h4>
 
             {{-- Event Card --}}
             @if($events)
             <div class="row px-md-0 justify-content-center g-3 g-md-4">
+            {{-- <div class="row px-md-0 justify-content-center g-3 g-md-4 owl-carousel owl-theme"> --}}
                 @foreach ($events as $event)
-                <x-event-card :event="$event"/>
+                    <x-event-card :event="$event"/>
                 @endforeach
             </div>
             @endif
@@ -55,9 +50,9 @@
 
         <section class="d-flex flex-row justify-content-between px-4 p-5 rounded-4" style="background-color: #01676C;">
             <div class=" align-self-center">
-                <h5 class="text-white">
+                <h4 class="text-white">
                     Yuk upload event di TemuInklusi!
-                </h5>
+                </h4>
                 <p class="text-white">organize@TemuInklusi.com</p>
             </div>
             <div>
@@ -65,4 +60,15 @@
             </div>
         </section>
     </div>
+
+    {{-- @push('after-script')
+        <script>
+            $(document).ready(function(){
+                $('.owl-carousel').owlCarousel({
+                    items: 3,
+                    margin: 10,
+                })
+            });
+        </script>
+    @endpush --}}
 @endsection
