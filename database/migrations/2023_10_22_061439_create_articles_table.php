@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventsTable extends Migration
+class CreateArticlesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,16 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreignId('event_detail_id')->references('id')->on('event_details')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreignId('status_id')->references('id')->on('master_statuses')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->string('title');
+            $table->longText('content');
+            $table->string('slug');
+            $table->tinyInteger('show_flag')->default(1);
+            $table->string('created_by');
+            $table->string('updated_by');
 
             $table->timestamps();
         });
@@ -30,6 +35,6 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('articles');
     }
 }

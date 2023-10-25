@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MasterStatusSeeder extends Seeder
+class EventCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +14,10 @@ class MasterStatusSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_statuses')->insert([
+        DB::table('event_categories')->insert([
             [
-                'label' => 'On Progress',
-            ],
-            [
-                'label' => 'Verified'
+                'master_category_id' => 1,
+                'event_id'           => 1,
             ]
         ]);
     }

@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
-
 @section('content')
     <div class="bg-primary">
         <div class="container-lg text-center pt-4 pb-4">
-            <h5 class="text-primary mb-2">
+            <h3 class="text-primary mb-2">
                 Cari event yang ramah untuk <strong>Disabilitas?</strong> Temukan
                 hanya di <strong>TemuInklusi</strong>
-            </h5>
+            </h3>
             <div class="mt-5 mb-4">
                 <img class="w-75" src="{{ asset('assets/img/hero.svg') }}" style="max-width: 25.5rem" />
             </div>
@@ -18,9 +16,9 @@
     {{-- Benefit Card Section --}}
     <div class="container-lg px-4 px-lg-3">
         <section>
-            <h5 class="text-center text-primary my-5">
+            <h4 class="text-primary text-center my-5">
                 Kenapa TemuInklusi?
-            </h5>
+            </h4>
 
             {{-- Benefit Card --}}
             <div class="row g-3 g-md-4 justify-content-center">
@@ -35,52 +33,26 @@
 
         {{-- Event Card Section --}}
         <section class="mb-5">
-            <h5 class="text-center text-primary my-5">
+            <h4 class="text-primary text-center my-5">
                 Event Pilihan
-            </h5>
+            </h4>
 
             {{-- Event Card --}}
+            @if($events)
             <div class="row px-md-0 justify-content-center g-3 g-md-4">
-                <div class="col-12 col-md-4">
-                    <div class="card p-0">
-                        <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
-                        <div class="card-body px-3">
-                            <h6 class="card-title text-primary">Power of Words</h6>
-                            <p style="color: black; font-size: 12px">8 Agustus 2024</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="card p-0">
-                        <a class="text-decoration-none" href="#">
-                            <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid"
-                                alt="event banner">
-                            <div class="card-body px-3">
-                                <h6 class="card-title text-primary">Power of Words</h6>
-                                <p style="color: black; font-size: 12px">8 Agustus 2024</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <div class="card p-0">
-                        <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="event banner">
-                        <div class="card-body px-3">
-                            <h6 class="card-title text-primary">Power of Words</h6>
-                            <p style="color: black; font-size: 12px">8 Agustus 2024</p>
-                        </div>
-                    </div>
-                </div>
+            {{-- <div class="row px-md-0 justify-content-center g-3 g-md-4 owl-carousel owl-theme"> --}}
+                @foreach ($events as $event)
+                    <x-event-card :event="$event"/>
+                @endforeach
             </div>
+            @endif
         </section>
 
         <section class="d-flex flex-row justify-content-between px-4 p-5 rounded-4" style="background-color: #01676C;">
             <div class=" align-self-center">
-                <h5 class="text-white">
+                <h4 class="text-white">
                     Yuk upload event di TemuInklusi!
-                </h5>
+                </h4>
                 <p class="text-white">organize@TemuInklusi.com</p>
             </div>
             <div>
@@ -88,4 +60,15 @@
             </div>
         </section>
     </div>
+
+    {{-- @push('after-script')
+        <script>
+            $(document).ready(function(){
+                $('.owl-carousel').owlCarousel({
+                    items: 3,
+                    margin: 10,
+                })
+            });
+        </script>
+    @endpush --}}
 @endsection
