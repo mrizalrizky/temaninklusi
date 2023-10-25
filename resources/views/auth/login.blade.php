@@ -1,75 +1,44 @@
 @extends('layouts.app')
-@section('title', 'Login')
-
 @section('content')
-    <div class="container-lg">
-        <div class="row justify-content-center my-5">
-            <div class="col-9 col-sm-7 col-md-5 col-lg-4 p-4 rounded-3 d-flex flex-column form-sign-in">
-                <form enctype="multipart/form-data" action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <h4 class="mt-3 mb-4 fw-semibold text-center">Login</h4>
-
-                    @error('failed')
-                        <div class="alert alert-danger d-flex alert-dismissible fade show">
-                            <i data-feather="alert-triangle"style="margin-right: 0.5em; width: 1.5em"></i>
-                            {{ $message }}
-                            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"
-                                aria-label="close"></button>
+    <div class="container-md px-4 mt-5 d-flex justify-content-center">
+        <div class="w-100" style="max-width: 920px;">
+            <div class="m-b-custom-2">
+                <h4 class="text-primary">Masuk ke akun kamu</h4>
+                <p class="text-primary">Masukan kredensial pada form</p>
+            </div>
+            <div class="row g-7 justify-content-center justify-content-md-between">
+                <div class="col-12 col-sm-10 col-md-7 col-lg-6">
+                    <form enctype="multipart/form-data" action="{{ route('login') }}" method="POST"
+                        class="border rounded-4 p-4 p-x-custom-2">
+                        @csrf
+                        <div class="form-group mb-4">
+                            <label for="exampleInputEmail1" class="text-primary fw-bold mb-2">Email address</label>
+                            <input type="email" class="form-control py-2" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="Enter email">
                         </div>
-                    @enderror
-
-                    {{-- <div class="form-floating">
-                        <input type="email" name="email"
-                            class="form-control rounded-3 @error('email') is-invalid @enderror" id="floatingInput"
-                            placeholder="Email" autofocus value="{{ Cookie::get('emailCookie') !== null ? Cookie::get('emailCookie') : old('email') }}">
-                        <label for="floatingInput">Email address</label>
-
-                        @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="form-floating">
-                        <input type="password" name="password"
-                            class="form-control rounded-3 @error('password') is-invalid @enderror"
-                            id="floatingPassword" placeholder="Password" value="{{ Cookie::get('passwordCookie') !== null ? Cookie::get('passwordCookie') : "" }}">
-                        <label for="floatingPassword">Password</label>
-
-                        @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
-
-                    <div class="d-grid gap-3">
-                        <x-auth-input label="Email Address" name="email" type="email"/>
-                        <x-auth-input label="Password" name="password" type="password"/>
-                    </div>
-                    <span class="d-flex text-center justify-content-end">
-                        <a class="fs-6 text-primary" href="#">Lupa password?</a>
-                    </span>
-
-                    <div class="d-flex justify-content-between remember-forgot">
-                        <div class="checkbox mb-3">
-                            <div class="remember-me d-flex">
-                                <input class="me-1" name="remember" type="checkbox" @if(Cookie::get('passwordCookie') !== null && Cookie::get('emailCookie') !== null) checked @endif>
-                                <label>Remember me</label>
-                            </div>
+                        <div class="form-group mb-2">
+                            <label for="exampleInputPassword1" class="text-primary fw-bold mb-2">Password</label>
+                            <input type="password" class="form-control py-2" id="exampleInputPassword1"
+                                placeholder="Password">
                         </div>
-                    </div>
-
+                        <div class="text-end mb-5">
+                            <a href="/sign-up" class="text-decoration-none"><small class="text-primary"
+                                    style="font-size: .8rem">Lupa Password?</small></a>
+                        </div>
+                        <div class="px-4 m-b-custom-2">
+                            <button type="submit" class="btn btn-primary w-100 rounded-4">Login</button>
+                        </div>
+                        <div class="px-4 text-center">
+                            <a href="/register" class="text-decoration-none text-primary"><small
+                                    style="font-size: .8rem">Belum punya akun?, Yuk <b>daftar</b> dulu</small></a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-5 col-lg-6 d-flex align-items-start d-none d-md-flex">
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="w-75 btn btn-primary mt-5 rounded-3">Login</a>
+                        <img src="assets/authentication/auth.png" class="img-fluid" alt="">
                     </div>
-
-
-                    <div class="mt-1 mb-3 to-register text-center">
-                        <p class="text-primary">Belum punya akun? Yuk <a class="fw-bold text-primary" href="{{ route('register') }}">daftar</a> dulu</p>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

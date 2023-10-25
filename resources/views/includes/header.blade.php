@@ -21,7 +21,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="/about" class="nav-link text-primary fw-semibold">About</a>
+                    <a href="{{ route('about') }}" class="nav-link text-primary fw-semibold">About</a>
                 </li>
 
                 <li class="nav-item mt-2">

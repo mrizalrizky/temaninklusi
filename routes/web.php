@@ -21,7 +21,9 @@ Route::get('/event-detail', function() {
 });
 Route::get('/about', function() {
     return view('pages.about');
-});
+})->name('about');
+
+Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
 
 Auth::routes();
 

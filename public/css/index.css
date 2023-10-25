@@ -47,23 +47,23 @@ h6 {
 }
 
 h1{
-    font-size: 2rem;
+    font-size: 2.125rem;
 }
 
 h2{
-    font-size: 1.5rem;
+    font-size: 1.875rem;
 }
 
 h3{
-    font-size: 1.17rem;
+    font-size: 1.5rem;
 }
 
 h4{
-    font-size: 1.33rem;
+    font-size: 1.25rem;
 }
 
 h5{
-    font-size: .83rem;
+    font-size: 1.125rem;
 }
 
 h6{
@@ -85,11 +85,6 @@ h6{
 
 .text-primary {
     color: var(--main-color) !important;
-}
-
-.text-primary:hover {
-    color: var(--hover-color) !important;
-    transition: 0.2s all linear !important;
 }
 
 .navbar-brand {
@@ -245,6 +240,20 @@ h6{
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: var(--bs-btn-color);
     --bs-gradient: none;
+}
+
+.p-x-custom-2 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.m-b-custom-2 {
+    margin-bottom: 2rem !important;
+}
+
+.g-7 {
+    --bs-gutter-x: 4rem;
+    --bs-gutter-y: 4rem;
 }
 
 @media only screen and (max-width: 547px) {
