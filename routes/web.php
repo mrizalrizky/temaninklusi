@@ -24,9 +24,6 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-<<<<<<< HEAD
-Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
-=======
 Route::prefix('blogs')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'getAllArticles'])->name('blog.index');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'getArticleDetails'])->name('blog.details');
@@ -41,7 +38,6 @@ Route::prefix('profile')->group(function () {
     Route::get('/')->name('profile.index');
     Route::get('/events')->name('profile.events');
 });
->>>>>>> 647642f40fa4ea5dd869556606044165048dede3
 
-Auth::routes();
+Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
 
