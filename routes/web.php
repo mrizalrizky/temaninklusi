@@ -25,16 +25,16 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::prefix('blogs')->group(function () {
-    Route::get('/', [App\Http\Controllers\ArticleController::class, 'getAllArticles'])->name('blog.index');
-    Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'getArticleDetails'])->name('blog.details');
+    Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
+    Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
 });
 
 Route::prefix('events')->group(function () {
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
-    Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'eventDetails'])->name('event.details');
+    Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
 });
 
-Route::prefix('profile')->group(function () {
+Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
     Route::get('/')->name('profile.index');
     Route::get('/events')->name('profile.events');
 });

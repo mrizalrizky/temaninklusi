@@ -5,7 +5,7 @@
         <div class="container-lg text-center pt-4 pb-4">
             <h3 class="text-primary mb-2">
                 Cari event yang ramah untuk <strong>Disabilitas?</strong> Temukan
-                hanya di <strong>TemuInklusi</strong>
+                hanya di <strong>{{ config('app.name') }}</strong>
             </h3>
             <div class="mt-5 mb-4">
                 <img class="w-75" src="{{ asset('assets/img/hero.svg') }}" style="max-width: 25.5rem" />
@@ -17,7 +17,7 @@
     <div class="container-lg px-4 px-lg-3">
         <section>
             <h4 class="text-primary text-center my-5">
-                Kenapa TemuInklusi?
+                Kenapa {{ config('app.name') }}?
             </h4>
 
             {{-- Benefit Card --}}
@@ -51,7 +51,7 @@
         <section class="d-flex flex-row justify-content-between px-4 p-5 rounded-4" style="background-color: #01676C;">
             <div class=" align-self-center">
                 <h4 class="text-white">
-                    Yuk upload event di TemuInklusi!
+                    Yuk upload event di {{ config('app.name') }}!
                 </h4>
                 <p class="text-white">organize@TemuInklusi.com</p>
             </div>

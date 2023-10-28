@@ -13,6 +13,7 @@ class Article extends Model
         'title',
         'content',
         'slug',
+        'show_flag',
         'created_by',
         'updated_by',
     ];

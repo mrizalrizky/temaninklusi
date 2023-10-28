@@ -1,25 +1,22 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Input;
 
 use Illuminate\View\Component;
 
-class AuthInput extends Component
+class BaseFormInput extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-
-    public $label;
     public $name;
-    public $type;
-    public function __construct($label, $name, $type)
+    public $placeholder;
+    public function __construct($name, $placeholder)
     {
-        $this->label = $label;
         $this->name = $name;
-        $this->type = $type;
+        $this->placeholder = $placeholder;
     }
 
     /**
@@ -29,6 +26,6 @@ class AuthInput extends Component
      */
     public function render()
     {
-        return view('components.auth-input');
+        return view('components.input.base-form-input');
     }
 }

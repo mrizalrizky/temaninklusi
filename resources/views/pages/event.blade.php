@@ -14,7 +14,11 @@
 
     <section class="mb-5">
         <div class="d-flex gap-4 rounded-4 p-4 m-auto" style="width: fit-content; background-color: #01676c">
-            <div class="form-group">
+            <x-input.base-form-input name="title" placeholder="Cari event"/>
+            {{-- <x-input.base-form-input name="date"/> --}}
+            {{-- <x-input.base-form-input name="category" placeholder="Kategori"/> --}}
+            {{-- <x-input.base-form-input name="location" placeholder="Cari event"/> --}}
+            {{-- <div class="form-group">
                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Cari event" name="title">
             </div>
             <div class="form-group">
@@ -25,7 +29,7 @@
             </div>
             <div class="form-group">
                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Kategori">
-            </div>
+            </div> --}}
         </div>
 
         <h4 class="text-primary text-center my-5">
