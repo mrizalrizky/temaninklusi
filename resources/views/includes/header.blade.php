@@ -1,26 +1,28 @@
-<nav class="navbar navbar-expand-md py-4 top-0 position-md-relative z-3 {{ request()->route()->named('index') ? 'bg-primary' : ''}}">
+<nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
     <div class="container-lg px-4 px-md-3">
-        <a class="navbar-brand fw-bolder" href="{{ route('index') }}">{{ config('app.name') }}</a>
+        <a class="navbar-brand fw-bolder" href="{{ route('index') }}">TemuInklusi</a>
         <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse" style="background: transparent; border-color: transparent !important"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
-            <i data-feather="menu" class="text-primary w-75 icon"></i>
+            <i data-feather="menu" class="text-primary"></i>
         </button>
 
         <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">
             <ul class="navbar-nav gap-sm-3 mt-2 px-2">
-                <x-navbar-item href="{{ route('index') }}">
-                    Home
-                </x-navbar-item>
-                <x-navbar-item href="{{ route('event.index')}}">
-                    Event
-                </x-navbar-item>
-                <x-navbar-item href="{{ route('blog.index') }}">
-                    Blog
-                </x-navbar-item>
-                <x-navbar-item href="{{ route('about') }}">
-                    About
-                </x-navbar-item>
+                <li class="nav-item">
+                    <a href="{{ route('index') }}" class="nav-link text-primary fw-semibold">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-primary fw-semibold">Event</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-primary fw-semibold">Blog</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('about') }}" class="nav-link text-primary fw-semibold">About</a>
+                </li>
 
                 <li class="nav-item mt-2">
                     <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill" href="{{ route('login') }}">Login</a>

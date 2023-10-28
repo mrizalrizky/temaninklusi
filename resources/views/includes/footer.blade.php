@@ -1,6 +1,6 @@
 <footer class="d-flex mt-auto justify-content-between flex-wrap align-items-center p-3 gap-3">
     <div class="">
-        <h5 class="fw-bold">TemuInklusi</h5>
+        <h4 class="fw-bold">TemuInklusi</h4>
         <small>
             Satukan Perbedaan, Wujudkan Inklusi
             <br>
