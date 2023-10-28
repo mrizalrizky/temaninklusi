@@ -17,21 +17,21 @@ class UsersSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'full_name' => 'Test User Member',
+                'name' => 'Test User Member',
                 'username' => "user",
                 'password' => Hash::make("useruser"),
                 'email' => "user@gmail.com",
                 'role_id' => 1
             ],
             [
-                'full_name' => 'Test User Admin',
+                'name' => 'Test User Admin',
                 'username' => "admin",
                 'password' => Hash::make("adminadmin"),
                 'email' => "admin@gmail.com",
                 'role_id' => 2
             ],
             [
-                'full_name' => 'Test User EO',
+                'name' => 'Test User EO',
                 'username' => "eo",
                 'password' => Hash::make("eventorganizer"),
                 'email' => "eo@gmail.com",

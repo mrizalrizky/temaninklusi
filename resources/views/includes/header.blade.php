@@ -9,43 +9,34 @@
 
         <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">
             <ul class="navbar-nav gap-sm-3 mt-2 px-2">
-                <li class="nav-item">
-                    <a href="{{ route('index') }}" class="nav-link text-primary fw-semibold">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-primary fw-semibold">Event</a>
-                </li>
+                <x-listitem.navbar-item href="{{ route('index') }}">
+                    Home
+                </x-listitem.navbar-item>
+                <x-listitem.navbar-item href="{{ route('event.index')}}">
+                    Event
+                </x-listitem.navbar-item>
+                <x-listitem.navbar-item href="{{ route('blog.index') }}">
+                    Blog
+                </x-listitem.navbar-item>
+                <x-listitem.navbar-item href="{{ route('about') }}">
+                    About
+                </x-listitem.navbar-item>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-primary fw-semibold">Blog</a>
+                @if (!Auth::check())
+                <li class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill" href="{{ route('login') }}">
+                    Login
                 </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('about') }}" class="nav-link text-primary fw-semibold">About</a>
-                </li>
-
-                <li class="nav-item mt-2">
-                    <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill" href="{{ route('login') }}">Login</a>
-                </li>
-
-                @if (Auth::check())
-                    <li class="nav-item">
-                        <form action="" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-primary d-flex justify-content-center d-md-none w-100 rounded-3">
-                                Login
-                            </button>
-                        </form>
-                    </li>
                 @endif
             </ul>
         </div>
 
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <div class="ms-auto d-flex">
+                @if (!Auth::check())
                 <a href="{{ route('login') }}" class="btn btn-sm btn-primary d-none d-md-flex rounded-5 px-5 py-2" style="padding: 0 2.2rem">
                     Login
                 </a>
+                @endif
             </div>
         </div>
     </div>

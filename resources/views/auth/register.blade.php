@@ -42,7 +42,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-5 d-flex align-items-start d-none d-md-flex">
+                <div class="col-5 d-flex align-items-center d-none d-md-flex">
                     <div class="d-flex justify-content-center">
                         <img src="assets/authentication/auth.png" class="img-fluid" alt="">
                     </div>

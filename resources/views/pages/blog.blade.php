@@ -10,11 +10,16 @@
             <p class="text-primary fw-bold">buat bantu kamu terinspirasi!</p>
     </section>
 
-    <section class="d-grid gap-5">
+    <section class="d-grid gap-5 pb-5 mb-5">
         @foreach ($articles as $article)
-            <x-blog-card :article="$article"/>
+            <x-card.blog-card :article="$article"/>
         @endforeach
     </section>
+
+    <div class="d-flex justify-content-center">
+
+        {{ $articles->links() }}
+    </div>
 </div>
 
 @endsection

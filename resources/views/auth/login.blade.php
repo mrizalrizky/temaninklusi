@@ -39,8 +39,8 @@
                             <button type="submit" class="btn btn-primary w-100 rounded-4">Login</button>
                         </div>
                         <div class="px-4 text-center">
-                            <a href="/register" class="text-decoration-none text-primary"><small>Belum punya akun?, Yuk
-                                    <b>daftar</b> dulu</small></a>
+                            <a href="{{ route('register') }}" class="text-decoration-none text-primary"><small
+                                    style="font-size: .8rem">Belum punya akun?, Yuk <b>daftar</b> dulu</small></a>
                         </div>
                 </form>
             </div>

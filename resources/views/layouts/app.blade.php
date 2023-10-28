@@ -4,7 +4,7 @@
 <head>
     @include('includes.meta')
 
-    <title>{{ $pageTitle }} - TemuInklusi</title>
+    <title>{{ $pageTitle }} - {{ config('app.name') }}</title>
 
     <link rel="apple-touch-icon" href="">
     <link rel="shortcut icon" href="" type="image/x-icon">

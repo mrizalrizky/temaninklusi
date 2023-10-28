@@ -14,11 +14,17 @@ class EventDetail extends Model
         'description',
         'location',
         'slug',
+        'start_date',
+        'end_date'
     ];
 
     protected $dates = [
         'start_date',
         'end_date'
     ];
+
+    public function events() {
+        return $this->belongsTo(Event::class);
+    }
 
 }

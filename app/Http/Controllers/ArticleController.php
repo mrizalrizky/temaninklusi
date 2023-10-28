@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    public function getAllArticles() {
-        $articles = Article::latest()->get();
+    public function index() {
+        $articles = Article::latest()->paginate(3);
 
         return view('pages.blog', compact('articles'));
+    }
+
+    public function show($slug) {
+        // $article = Article::find()
     }
 }

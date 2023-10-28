@@ -1,23 +1,20 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\ListItem;
 
 use Illuminate\View\Component;
 
-class BenefitCard extends Component
+class EventListItem extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-
-    public $title;
-    public $description;
-    public function __construct($title, $description)
+    public $icon;
+    public function __construct($icon)
     {
-        $this->title = $title;
-        $this->description = $description;
+        $this->icon = $icon;
     }
 
     /**
@@ -27,6 +24,6 @@ class BenefitCard extends Component
      */
     public function render()
     {
-        return view('components.benefit-card');
+        return view('components.listitem.event-list-item');
     }
 }
