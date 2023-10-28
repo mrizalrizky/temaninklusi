@@ -1,20 +1,21 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\ListItem;
 
 use Illuminate\View\Component;
 
-class BlogCard extends Component
+class NavbarItem extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $article;
-    public function __construct($article)
+
+    public $href;
+    public function __construct($href)
     {
-        $this->article = $article;
+        $this->href = $href;
     }
 
     /**
@@ -24,6 +25,6 @@ class BlogCard extends Component
      */
     public function render()
     {
-        return view('components.blog-card');
+        return view('components.listitem.navbar-item');
     }
 }

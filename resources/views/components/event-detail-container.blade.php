@@ -25,7 +25,9 @@
         </x-event-list-item>
     </ul>
 
+    @if (Auth::check())
     <div class="d-flex justify-content-center">
         <button class="btn btn-sm btn-primary rounded-pill w-75 py-2" href="#">Daftar Sekarang</button>
     </div>
+    @endif
 </div>

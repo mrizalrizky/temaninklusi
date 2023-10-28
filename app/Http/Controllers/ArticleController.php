@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ArticleController extends Controller
 {
     public function index() {
-        $articles = Article::latest()->get();
+        $articles = Article::latest()->paginate(3);
 
         return view('pages.blog', compact('articles'));
     }

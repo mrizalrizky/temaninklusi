@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Input;
+namespace App\View\Components\Form;
 
 use Illuminate\View\Component;
 
@@ -13,10 +13,14 @@ class BaseFormInput extends Component
      */
     public $name;
     public $placeholder;
-    public function __construct($name, $placeholder)
+    public $type;
+    public $label;
+    public function __construct($name, $placeholder, $type, $label)
     {
         $this->name = $name;
         $this->placeholder = $placeholder;
+        $this->type = $type;
+        $this->label = $label;
     }
 
     /**
@@ -26,6 +30,6 @@ class BaseFormInput extends Component
      */
     public function render()
     {
-        return view('components.input.base-form-input');
+        return view('components.form.base-form-input');
     }
 }

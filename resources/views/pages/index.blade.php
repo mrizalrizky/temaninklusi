@@ -22,11 +22,11 @@
 
             {{-- Benefit Card --}}
             <div class="row g-3 g-md-4 justify-content-center">
-                <x-benefit-card title="Aksesibilitas"
+                <x-card.benefit-card title="Aksesibilitas"
                     description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place." />
-                <x-benefit-card title="Aksesibilitas"
+                <x-card.benefit-card title="Aksesibilitas"
                     description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place." />
-                <x-benefit-card title="Aksesibilitas"
+                <x-card.benefit-card title="Aksesibilitas"
                     description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place." />
             </div>
         </section>
@@ -42,7 +42,7 @@
             <div class="row px-md-0 justify-content-center g-3 g-md-4">
             {{-- <div class="row px-md-0 justify-content-center g-3 g-md-4 owl-carousel owl-theme"> --}}
                 @foreach ($events as $event)
-                    <x-event-card :event="$event"/>
+                    <x-card.event-card :event="$event"/>
                 @endforeach
             </div>
             @endif
@@ -60,15 +60,4 @@
             </div>
         </section>
     </div>
-
-    {{-- @push('after-script')
-        <script>
-            $(document).ready(function(){
-                $('.owl-carousel').owlCarousel({
-                    items: 3,
-                    margin: 10,
-                })
-            });
-        </script>
-    @endpush --}}
 @endsection
