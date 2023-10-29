@@ -19,17 +19,30 @@
                                     aria-label="close"></button>
                             </div>
                         @enderror
+
                         <div class="form-group mb-4">
                             <label for="exampleInputEmail1" class="text-primary fw-bold mb-2">Email address</label>
                             <input type="email" class="form-control py-2 @error('email') is-invalid @enderror"
                                 id="exampleInputEmail1" name="email" aria-describedby="emailHelp"
                                 value="{{ old('email') }}" placeholder="Janedoe@gmail.com">
+
+                                @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="form-group mb-2">
                             <label for="exampleInputPassword1"
                                 class="text-primary fw-bold mb-2 @error('password') is-invalid @enderror">Password</label>
                             <input type="password" class="form-control py-2" id="exampleInputPassword1" name="password"
                                 placeholder="●●●●●●●●">
+
+                                @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="text-end mb-5">
                             <a href="/sign-up" class="text-decoration-none"><small class="text-primary">Lupa
