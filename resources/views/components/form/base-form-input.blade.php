@@ -1,7 +1,7 @@
 @props([
     'type' => 'text',
     'placeholder' => '',
-    'label'
+    'label' => false,
 ])
 
 <div class="form-group">

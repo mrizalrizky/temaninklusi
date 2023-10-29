@@ -48,16 +48,7 @@
             @endif
         </section>
 
-        <section class="d-flex flex-row justify-content-between px-4 p-5 rounded-4" style="background-color: #01676C;">
-            <div class=" align-self-center">
-                <h4 class="text-white">
-                    Yuk upload event di {{ config('app.name') }}!
-                </h4>
-                <p class="text-white">organize@TemuInklusi.com</p>
-            </div>
-            <div class="d-none d-md-flex">
-                <img src="{{ asset('assets/img/asd.svg') }}" class="img-fluid" style="max-width: 15rem;" />
-            </div>
-        </section>
+
+        <x-banner title="Yuk upload event di {{ config('app.name') }}!" image="{{ asset('assets/img/asd.svg') }}"/>
     </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container-md">
+    <div class="container-md px-4 px-lg-3">
         <div class="d-flex justify-content-center">
             <img src="assets/about/aboutBanner.png" class="img-fluid col-10" style="max-width: 30rem" alt="">
         </div>
@@ -16,13 +16,7 @@
                 yang mewadahi mereka dalam mengembangkan diri.
             </p>
         </div>
-    </div>
 
-    <div class="m-3 mt-5 d-flex justify-content-between flex-wrap gap-4 p-4 rounded-3" style="background-color: #01676C; min-height: 10rem;">
-        <div class="text-white">
-            <h4 class="m-0 text-white">Punya Pertanyaan?</h4>
-            <p>organize@temuinklusi.com</p>
-        </div>
-        <img src="assets/about/needHelp.png" class="img-fluid object-fit-contain d-none d-sm-flex" style="max-width:14rem" alt="">
+        <x-banner title="Punya pertanyaan?" image="{{ asset('assets/about/needHelp.png') }}"/>
     </div>
 @endsection

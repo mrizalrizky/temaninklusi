@@ -16,7 +16,7 @@
         <div class="d-flex gap-4 rounded-4 p-4 m-auto" style="width: fit-content; background-color: #01676c">
             {{-- <x-form.base-form-input type="text" name="title" placeholder="Cari event"/>
             <x-form.base-form-input type="select" name="disability_category" placeholder="Jenis Disabilitas"/> --}}
-            <x-form.base-form-input placeholder="Kategori"/>
+            {{-- <x-form.base-form-input placeholder="Kategori"/> --}}
             <x-form.base-form-input :label="true" name="category" placeholder="Kategori" type="text"/>
         </div>
 
