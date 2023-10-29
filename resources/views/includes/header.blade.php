@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
     <div class="container-lg px-4 px-md-3">
         <a class="navbar-brand fw-bolder" href="{{ route('index') }}">TemuInklusi</a>
-        <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse" style="background: transparent; border-color: transparent !important"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse"
+            style="background: transparent; border-color: transparent !important" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i data-feather="menu" class="text-primary"></i>
         </button>
 
@@ -12,7 +12,7 @@
                 <x-listitem.navbar-item href="{{ route('index') }}">
                     Home
                 </x-listitem.navbar-item>
-                <x-listitem.navbar-item href="{{ route('event.index')}}">
+                <x-listitem.navbar-item href="{{ route('event.index') }}">
                     Event
                 </x-listitem.navbar-item>
                 <x-listitem.navbar-item href="{{ route('blog.index') }}">
@@ -23,19 +23,33 @@
                 </x-listitem.navbar-item>
 
                 @if (!Auth::check())
-                <li class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill" href="{{ route('login') }}">
-                    Login
-                </li>
+                    <li class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill"
+                        href="{{ route('login') }}">
+                        Login
+                    </li>
+                @else
+                    <x-listitem.navbar-item href="#" class="d-md-none">
+                        Profile
+                    </x-listitem.navbar-item>
                 @endif
             </ul>
         </div>
 
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
-            <div class="ms-auto d-flex">
+            <div class="ms-auto d-flex d-none d-md-flex">
                 @if (!Auth::check())
-                <a href="{{ route('login') }}" class="btn btn-sm btn-primary d-none d-md-flex rounded-5 px-5 py-2" style="padding: 0 2.2rem">
-                    Login
-                </a>
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary rounded-5 px-5 py-2"
+                        style="padding: 0 2.2rem">
+                        Login
+                    </a>
+                @else
+                    <a href="{{ route('login') }}" style="padding: 0 2.2rem">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1.85rem" style="fill: #01676c"
+                            viewBox="0 0 512 512">
+                            <path
+                                d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                        </svg>
+                    </a>
                 @endif
             </div>
         </div>
