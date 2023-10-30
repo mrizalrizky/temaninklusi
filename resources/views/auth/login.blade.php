@@ -20,7 +20,7 @@
                             </div>
                         @enderror
 
-                        <div class="form-group mb-4">
+                        {{-- <div class="form-group mb-4">
                             <label for="exampleInputEmail1" class="text-primary fw-bold mb-2">Email address</label>
                             <input type="email" class="form-control py-2 @error('email') is-invalid @enderror"
                                 id="exampleInputEmail1" name="email" aria-describedby="emailHelp"
@@ -31,23 +31,23 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-                        </div>
-                        <x-form.base-form-input class="mb-4 @error('email') is-invalid @enderror" title="Email address" type="email" value="{{ old('email') }}" name="email" :label="true">
+                        </div> --}}
+                        <x-form.base-form-input title="Email address" type="email" value="{{ old('email') }}" name="email" :label="true">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                             @enderror
                         </x-form.base-form-input>
-                        
-                        <x-form.base-form-input class="mb-2 @error('password') is-invalid @enderror" title="Password" type="password" value="{{ old('email') }}" name="password" :label="true" placeholder="●●●●●●●●">
+
+                        <x-form.base-form-input class="mb-2" title="Password" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                             @enderror
                         </x-form.base-form-input>
-                        
+
 
                         <!-- <div class="form-group mb-2">
                             <label for="exampleInputPassword1"

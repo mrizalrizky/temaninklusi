@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MasterCategory extends Model
+class DisabilityCategory extends Model
 {
-
+    protected $fillable = [
+        'name'
+    ];
 }

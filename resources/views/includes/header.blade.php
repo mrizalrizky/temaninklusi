@@ -23,10 +23,10 @@
                 </x-listitem.navbar-item>
 
                 @if (!Auth::check())
-                    <li class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill"
-                        href="{{ route('login') }}">
+                    <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill"
+                        href>
                         Login
-                    </li>
+                    </a>
                 @else
                     <x-listitem.navbar-item href="#" class="d-md-none">
                         Profile

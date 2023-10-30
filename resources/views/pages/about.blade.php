@@ -5,7 +5,7 @@
             <img src="assets/about/aboutBanner.png" class="img-fluid col-10" style="max-width: 30rem" alt="">
         </div>
         <div class="mt-5 text-center">
-            <h3  class="mb-4">Our Mission</h3>
+            <h3  class="mb-4">Misi Kami</h3>
             <p>Menjadi solusi untuk menambah wawasan dan membantu anak-anak muda indonesia
                 dalam berkolaborasi, baik itu mempromosikan event/kegiatan antar kampus/institusi hingga menjadi platform
                 yang mewadahi mereka dalam mengembangkan diri.

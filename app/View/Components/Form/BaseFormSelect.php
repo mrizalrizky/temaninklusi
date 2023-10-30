@@ -11,9 +11,10 @@ class BaseFormSelect extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $options;
+    public function __construct($options)
     {
-        //
+        $this->options = $options;
     }
 
     /**

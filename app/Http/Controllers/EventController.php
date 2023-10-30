@@ -7,7 +7,8 @@ use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
 use App\Models\EventDetail;
 use Illuminate\Support\Str;
-use App\Enums\Status;
+use App\Constants\StatusConstant;
+use App\Models\DisabilityCategory;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -26,16 +27,14 @@ class EventController extends Controller
 
         $eventDetail->events()->create([
             'user_id'   => 2,
-            'status_id' => Status::REJECTED,
+            'status_id' => StatusConstant::ON_VERIFICATION,
             'event_detail_id' => $eventDetail->id
         ]);
 
-
-
-
+        $disabilityCategories = DisabilityCategory::all();
         $events = Event::with('eventDetails')->paginate(6);
 
-        return view('pages.event', compact('events'));
+        return view('pages.event', compact('events', 'disabilityCategories'));
     }
 
     public function show($slug) {
@@ -58,7 +57,7 @@ class EventController extends Controller
 
         $eventDetail->events()->create([
             'user_id'   => Auth::id(),
-            'status_id' => Status::ON_VERIFICATION,
+            'status_id' => StatusConstant::ON_VERIFICATION,
             'event_detail_id' => $eventDetail->id
         ]);
 

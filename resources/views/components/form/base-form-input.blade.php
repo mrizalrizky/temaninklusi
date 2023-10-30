@@ -1,10 +1,11 @@
-<div {{ $attributes->merge(['class' => 'form-group']) }}>
+<div class="@if ($label) mb-4 @endif">
+    <div {{ $attributes->merge(['class' => 'form-group']) }}>
+        @if ($label)
+        <label for="{{ $name }}" class="text-primary fw-bold mb-2">{{ $title }}</label>
+        @endif
+        <input {{ $attributes->class(['form-control py-2', 'is-invalid' => $errors->has($name)]) }} type="{{ $type }}" id="{{ $name }}"
+               placeholder="{{ $placeholder }}" name="{{ $name }}" value="{{ $value }}">
 
-    @if ($label)
-    <label for="{{ $name }}" class="text-primary fw-bold mb-2">{{ $title }}</label>
-    @endif
-    <input type="{{ $type }}" {{ $attributes->merge(['class' => 'form-control py-2']) }} id="{{ $name }}" aria-describedby="emailHelp"
-            placeholder="{{ $placeholder }}" name="{{ $name }}" value="{{ $value }}">
-
-    {{ $slot }}
+        {{ $slot }}
+    </div>
 </div>

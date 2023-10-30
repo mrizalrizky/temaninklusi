@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterCategorySeeder::class);
         // $this->call(EventCategorySeeder::class);
         $this->call(ArticleSeeder::class);
+        $this->call(DisabilityCategorySeeder::class);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\Role;
+use App\Constants\RoleConstant;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -39,7 +39,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->middleware('guest');
     }
 
     /**
@@ -68,12 +68,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd($data);
         return User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'role_id' => 2,
+            'role_id' => RoleConstant::MEMBER,
             'password' => Hash::make($data['password']),
         ]);
     }
