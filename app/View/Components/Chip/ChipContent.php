@@ -1,22 +1,22 @@
 <?php
 
-namespace App\View\Components\Form;
+namespace App\View\Components\Chip;
 
 use Illuminate\View\Component;
 
-class BaseFormSelect extends Component
+class ChipContent extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $options;
-    public $placeholder;
-    public function __construct($placeholder = '', $options = null)
+    public $id;
+    public $ariaLabelledBy;
+    public function __construct($id, $ariaLabelledBy)
     {
-        $this->placeholder = $placeholder;
-        $this->options = $options;
+        $this->id = $id;
+        $this->ariaLabelledBy = $ariaLabelledBy;
     }
 
     /**
@@ -26,6 +26,6 @@ class BaseFormSelect extends Component
      */
     public function render()
     {
-        return view('components.form.base-form-select');
+        return view('components.chip.chip-content');
     }
 }

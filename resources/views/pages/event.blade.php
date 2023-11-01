@@ -18,7 +18,6 @@
             <x-form.base-form-input name="start_date" type="date" />
             <x-form.base-form-select name="disability_category" :options="$disabilityCategories" placeholder="Jenis Disabilitas"/>
             <x-form.base-form-select name="event_category" :options="$disabilityCategories" placeholder="Kategori"/>
-            <!-- <x-form.base-form-select name="event_category"/> -->
         </div>
 
         <h4 class="text-primary text-center my-5">

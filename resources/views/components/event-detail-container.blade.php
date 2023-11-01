@@ -7,7 +7,7 @@
             <h4 class="text-center text-white mb-0">TU</h4>
         </div>
         <div>
-            <h4 class="mb-1 text-dark fw-bold">TernakUang</h4>
+            <h5 class="mb-1 text-dark fw-bold">TernakUang</h5>
             <p class="m-0" style="font-size: 0.75rem">Verified organizer</p>
         </div>
     </div>
