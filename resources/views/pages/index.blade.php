@@ -40,7 +40,6 @@
             {{-- Event Card --}}
             @if($events)
             <div class="row px-md-0 justify-content-center g-3 g-md-4">
-            {{-- <div class="row px-md-0 justify-content-center g-3 g-md-4 owl-carousel owl-theme"> --}}
                 @foreach ($events as $event)
                     <x-card.event-card :event="$event"/>
                 @endforeach
