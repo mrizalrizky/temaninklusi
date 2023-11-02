@@ -37,11 +37,11 @@ body {
 }
 
 small {
-    font-size: .85rem;
+    font-size: .9rem;
 }
 
 p {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
 }
 
 h1,
@@ -274,18 +274,18 @@ a {
     }
 }
 
-@media only screen and (max-width: 284px) {
+/* @media only screen and (max-width: 284px) {
     html {
         font-size: 75% !important;
     }
-/*
+
     .icon {
         width: 45% !important;
-    } */
-}
+    }
+} */
 
 @media only screen and (max-width: 150px) {
     html {
-        font-size: 45% !important;
+        font-size: 60% !important;
     }
 }
