@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-lg px-3 px-lg-4 bg-secondary">
+<div class="container-lg px-3 px-lg-4">
     <section>
         <div class="text-center my-5">
             <h3 class="text-primary">

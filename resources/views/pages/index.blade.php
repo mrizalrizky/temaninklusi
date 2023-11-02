@@ -16,9 +16,9 @@
     {{-- Benefit Card Section --}}
     <div class="container-lg px-4 px-lg-3">
         <section>
-            <h4 class="text-primary text-center my-5">
+            <h3 class="text-primary text-center my-4 py-3">
                 Kenapa {{ config('app.name') }}?
-            </h4>
+            </h3>
 
             {{-- Benefit Card --}}
             <div class="row g-3 g-md-4 justify-content-center">
@@ -33,9 +33,9 @@
 
         {{-- Event Card Section --}}
         <section class="mb-5">
-            <h4 class="text-primary text-center my-5">
+            <h3 class="text-primary text-center my-4 py-3">
                 Event Pilihan
-            </h4>
+            </h3>
 
             {{-- Event Card --}}
             @if($events)

@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Card;
 
+use App\Models\Event;
 use Illuminate\View\Component;
 
 class EventCard extends Component
@@ -11,10 +12,10 @@ class EventCard extends Component
      *
      * @return void
      */
-    public $event;
+    public Event $event;
     // public $title;
     // public $date;
-    public function __construct($event)
+    public function __construct(Event $event)
     {
         $this->event = $event;
     }
