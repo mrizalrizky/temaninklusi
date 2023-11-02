@@ -24,8 +24,6 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
-
 Route::prefix('blogs')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');

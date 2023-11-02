@@ -16,9 +16,9 @@
     {{-- Benefit Card Section --}}
     <div class="container-lg px-4 px-lg-3">
         <section>
-            <h4 class="text-primary text-center my-5">
+            <h3 class="text-primary text-center my-4 py-3">
                 Kenapa {{ config('app.name') }}?
-            </h4>
+            </h3>
 
             {{-- Benefit Card --}}
             <div class="row g-3 g-md-4 justify-content-center">
@@ -33,9 +33,9 @@
 
         {{-- Event Card Section --}}
         <section class="mb-5">
-            <h4 class="text-primary text-center my-5">
+            <h3 class="text-primary text-center my-4 py-3">
                 Event Pilihan
-            </h4>
+            </h3>
 
             {{-- Event Card --}}
             @if($events)
@@ -48,16 +48,7 @@
             @endif
         </section>
 
-        <section class="d-flex flex-row justify-content-between px-4 p-5 rounded-4" style="background-color: #01676C;">
-            <div class=" align-self-center">
-                <h4 class="text-white">
-                    Yuk upload event di {{ config('app.name') }}!
-                </h4>
-                <p class="text-white">organize@TemuInklusi.com</p>
-            </div>
-            <div class="d-none d-md-flex">
-                <img src="{{ asset('assets/img/asd.svg') }}" class="img-fluid" style="max-width: 15rem;" />
-            </div>
-        </section>
+
+        <x-banner title="Yuk upload event di {{ config('app.name') }}!" image="{{ asset('assets/img/asd.svg') }}"/>
     </div>
 @endsection

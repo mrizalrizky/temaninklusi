@@ -1,13 +1,11 @@
-@props([
-    'type' => 'text',
-    'placeholder' => '',
-    'label'
-])
+<div class="@if ($label) mb-4 @endif">
+    <div {{ $attributes->merge(['class' => 'form-group']) }}>
+        @if ($label)
+        <label for="{{ $name }}" class="text-primary fw-bold mb-2">{{ $title }}</label>
+        @endif
+        <input {{ $attributes->class(['form-control py-2', 'is-invalid' => $errors->has($name)]) }} type="{{ $type }}" id="{{ $name }}"
+               placeholder="{{ $placeholder }}" name="{{ $name }}" value="{{ $value }}">
 
-<div class="form-group">
-
-    @if ($label)
-    <label for="name" class="text-primary fw-bold">{{ $name }}</label>
-    @endif
-    <input type="{{ $type }}" class="form-control" {{ $attributes->merge(['class']) }} id="{{ $name }}" aria-describedby="emailHelp" placeholder="{{ $placeholder }}" name="{{ $name }}">
+        {{ $slot }}
+    </div>
 </div>

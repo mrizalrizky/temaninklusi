@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
     <div class="container-lg px-4 px-md-3">
-        <a class="navbar-brand fw-bolder" href="{{ route('index') }}">TemuInklusi</a>
+        <a class="navbar-brand fw-bolder" href="{{ route('index') }}">{{ config('app.name') }}</a>
         <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse"
             style="background: transparent; border-color: transparent !important" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,10 +23,10 @@
                 </x-listitem.navbar-item>
 
                 @if (!Auth::check())
-                    <li class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill"
-                        href="{{ route('login') }}">
+                    <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill"
+                        href>
                         Login
-                    </li>
+                    </a>
                 @else
                     <x-listitem.navbar-item href="#" class="d-md-none">
                         Profile
