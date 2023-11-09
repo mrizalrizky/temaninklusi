@@ -37,11 +37,11 @@ body {
 }
 
 small {
-    font-size: 0.85rem;
+    font-size: .85rem;
 }
 
 p {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
 }
 
 h1,
@@ -63,7 +63,7 @@ h2 {
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
 }
 
 h4 {
@@ -80,10 +80,15 @@ h6 {
 
 a {
     text-decoration: none;
+    text-transform: unset !important;
 }
 
 .fw-bold {
     font-weight: 600;
+}
+
+.navbar {
+    box-shadow: none;
 }
 
 .navbar-brand:hover {
@@ -109,6 +114,7 @@ a {
 }
 
 .btn-primary {
+    background-color: var(--bs-btn-bg);
     --bs-btn-color: #fff;
     --bs-btn-bg: var(--main-color);
     --bs-btn-border-color: var(--bs-btn-bg);
@@ -124,6 +130,11 @@ a {
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
+.btn-primary:hover {
+    background-color: var(--bs-btn-bg);
+}
+
 /*
 .btn-danger {
     --bs-btn-color: #fff;
@@ -282,14 +293,13 @@ a {
     html {
         font-size: 75% !important;
     }
-    /*
-    .icon {
+    /* .icon {
         width: 45% !important;
     } */
 }
 
 @media only screen and (max-width: 150px) {
     html {
-        font-size: 45% !important;
+        font-size: 60% !important;
     }
 }

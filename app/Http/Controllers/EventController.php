@@ -7,35 +7,25 @@ use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
 use App\Models\EventDetail;
 use Illuminate\Support\Str;
-use App\Enums\Status;
+use App\Constants\StatusConstant;
+use App\Models\DisabilityCategory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-        // nitip di sini ya wkwkwk
-        $eventDetail = EventDetail::create([
-            'title'       => 'test1',
-            'description' => 'test desc',
-            'location'    => 'test location',
-            'slug'        => Str::slug('test-satu', '-'), // butuh bikin helper function untuk handle kalo ada nama event yang sama tambahin -[n]]
-            'start_date'  => now(),
-            'end_date'  => now(),
-        ]);
+        $events = Event::whereHas('eventDetails', function ($query) use ($request) {
+            $query->where('title', 'ILIKE', '%' . $request->title . '%');
+                //   ->where('start_date', 'ILIKE', '%' . $request->start_date . '%')
+                //   ->where('slug', 'ILIKE', '%' . $request->disability_category . '%')
+                //   ->where('location', 'ILIKE', '%' . $request->event_category . '%');
+        })->paginate(6);
 
-        $eventDetail->events()->create([
-            'user_id'   => 2,
-            'status_id' => Status::REJECTED,
-            'event_detail_id' => $eventDetail->id
-        ]);
+        $disabilityCategories = DisabilityCategory::all();
 
-
-
-
-        $events = Event::with('eventDetails')->paginate(6);
-
-        return view('pages.event', compact('events'));
+        return view('pages.event', compact('events', 'disabilityCategories'));
     }
 
     public function show($slug) {
@@ -58,7 +48,7 @@ class EventController extends Controller
 
         $eventDetail->events()->create([
             'user_id'   => Auth::id(),
-            'status_id' => Status::ON_VERIFICATION,
+            'status_id' => StatusConstant::ON_VERIFICATION,
             'event_detail_id' => $eventDetail->id
         ]);
 

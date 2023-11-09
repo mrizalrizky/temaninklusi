@@ -1,23 +1,20 @@
 <?php
 
-namespace App\View\Components\Card;
+namespace App\View\Components\Container;
 
-use App\Models\Event;
 use Illuminate\View\Component;
 
-class EventCard extends Component
+class EventDescription extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public Event $event;
-    // public $title;
-    // public $date;
-    public function __construct(Event $event)
+    public $description;
+    public function __construct($description = '')
     {
-        $this->event = $event;
+        $this->description = $description;
     }
 
     /**
@@ -27,6 +24,6 @@ class EventCard extends Component
      */
     public function render()
     {
-        return view('components.card.event-card');
+        return view('components.container.event-description');
     }
 }

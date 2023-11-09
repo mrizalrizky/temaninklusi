@@ -11,9 +11,18 @@ class BaseFormSelect extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $name;
+    public $id;
+    public $options;
+    public $placeholder;
+    public $onChange;
+    public function __construct($name, $id, $placeholder = '', $options = null, $onChange = null)
     {
-        //
+        $this->name = $name;
+        $this->id = $id;
+        $this->placeholder = $placeholder;
+        $this->options = $options;
+        $this->onChange = $onChange;
     }
 
     /**
