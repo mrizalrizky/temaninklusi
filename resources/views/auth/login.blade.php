@@ -15,8 +15,8 @@
                             <div class="alert alert-danger d-flex alert-dismissible fade show">
                                 <i data-feather="alert-triangle"style="margin-right: 0.5em; width: 1.2em"></i>
                                 <p class="m-0">{{ session()->get('failed') }}</p>
-                                <button type="button" class="btn-close ms-auto" style="width: 1.2em !important" data-bs-dismiss="alert"
-                                    aria-label="close"></button>
+                                <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
+                                    data-bs-dismiss="alert" aria-label="close"></button>
                             </div>
                         @enderror
 
@@ -45,8 +45,8 @@
                             <button type="submit" class="btn btn-primary w-100 rounded-4">Login</button>
                         </div>
                         <div class="px-4 text-center">
-                            <a href="{{ route('register') }}" class="text-decoration-none text-primary"><small
-                                    style="font-size: .8rem">Belum punya akun?, Yuk <b>daftar</b> dulu</small></a>
+                            <a href="{{ route('register') }}" class="text-decoration-none text-primary"><small>Belum
+                                    punya akun?, Yuk <b>daftar</b> dulu</small></a>
                         </div>
                 </form>
             </div>

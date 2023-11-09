@@ -21,9 +21,9 @@
             </div>
         {{-- </form> --}}
 
-        <h4 class="text-primary text-center my-5">
+        <h3 class="text-primary text-center my-5">
             Semua Event
-        </h4>
+        </h3>
 
         @if($events)
             <div class="row px-md-0 justify-content-center g-3 g-md-4">
