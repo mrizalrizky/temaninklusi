@@ -87,6 +87,10 @@ a {
     font-weight: 600;
 }
 
+.navbar {
+    box-shadow: none;
+}
+
 .navbar-brand:hover {
     color: var(--hover-color);
     transition: 0.2s all linear !important;
@@ -110,6 +114,7 @@ a {
 }
 
 .btn-primary {
+    background-color: var(--bs-btn-bg);
     --bs-btn-color: #fff;
     --bs-btn-bg: var(--main-color);
     --bs-btn-border-color: var(--bs-btn-bg);
@@ -125,6 +130,11 @@ a {
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
+.btn-primary:hover {
+    background-color: var(--bs-btn-bg);
+}
+
 /*
 .btn-danger {
     --bs-btn-color: #fff;

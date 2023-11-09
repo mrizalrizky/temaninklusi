@@ -15,13 +15,9 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     public function index(Request $request) {
-        // $events = Event::whereHas('eventDetails', function ($query) use ($request) {
-        //     foreach ($request->query() as $key => $value)
-        //     $query->where($key, 'ILIKE', '%' . $value . '%');
-        // })->paginate(6);
 
         $events = Event::whereHas('eventDetails', function ($query) use ($request) {
-            $query->where('title', 'ILIKE', '%' . $request->title . '%')
+            $query->where('title', 'ILIKE', '%' . $request->title . '%');
                 //   ->where('start_date', 'ILIKE', '%' . $request->start_date . '%')
                 //   ->where('slug', 'ILIKE', '%' . $request->disability_category . '%')
                 //   ->where('location', 'ILIKE', '%' . $request->event_category . '%');

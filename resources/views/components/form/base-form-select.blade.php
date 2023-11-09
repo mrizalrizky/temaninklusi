@@ -4,24 +4,15 @@
     {{ $placeholder }}
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        @foreach ($options as $option) 
+        @foreach ($options as $option)
         <li>
             <a class="dropdown-item" href="#">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{ $option->id }}" id="Checkme1" />
-                    <label class="form-check-label" for="Checkme1">{{ $option->name}}</label>
+                    <input class="form-check-input" type="checkbox" value="{{ $option->id }}" name="{{ $name }}" id="{{ $id }}" />
+                    <label class="form-check-label" for="{{ $id }}">{{ $option->name}}</label>
                 </div>
             </a>
         </li>
         @endforeach
-        <!-- <li><hr class="dropdown-divider" /></li>
-        <li>
-            <a class="dropdown-item" href="#">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="Checkme4" checked />
-                    <label class="form-check-label" for="Checkme4">Check me</label>
-                </div>
-            </a>
-        </li> -->
     </ul>
 </div>

@@ -1,22 +1,19 @@
 <?php
 
-namespace App\View\Components\Chip;
+namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class ChipContent extends Component
+class UserComment extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $id;
-    public $ariaLabelledBy;
-    public function __construct($id, $ariaLabelledBy)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->ariaLabelledBy = $ariaLabelledBy;
+        //
     }
 
     /**
@@ -26,6 +23,6 @@ class ChipContent extends Component
      */
     public function render()
     {
-        return view('components.chip.chip-content');
+        return view('components.user-comment');
     }
 }

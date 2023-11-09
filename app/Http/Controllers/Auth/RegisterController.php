@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -53,10 +54,11 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min: 5', 'max:20', 'unique:users'],
+            // 'user_type' => ['required', Rule::in(RoleConstant::class)],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
-            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirmation' => ['same:password'],
+            // 'organizer_name' => 'min: 3',
         ]);
     }
 
@@ -68,11 +70,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // if($data['user_type'] === RoleConstant::EVENT_ORGANIZER) {
+        //     MasterOrganizer::create([
+        //         'name' => $data['organizer_name'],
+        //     ]);
+        // };
         return User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'role_id' => RoleConstant::MEMBER,
+            // 'role_id' => $data['user_type'],
             'password' => Hash::make($data['password']),
         ]);
     }
