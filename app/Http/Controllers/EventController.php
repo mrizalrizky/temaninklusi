@@ -10,29 +10,20 @@ use Illuminate\Support\Str;
 use App\Constants\StatusConstant;
 use App\Models\DisabilityCategory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-        // nitip di sini ya wkwkwk
-        $eventDetail = EventDetail::create([
-            'title'       => 'test1',
-            'description' => 'test desc',
-            'location'    => 'test location',
-            'slug'        => Str::slug('test-satu', '-'), // butuh bikin helper function untuk handle kalo ada nama event yang sama tambahin -[n]]
-            'start_date'  => now(),
-            'end_date'  => now(),
-        ]);
-
-        $eventDetail->events()->create([
-            'user_id'   => 2,
-            'status_id' => StatusConstant::ON_VERIFICATION,
-            'event_detail_id' => $eventDetail->id
-        ]);
+        $events = Event::whereHas('eventDetails', function ($query) use ($request) {
+            $query->where('title', 'ILIKE', '%' . $request->title . '%');
+                //   ->where('start_date', 'ILIKE', '%' . $request->start_date . '%')
+                //   ->where('slug', 'ILIKE', '%' . $request->disability_category . '%')
+                //   ->where('location', 'ILIKE', '%' . $request->event_category . '%');
+        })->paginate(6);
 
         $disabilityCategories = DisabilityCategory::all();
-        $events = Event::with('eventDetails')->paginate(6);
 
         return view('pages.event', compact('events', 'disabilityCategories'));
     }
