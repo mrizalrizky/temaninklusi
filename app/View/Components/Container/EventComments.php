@@ -12,9 +12,11 @@ class EventComments extends Component
      * @return void
      */
     public $comments;
-    public function __construct($comments)
+    public $eventId;
+    public function __construct($comments, $eventId)
     {
         $this->comments = $comments;
+        $this->eventId = $eventId;
     }
 
     /**
