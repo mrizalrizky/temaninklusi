@@ -6,7 +6,7 @@
         </div>
         <div class="card-body text-center px-4">
             <h4 class="card-title text-primary">{{ $title }}</h4>
-            <p class="text-dark">{{ $description }}</p>
+            <desc class="text-dark">{{ $description }}</desc>
         </div>
     </div>
 </div>

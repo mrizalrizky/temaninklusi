@@ -3,7 +3,10 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PageTitleController;
+use App\Mail\Email;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
@@ -41,3 +45,18 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
 
+Route::get('/reset-password', function () {
+    return view('auth.reset-password');
+})->name('reset-password');
+
+
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.reset-password');
+
+Route::get('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('validate.password');
+Route::post('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
+
+Route::get('/test', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword']);
+
+Route::get('/x', function () {
+    return view('pages.validate-password');
+});
