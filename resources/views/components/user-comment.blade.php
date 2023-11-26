@@ -4,14 +4,15 @@
     </div>
     <div>
         <div class="d-flex justify-content-between">
-            <p><span class="fw-bold">John Doe</span> - 2 hours ago</p>
+            <p><span class="fw-bold">{{ $commentData->users->name }}</span> - {{ $commentData->created_at->diffForHumans() }}</p>
             <button class="p-0 bg-transparent border-0 d-flex">
                 <iconify-icon icon="mdi:reply" height="1.5rem" class="text-primary"/>
                 <p class="text-primary">Reply</p>
             </button>
         </div>
         <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea, laboriosam! Soluta amet quos debitis eum, a praesentium consequatur, qui veritatis aliquid sed cum rerum est quam blanditiis expedita delectus officia?
+            {{-- Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi in odit consequuntur sunt nam laudantium delectus adipisci asperiores amet, beatae quod earum odio est commodi sit! Asperiores est totam saepe. --}}
+            {{ $commentData->content }}
         </p>
     </div>
 </div>

@@ -11,9 +11,10 @@ class UserComment extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $commentData;
+    public function __construct($commentData)
     {
-        //
+        $this->commentData = $commentData;
     }
 
     /**

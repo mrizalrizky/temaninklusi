@@ -4,10 +4,10 @@
     <div class="d-flex justify-content-center justify-content-md-start align-items-center gap-3">
     {{-- <div class="d-flex align-items-center gap-3"> --}}
         <div class="p-2 rounded-3 bg-dark">
-            <h4 class="text-center text-white mb-0">TU</h4>
+            <h4 class="text-center text-white mb-0">{{ $event->organizer->initial }}</h4>
         </div>
         <div>
-            <h5 class="mb-1 text-dark fw-bold">TernakUang</h5>
+            <h5 class="mb-1 text-dark fw-bold">{{ $event->organizer->name }}</h5>
             <p class="m-0" style="font-size: 0.75rem">Verified organizer</p>
         </div>
     </div>
@@ -25,9 +25,27 @@
         </x-listitem.event-list-item>
     </ul>
 
-    @if (Auth::check())
-    <div class="d-flex justify-content-center">
-        <button class="btn btn-sm btn-primary rounded-pill w-75 py-2" href="#">Daftar Sekarang</button>
-    </div>
-    @endif
+    <span class="d-flex justify-content-center">
+        @if (Auth::check())
+            <button type="button" class="btn btn-sm btn-primary rounded-pill w-full py-2" data-bs-toggle="modal" data-bs-target="#confirmRegisterModal">
+                Daftar Sekarang
+            </button>
+        @else
+            <a class="btn btn-sm btn-primary rounded-pill w-full py-2" href="{{ route('login') }}">
+                Daftar Sekarang
+            </a>
+        @endif
+    </span>
+
+    <x-dialog.base-dialog id="confirmRegisterModal" action="{{ route('event.action',['actionType' => 'register-event', 'slug' => $event->eventDetails->slug]) }}"
+                          title="Yakin akan mendaftar event?" submitTitle="Ya" rejectTitle="Tidak"/>
+
+
 </div>
+
+@push('after-script')
+    <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+@endpush
