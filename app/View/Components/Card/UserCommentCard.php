@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Card;
 
 use Illuminate\View\Component;
 
-class UserComment extends Component
+class UserCommentCard extends Component
 {
     /**
      * Create a new component instance.
@@ -12,9 +12,11 @@ class UserComment extends Component
      * @return void
      */
     public $commentData;
-    public function __construct($commentData)
+    public $onClick;
+    public function __construct($commentData, $onClick)
     {
         $this->commentData = $commentData;
+        $this->onClick = $onClick;
     }
 
     /**
@@ -24,6 +26,6 @@ class UserComment extends Component
      */
     public function render()
     {
-        return view('components.user-comment');
+        return view('components.card.user-comment-card');
     }
 }

@@ -26,14 +26,14 @@
     </ul>
 
     <span class="d-flex justify-content-center">
-        @if (Auth::check())
-            <button type="button" class="btn btn-sm btn-primary rounded-pill w-full py-2" data-bs-toggle="modal" data-bs-target="#confirmRegisterModal">
-                Daftar Sekarang
-            </button>
-        @else
+        @if (!Auth::check())
             <a class="btn btn-sm btn-primary rounded-pill w-full py-2" href="{{ route('login') }}">
                 Daftar Sekarang
             </a>
+        @elseif (Auth::user()->isMember())
+            <button type="button" class="btn btn-sm btn-primary rounded-pill w-full py-2" data-bs-toggle="modal" data-bs-target="#confirmRegisterModal">
+                Daftar Sekarang
+            </button>
         @endif
     </span>
 
@@ -42,10 +42,3 @@
 
 
 </div>
-
-@push('after-script')
-    <script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    </script>
-@endpush

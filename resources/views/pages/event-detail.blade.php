@@ -2,7 +2,14 @@
 
 @section('content')
 <div class="container-lg">
-    @if (Auth::check())
+    @if (session()->has('success'))
+    <div class="alert alert-success d-flex alert-dismissible fade show">
+        <p class="m-0">{{ session()->get('success') }}</p>
+        <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
+            data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+@enderror
+    @if (Auth::check() && Auth::user()->isAdmin())
     <div class="d-flex justify-content-end">
         <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmApproveModal">Approve</button>
         <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmRejectModal">Reject</button>
@@ -10,9 +17,9 @@
     </div>
     @endif
 
-    <x-dialog.base-dialog id="confirmApproveModal" action="{{ route('event.action',['actionType' => 'approve', 'slug' => $event->eventDetails->slug]) }}"
+    <x-dialog.base-dialog id="confirmApproveModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'approve']) }}"
                           title="Yakin akan approve event?" submitTitle="Ya" rejectTitle="Tidak"/>
-    <x-dialog.base-dialog id="confirmRejectModal" action="{{ route('event.action',['actionType' => 'reject', 'slug' => $event->eventDetails->slug]) }}"
+    <x-dialog.base-dialog id="confirmRejectModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'reject']) }}"
                           title="Yakin akan reject event?" submitTitle="Ya" rejectTitle="Tidak"/>
     <div id="carouselFade" class="carousel slide carousel-fade">
         <div class="carousel-inner">
@@ -53,7 +60,7 @@
                     <x-container.event-details :event="$event"/>
                 </div>
                 <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="comments-tab">
-                    <x-container.event-comments :comments="$event->comments"/>
+                    <x-container.event-comments :comments="$event->comments" eventId="{{ $event->id }}"/>
                 </div>
               </div>
         </div>

@@ -33,7 +33,7 @@ class ResetPasswordController extends Controller
 
         $user = $user = User::where('email', $request->email);
 
-        if ($user->get()->count() < 1) return redirect()->route('generate.reset-password');
+        if ($user->get()->count() < 1) return redirect()->back()->with('failed','Email tidak valid');
 
         $resetToken = Str::random(30);
         $expiredResetToken = Carbon::now()->addMinute(15);
@@ -43,9 +43,9 @@ class ResetPasswordController extends Controller
             'expired_token' => $expiredResetToken,
         ]);
 
-        Mail::to('temuinklusi.id@gmail.com')->send(new Email($request->email, $resetToken));
+        $data = Mail::to($request->email)->send(new Email($request->email, $resetToken));
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Email reset berhasil dikirim!');
     }
 
     public function validatePassword(String $email, String $resetToken)

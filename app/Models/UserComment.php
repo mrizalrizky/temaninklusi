@@ -10,7 +10,9 @@ class UserComment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'content'
+        'content',
+        'event_id',
+        'user_id'
     ];
 
     protected $dates = [
