@@ -20,49 +20,22 @@
                             </div>
                         @enderror
 
-                        {{-- <div class="form-group mb-4">
-                            <label for="exampleInputEmail1" class="text-primary fw-bold mb-2">Email address</label>
-                            <input type="email" class="form-control py-2 @error('email') is-invalid @enderror"
-                                id="exampleInputEmail1" name="email" aria-describedby="emailHelp"
-                                value="{{ old('email') }}" placeholder="Janedoe@gmail.com">
-
+                        <x-form.base-form-input title="Email address" type="email" value="{{ old('email') }}" name="email" :label="true">
                             @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
-                        <x-form.base-form-input title="Email address" type="email" value="{{ old('email') }}"
-                            name="email" :label="true" placeholder="Janedoe@gmail.com">
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-2" title="Password" type="password"
-                            value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-2" title="Password" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                             @enderror
                         </x-form.base-form-input>
 
-
-                        <!-- <div class="form-group mb-2">
-                            <label for="exampleInputPassword1"
-                                class="text-primary fw-bold mb-2 @error('password') is-invalid @enderror">Password</label>
-                            <input type="password" class="form-control py-2" id="exampleInputPassword1" name="password"
-                                placeholder="●●●●●●●●">
-
-                            @error('password')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                            @enderror
-                        </div> -->
                         <div class="text-end mb-5">
                             <a href="{{ route('reset-password') }}" class="text-decoration-none"><small
                                     class="text-primary">Lupa
@@ -75,7 +48,8 @@
                             <a href="{{ route('register') }}" class="text-decoration-none text-primary"><small>Belum
                                     punya akun?, Yuk <b>daftar</b> dulu</small></a>
                         </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <div class="col-5 d-flex align-items-center d-none d-md-flex">
                 <div class="d-flex justify-content-center">

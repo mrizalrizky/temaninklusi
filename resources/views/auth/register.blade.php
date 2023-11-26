@@ -8,32 +8,10 @@
             </div>
             <div class="row g-7 justify-content-center justify-content-md-between">
                 <div class="col-12 col-sm-10 col-md-7">
-                    <form enctype="multipart/form-data" action="{{ route('register') }}"" method="POST"
+                    <form enctype="multipart/form-data" action="{{ route('register') }}" method="POST"
                         class="border rounded-4 p-4 p-x-custom-2">
                         @csrf
-                        <div class="form-group mb-4">
-                            <label for="" class="text-primary fw-bold mb-2">Bagaimana Anda mengidentifikasi diri Anda?</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input py-2" type="radio" name="user_type" id="regular_user" checked/>
-                                <label for="regular_user" class="form-check-label text-primary fw-bold mb-2">Pengguna Reguler</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input py-2" type="radio" name="user_type" id="event_organizer"/>
-                                <label for="event_organizer" class="form-check-label text-primary fw-bold mb-2">Event Organizer</label>
-                            </div>
-                        </div>
-                        {{-- <div class="form-group mb-4">
-                            <label for="exampleInputNama1" class="text-primary fw-bold mb-2">Name</label>
-                            <input type="text" class="form-control py-2 @error('name') is-invalid @enderror"
-                                id="exampleInputNama1" aria-describedby="usernameHelp" name="name"
-                                value="{{ old('name') }}" placeholder="Jane Doe">
 
-                            @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div> --}}
                         <x-form.base-form-input title="Nama" type="text" value="{{ old('name') }}" placeholder="Jane Doe" name="name" :label="true">
                             @error('name')
                             <div class="invalid-feedback">
@@ -74,6 +52,35 @@
                             @endif
                         </x-form.base-form-input>
 
+                        <div class="form-group mb-4">
+                            <label for="user_type" class="text-primary fw-bold mb-2">Bagaimana Anda mengidentifikasi diri Anda?</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input py-2" type="radio" name="user_type" value="4" id="regular_user" onchange="getUserType()" checked/>
+                                <label for="regular_user" class="form-check-label text-primary fw-bold mb-2 @error('user_type') is-invalid @enderror">Pengguna Reguler</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input py-2" type="radio" name="user_type" value="{{ App\Constants\RoleConstant::EVENT_ORGANIZER }}" id="event_organizer" onchange="getUserType()"/>
+                                <label for="event_organizer" class="form-check-label text-primary fw-bold mb-2 @error('user_type') is-invalid @enderror">
+                                    Event Organizer
+                                </label>
+                            </div>
+                            @error('user_type')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <x-form.base-form-input title="Nama Perusahaan" class="d-none" type="text" name="organizer_name" id="organizer_name" :label="true">
+                        {{-- <x-form.base-form-input title="Nama Perusahaan" type="text" name="organizer_name" id="organizer_name" :label="true" :hidden="true"> --}}
+                            @error('organizer_name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
+                        </x-form.base-form-input>
+
                         <div class="px-4">
                             <button type="submit" class="btn btn-primary w-100 rounded-4">Daftar</button>
                         </div>
@@ -88,3 +95,14 @@
         </div>
     </div>
 @endsection
+
+@push('after-script')
+<script>
+    const getUserType = () => {
+        const getClickedRadio = event.target.id === 'event_organizer';
+        const organizerNameEl = document.getElementById('organizer_name');
+        getClickedRadio ? organizerNameEl.classList.remove('d-none') : organizerNameEl.classList.add('d-none')
+    }
+</script>
+
+@endpush

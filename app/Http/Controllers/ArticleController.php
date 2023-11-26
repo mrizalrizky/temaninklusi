@@ -17,5 +17,4 @@ class ArticleController extends Controller
     public function show($slug) {
         // $article = Article::find()
     }
-
 }
