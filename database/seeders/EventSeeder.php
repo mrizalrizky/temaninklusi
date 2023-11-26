@@ -16,9 +16,14 @@ class EventSeeder extends Seeder
     {
         DB::table('events')->insert([
             [
-                'user_id'         => 1,
+                'organizer_id'    => 2,
                 'event_detail_id' => 1,
                 'status_id'       => 1,
+            ],
+            [
+                'organizer_id'    => 1,
+                'event_detail_id' => 2,
+                'status_id'       => 2,
             ],
         ]);
     }

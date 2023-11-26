@@ -7,8 +7,9 @@ use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
 use App\Models\EventDetail;
 use Illuminate\Support\Str;
-use App\Constants\StatusConstant;
+use App\Constants\EventStatusConstant;
 use App\Models\DisabilityCategory;
+use App\Models\UserComment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -29,12 +30,53 @@ class EventController extends Controller
     }
 
     public function show($slug) {
-        $event = Event::with(['eventDetails', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
+        $event = Event::with(['eventDetails', 'organizer', 'comments', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
             $q->where('slug', $slug);
         })->first();
 
         return view('pages.event-detail', compact('event'));
     }
+
+    public function eventAction(Request $request, $actionType, $slug) {
+        if($actionType == 'approve') {
+            $a = ['EVENT APPROVED'];
+            dd($a);
+            // $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
+                //     $q->where('slug', $slug);
+                // })->first();
+
+            // $test = $event->update([
+            //     'status_id' => EventStatusConstant::APPROVED
+            // ]);
+        } else if ($actionType == 'reject') {
+            $a = ['EVENT APPROVED'];
+            dd($a);
+            // $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
+            //     $q->where('slug', $slug);
+            // })->first();
+            // $test = $event->update([
+            //     'status_id' => EventStatusConstant::REJECTED
+            // ]);
+        } else if ($actionType == 'register-event') {
+            $a = ['REGISTERED TO EVENT'];
+            dd($a);
+            // $event = RegisteredEvent::create([
+                //     'user_id'  => $request->user_id,
+                //     'event_id' => $request->event_id
+                // ]);
+        } else if ($actionType == 'cancel-register') {
+            $a = ['CANCEL REGISTER TO EVENT'];
+            dd($a);
+            // $event = RegisteredEvent::destroy([
+            //     'user_id'  => $request->user_id,
+            //     'event_id' => $request->event_id
+            // ]);
+
+        }
+
+        return redirect()->back();
+    }
+
 
     public function store(StoreEventRequest $request) {
         $eventDetail = EventDetail::create([
@@ -47,8 +89,8 @@ class EventController extends Controller
         ]);
 
         $eventDetail->events()->create([
-            'user_id'   => Auth::id(),
-            'status_id' => StatusConstant::ON_VERIFICATION,
+            'organizer_id'    => 1,
+            'status_id'       => EventStatusConstant::WAITING_APPROVAL,
             'event_detail_id' => $eventDetail->id
         ]);
 

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MasterStatusSeeder extends Seeder
+class MasterOrganizerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,16 +14,15 @@ class MasterStatusSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_statuses')->insert([
+        DB::table('master_organizers')->insert([
             [
-                'label' => 'Waiting Approval',
+                'name'    => 'Java Festival Production',
+                'initial' => 'JF',
             ],
             [
-                'label' => 'Rejected'
+                'name'    => 'Boss Creator',
+                'initial' => 'BC'
             ],
-            [
-                'label' => 'Approved'
-            ]
         ]);
     }
 }

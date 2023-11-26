@@ -11,9 +11,10 @@ class EventComments extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $comments;
+    public function __construct($comments)
     {
-        //
+        $this->comments = $comments;
     }
 
     /**

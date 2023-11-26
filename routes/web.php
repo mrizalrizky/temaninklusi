@@ -32,6 +32,7 @@ Route::prefix('blogs')->group(function () {
 Route::prefix('events')->group(function () {
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
+    Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
