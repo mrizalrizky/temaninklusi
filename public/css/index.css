@@ -44,6 +44,7 @@ p {
     font-size: 1.1rem;
 }
 
+
 h1,
 h2,
 h3,
@@ -67,7 +68,7 @@ h3 {
 }
 
 h4 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
 }
 
 h5 {
@@ -78,9 +79,23 @@ h6 {
     font-size: 0.67rem;
 }
 
+desc {
+    font-size: 1rem;
+}
+
 a {
     text-decoration: none;
     text-transform: unset !important;
+}
+
+caption-detail {
+    font-size: .85rem;
+    color: #6c757d;
+    font-weight: bold;
+}
+
+::placeholder {
+    color: #999 !important;
 }
 
 .fw-bold {
@@ -274,6 +289,10 @@ a {
     padding-bottom: 2rem !important;
 }
 
+.m-t-custom-2 {
+    margin-top: 2rem !important;
+}
+
 .m-b-custom-2 {
     margin-bottom: 2rem !important;
 }
@@ -283,23 +302,29 @@ a {
     --bs-gutter-y: 4rem;
 }
 
-@media only screen and (max-width: 547px) {
+@media only screen and (max-width: 928px) {
     html {
         font-size: 90% !important;
     }
 }
 
+/* @media only screen and (max-width: 547px) {
+    html {
+        font-size: 70% !important;
+    }
+} */
+
 @media only screen and (max-width: 284px) {
     html {
-        font-size: 75% !important;
+        font-size: 60% !important;
     }
     /* .icon {
         width: 45% !important;
     } */
 }
 
-@media only screen and (max-width: 150px) {
+/* @media only screen and (max-width: 150px) {
     html {
         font-size: 60% !important;
     }
-}
+} */

@@ -5,7 +5,9 @@
                 style="max-width: 10rem;">
         </div>
         <div class="card-body text-center px-4">
-            <h5 class="card-title text-primary">{{ $title }}</h5>
+        {{ -- <h4 class="card-title text-primary">{{ $title }}</h4>
+            <desc class="text-dark">{{ $description }}</desc>-- }}
+            <h4 class="card-title text-primary">{{ $title }}</h5>
             <small class="text-dark">{{ $description }}</small>
         </div>
     </div>

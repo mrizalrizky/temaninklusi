@@ -9,7 +9,7 @@
     </div>
 
     <div class="">
-        <p class="fw-bolder m-0" style="font-size: .7rem">
+        <p class="fw-bolder m-0" style="font-size: .8rem">
             Copyright © {{ date('Y') }} {{ config('app.name') }}, All Right Reserved.
         </p>
     </div>

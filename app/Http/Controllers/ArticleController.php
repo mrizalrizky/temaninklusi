@@ -14,7 +14,7 @@ class ArticleController extends Controller
         return view('pages.blog', compact('articles'));
     }
 
-    // public function show($slug) {
-    //     $article = Article::find($slug);
-    // }
+    public function show($slug) {
+        // $article = Article::find()
+    }
 }
