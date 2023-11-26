@@ -49,7 +49,6 @@
                                     punya akun?, Yuk <b>daftar</b> dulu</small></a>
                         </div>
                     </form>
-                </div>
             </div>
             <div class="col-5 d-flex align-items-center d-none d-md-flex">
                 <div class="d-flex justify-content-center">

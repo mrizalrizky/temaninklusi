@@ -9,9 +9,9 @@ use App\Models\EventDetail;
 use Illuminate\Support\Str;
 use App\Constants\EventStatusConstant;
 use App\Models\DisabilityCategory;
-use App\Models\UserComment;
-use Illuminate\Support\Facades\Auth;
+use App\Models\RegisteredEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -29,6 +29,12 @@ class EventController extends Controller
         return view('pages.event', compact('events', 'disabilityCategories'));
     }
 
+    public function showPopularEvents () {
+        $events = Event::with(['eventDetails','organizer','status', 'eventFiles'])->get();
+
+        return view('pages.index', compact('events'));
+    }
+
     public function show($slug) {
         $event = Event::with(['eventDetails', 'organizer', 'comments', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
             $q->where('slug', $slug);
@@ -37,44 +43,59 @@ class EventController extends Controller
         return view('pages.event-detail', compact('event'));
     }
 
-    public function eventAction(Request $request, $actionType, $slug) {
-        if($actionType == 'approve') {
-            $a = ['EVENT APPROVED'];
-            dd($a);
-            // $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
-                //     $q->where('slug', $slug);
-                // })->first();
+    public function eventAction(Request $request, $slug, $actionType) {
+        $message = '';
+        $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
+            $q->where('slug', $slug);
+        })->first();
 
-            // $test = $event->update([
-            //     'status_id' => EventStatusConstant::APPROVED
-            // ]);
-        } else if ($actionType == 'reject') {
-            $a = ['EVENT APPROVED'];
-            dd($a);
-            // $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
-            //     $q->where('slug', $slug);
-            // })->first();
-            // $test = $event->update([
-            //     'status_id' => EventStatusConstant::REJECTED
-            // ]);
-        } else if ($actionType == 'register-event') {
-            $a = ['REGISTERED TO EVENT'];
-            dd($a);
-            // $event = RegisteredEvent::create([
-                //     'user_id'  => $request->user_id,
-                //     'event_id' => $request->event_id
-                // ]);
-        } else if ($actionType == 'cancel-register') {
-            $a = ['CANCEL REGISTER TO EVENT'];
-            dd($a);
-            // $event = RegisteredEvent::destroy([
-            //     'user_id'  => $request->user_id,
-            //     'event_id' => $request->event_id
-            // ]);
+        switch($actionType) {
+            case "approve":
+                if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
 
+                }
+                $event->update([
+                    'status_id' => EventStatusConstant::APPROVED
+                ]);
+                $message = "Event berhasil diapprove!";
+
+                break;
+
+            case 'reject':
+                if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
+
+                }
+                $event->update([
+                    'status_id' => EventStatusConstant::REJECTED
+                ]);
+                $message = "Event berhasil direject!";
+
+                break;
+
+            case 'register-event':
+                $event = RegisteredEvent::create([
+                    'user_id'  => Auth::user()->id,
+                    'event_id' => $event->id,
+                ]);
+                $message = "Berhasil daftar event!";
+
+                break;
+
+            case 'cancel-register':
+                $event = RegisteredEvent::destroy([
+                    'user_id'  => Auth::user()->id,
+                    'event_id' => $event->id,
+                ]);
+
+                $message = "Berhasil cancel registrasi event";
+
+                break;
+
+            default:
+                break;
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', $message);
     }
 
 
