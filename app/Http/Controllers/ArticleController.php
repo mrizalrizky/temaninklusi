@@ -16,5 +16,15 @@ class ArticleController extends Controller
 
     public function show($slug) {
         // $article = Article::find()
+        return view('pages.blog-detail');
+    }
+
+    public function edit($slug) {
+        return view('pages.blog');
+    }
+
+    public function update($slug) {
+
+        return view('pages.blog-detail')->with('success', 'Berhasil edit data!');
     }
 }

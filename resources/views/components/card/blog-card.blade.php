@@ -6,8 +6,8 @@
     <div class="col-md-4">
         <p class="text-primary">Lifestyle</p>
         <h4 class="fw-bold">{{ $article->title }}</h4>
-        <desc>{{ $article->content}}</desc>
-        <a class="text-primary fw-bold" style="font-size: 0.75rem" href="{{route('blog.index')}}/{{ $article->slug }}">
+        <p>{{ $article->content}}</p>
+        <a class="text-primary fw-bold" style="font-size: 0.75rem" href="{{ route('blog.details', $article->slug) }}">
             Read More
         </a>
     </div>

@@ -25,17 +25,22 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::prefix('blogs')->group(function () {
+Route::prefix('blog')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
+
+    Route::post('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
+    Route::get('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
 });
 
 Route::prefix('events')->group(function () {
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
-    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
-    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
+
+    // Comments
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
+    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {

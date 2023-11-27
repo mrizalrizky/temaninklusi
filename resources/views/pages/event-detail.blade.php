@@ -42,15 +42,15 @@
             <h2 class="text-center text-md-start mb-3">{{ $event->eventDetails['title'] }}</h2>
             {{-- </div> --}}
             <ul class="nav d-flex gap-3 mb-3 justify-content-center justify-content-md-start" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn btn-sm btn-primary rounded-pill py-2 px-4 text-white active" id="description-tab" data-bs-toggle="tab" data-bs-target="#pills-description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn btn-sm btn-primary rounded-pill py-2 px-4 text-white" id="details-tab" data-bs-toggle="tab" data-bs-target="#pills-details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn btn-sm btn-primary rounded-pill py-2 px-4 text-white" id="comments-tab" data-bs-toggle="tab" data-bs-target="#pills-comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments</button>
-                </li>
+                <x-button.pill-button class="active" id="description-tab" dataBsTarget="#pills-description" ariaControls="description">
+                    Description
+                </x-button.pill-button>
+                <x-button.pill-button id="details-tab" dataBsTarget="#pills-details" ariaControls="details">
+                    Details
+                </x-button.pill-button>
+                <x-button.pill-button id="comments-tab" dataBsTarget="#pills-comments" ariaControls="comments">
+                    Comments
+                </x-button.pill-button>
               </ul>
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="description-tab">

@@ -23,12 +23,13 @@ class CommentController extends Controller
 
     public function replyComment (Request $request) {
 
-        CommentReplies::create([
-            'content'         => $request->content,
-            'user_comment_id' => $request->user_comment_id,
-            'user_id'         => Auth::user()->id
-        ]);
+dd($request);
+        // CommentReplies::create([
+        //     'content'         => $request->content,
+        //     'user_comment_id' => $request->user_comment_id,
+        //     'user_id'         => Auth::user()->id
+        // ]);
 
-        return redirect()->back();
+        // return redirect()->back();
     }
 }
