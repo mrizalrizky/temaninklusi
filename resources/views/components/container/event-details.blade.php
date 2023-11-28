@@ -25,19 +25,21 @@
     </div>
 
     <div class="row">
-        <div class="col">        <h4>Benefit</h4>
+        <div class="col">
+            <h4>Benefit</h4>
             <ul>
                 <li>Memberdayakan Komunikasi</li>
                 <li>Menginspirasi Pemikiran Kritis</li>
                 <li>Meningkatkan Kesadaran Emosional</li>
-            </ul></div>
-            <div class="col">
-                <h4>Goals</h4>
-                <ul>
-                    <li>Memberdayakan Komunikasi</li>
-                    <li>Menginspirasi Pemikiran Kritis</li>
-                    <li>Meningkatkan Kesadaran Emosional</li>
-                </ul>
-            </div>
+            </ul>
+        </div>
+        <div class="col">
+            <h4>Goals</h4>
+            <ul>
+                <li>Memberdayakan Komunikasi</li>
+                <li>Menginspirasi Pemikiran Kritis</li>
+                <li>Meningkatkan Kesadaran Emosional</li>
+            </ul>
+        </div>
     </div>
 </div>

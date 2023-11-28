@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->foreignId('organizer_id')->references('id')->on('master_organizers')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('event_detail_id')->references('id')->on('event_details')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('status_id')->references('id')->on('master_statuses')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->tinyInteger('show_flag')->default(1);
 
             $table->timestamps();
         });

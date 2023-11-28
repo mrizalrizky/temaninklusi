@@ -34,13 +34,13 @@ Route::prefix('blog')->group(function () {
 });
 
 Route::prefix('events')->group(function () {
+    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
 
     // Comments
-    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
-    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {

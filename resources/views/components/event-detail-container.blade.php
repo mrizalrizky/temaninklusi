@@ -1,5 +1,5 @@
 
-<div class="border border-1 rounded-4 p-5 d-grid gap-5">
+<div class="border rounded-4 p-5 d-grid gap-5">
     {{-- EO Name Section --}}
     <div class="d-flex justify-content-center justify-content-md-start align-items-center gap-3">
     {{-- <div class="d-flex align-items-center gap-3"> --}}
