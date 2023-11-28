@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\PageTitleController;
+use App\Mail\Email;
+// use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,19 +19,28 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/', [\App\Http\Controllers\EventController::class, 'showPopularEvents'])->name('index');
+
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::prefix('blogs')->group(function () {
+Route::prefix('blog')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
+
+    Route::post('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
+    Route::get('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
 });
 
 Route::prefix('events')->group(function () {
+    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
+    Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
+
+    // Comments
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
@@ -41,3 +50,18 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
 
+Route::get('/reset-password', function () {
+    return view('auth.reset-password');
+})->name('reset-password');
+
+
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.reset-password');
+
+Route::get('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('validate.password');
+Route::post('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
+
+Route::get('/test', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword']);
+
+Route::get('/x', function () {
+    return view('pages.validate-password');
+});

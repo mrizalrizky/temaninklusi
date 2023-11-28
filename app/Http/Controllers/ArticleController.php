@@ -23,4 +23,13 @@ class ArticleController extends Controller
         $article->content = preg_replace('~[\r\n]+~', '<br><br>', $article->content);
         return view('pages.blogDetail', compact('article'));
     }
+
+    public function edit($slug) {
+        return view('pages.blog');
+    }
+
+    public function update($slug) {
+
+        return view('pages.blog-detail')->with('success', 'Berhasil edit data!');
+    }
 }

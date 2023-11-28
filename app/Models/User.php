@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\RoleConstant;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,6 +48,18 @@ class User extends Authenticatable
     ];
 
     public function roles() {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function isAdmin() {
+        return $this->role_id == RoleConstant::ADMIN;
+    }
+
+    public function isEO() {
+        return $this->role_id == RoleConstant::EVENT_ORGANIZER;
+    }
+
+    public function isMember() {
+        return $this->role_id == RoleConstant::MEMBER;
     }
 }

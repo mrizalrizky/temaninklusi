@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
+<nav class="navbar navbar-expand-md py-4 top-0 position-md-relative z-3 {{ request()->route()->named('index') ? 'bg-primary' : null }}">
     <div class="container-lg px-4 px-md-3">
         <a class="navbar-brand fw-bolder" href="{{ route('index') }}">{{ config('app.name') }}</a>
-        <button class="ms-auto d-md-none" type="button" data-bs-toggle="collapse"
-            style="background: transparent; border-color: transparent !important" data-bs-target="#navbarSupportedContent"
+        <button class="ms-auto d-md-none bg-transparent" type="button" data-bs-toggle="collapse"
+            style="border-color: transparent !important" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i data-feather="menu" class="text-primary"></i>
         </button>
@@ -22,9 +22,9 @@
                     About
                 </x-listitem.navbar-item>
 
+                {{-- Login desktop --}}
                 @if (!Auth::check())
-                    <a class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mb-2 rounded-pill"
-                        href>
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mt-3 rounded-pill">
                         Login
                     </a>
                 @else
@@ -35,6 +35,7 @@
             </ul>
         </div>
 
+        {{-- Login mobile --}}
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <div class="ms-auto d-flex d-none d-md-flex">
                 @if (!Auth::check())

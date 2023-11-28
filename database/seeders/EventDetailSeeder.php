@@ -23,6 +23,14 @@ class EventDetailSeeder extends Seeder
                 'start_date' => now(),
                 'end_date' => now(),
             ],
+            [
+                'title' => 'Belajar ReactJS Pemula',
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus ea amet itaque exercitationem natus soluta repellat maxime voluptatem repellendus sequi odio fugiat, quo optio nesciunt, debitis magnam aliquid perferendis deleniti?',
+                'location' => 'Gelora Bung Karno',
+                'slug' => 'belajar-reactjs-pemula',
+                'start_date' => now(),
+                'end_date' => now(),
+            ],
         ]);
     }
 }

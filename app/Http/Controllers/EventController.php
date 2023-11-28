@@ -3,49 +3,107 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\EventDetail;
 use Illuminate\Support\Str;
-use App\Constants\StatusConstant;
+use App\Constants\EventStatusConstant;
 use App\Models\DisabilityCategory;
+use App\Models\RegisteredEvent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-        // nitip di sini ya wkwkwk
-        $eventDetail = EventDetail::create([
-            'title'       => 'test1',
-            'description' => 'test desc',
-            'location'    => 'test location',
-            'slug'        => Str::slug('test-satu', '-'), // butuh bikin helper function untuk handle kalo ada nama event yang sama tambahin -[n]]
-            'start_date'  => now(),
-            'end_date'  => now(),
-        ]);
-
-        $eventDetail->events()->create([
-            'user_id'   => 2,
-            'status_id' => StatusConstant::ON_VERIFICATION,
-            'event_detail_id' => $eventDetail->id
-        ]);
+        $events = Event::whereHas('eventDetails', function ($query) use ($request) {
+            $query->where('title', 'ILIKE', '%' . $request->title . '%')
+            ->where('show_flag', 1);
+                //   ->where('start_date', 'ILIKE', '%' . $request->start_date . '%')
+                //   ->where('slug', 'ILIKE', '%' . $request->disability_category . '%')
+                //   ->where('location', 'ILIKE', '%' . $request->event_category . '%');
+        })->paginate(6);
 
         $disabilityCategories = DisabilityCategory::all();
-        $events = Event::with('eventDetails')->paginate(6);
 
         return view('pages.event', compact('events', 'disabilityCategories'));
     }
 
+    public function showPopularEvents () {
+        $events = Event::with(['eventDetails','organizer','status', 'eventFiles'])->get();
+
+        return view('pages.index', compact('events'));
+    }
+
     public function show($slug) {
-        $event = Event::with(['eventDetails', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
+        $event = Event::with(['eventDetails', 'organizer', 'comments.replies.users', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
             $q->where('slug', $slug);
         })->first();
 
         return view('pages.event-detail', compact('event'));
     }
 
-    public function store(StoreEventRequest $request) {
+    public function eventAction(Request $request, $slug, $actionType) {
+        $message = '';
+        $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
+            $q->where('slug', $slug);
+        })->first();
+
+        switch($actionType) {
+            case "approve":
+                if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
+                    return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
+                }
+                $event->update([
+                    'status_id' => EventStatusConstant::APPROVED
+                ]);
+                $message = "Event berhasil diapprove!";
+
+                break;
+
+            case 'reject':
+                if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
+                    return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
+                }
+                $event->update([
+                    'status_id' => EventStatusConstant::REJECTED
+                ]);
+                $message = "Event berhasil direject!";
+
+                break;
+
+            case 'register-event':
+                $event = RegisteredEvent::create([
+                    'user_id'  => Auth::user()->id,
+                    'event_id' => $event->id,
+                ]);
+                $message = "Berhasil daftar event!";
+
+                break;
+
+            case 'cancel-register':
+                $event = RegisteredEvent::destroy([
+                    'user_id'  => Auth::user()->id,
+                    'event_id' => $event->id,
+                ]);
+
+                $message = "Berhasil cancel registrasi event";
+
+                break;
+
+            default:
+                break;
+        }
+
+        return redirect()->back()->with('success', $message);
+    }
+
+    // public function edit(EventRequest $request) {
+
+    // }
+
+    public function store(EventRequest $request) {
         $eventDetail = EventDetail::create([
             'title'       => $request->title,
             'description' => $request->description,
@@ -56,11 +114,23 @@ class EventController extends Controller
         ]);
 
         $eventDetail->events()->create([
-            'user_id'   => Auth::id(),
-            'status_id' => StatusConstant::ON_VERIFICATION,
+            'organizer_id'    => 1,
+            'status_id'       => EventStatusConstant::WAITING_APPROVAL,
             'event_detail_id' => $eventDetail->id
         ]);
 
         return redirect()->route('index');
+    }
+
+    public function delete($slug) {
+        $event = Event::with('eventDetails')->whereHas('eventDetails', function($q) use ($slug) {
+            $q->where('slug', $slug);
+        })->first();
+
+        $event->update([
+            'show_flag' => 0
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil hapus event!');
     }
 }

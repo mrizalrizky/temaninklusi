@@ -13,14 +13,16 @@ class BaseFormInput extends Component
      */
     public $title;
     public $name;
+    public $id;
     public $placeholder;
     public $type;
     public $label;
     public $value;
-    public function __construct($title = '', $name = '', $placeholder = '', $type = 'text', $value = '', $label = false)
+    public function __construct($title = '', $name = '', $id = '', $placeholder = '', $type = 'text', $value = '', $label = false)
     {
         $this->title = $title;
         $this->name = $name;
+        $this->id = $id;
         $this->placeholder = $placeholder;
         $this->type = $type;
         $this->label = $label;

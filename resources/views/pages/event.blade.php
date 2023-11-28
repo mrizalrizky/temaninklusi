@@ -13,12 +13,13 @@
     </section>
 
     <section class="mb-5">
+        {{-- <form action="{{ route('event.index')}}" method="GET"> --}}
         <div class="d-flex gap-4 rounded-4 p-4 m-auto" style="width: fit-content; background-color: #01676c">
-            <x-form.base-form-input name="title" placeholder="Cari event"/>
-            <x-form.base-form-input name="start_date" type="date" name="disability_category" placeholder="Jenis Disabilitas"/>
-            <x-form.base-form-select :options="$disabilityCategories" name="disability_category"/>
-            {{-- <x-form.base-form-select name="event_category"/> --}}
-        </div>
+                <x-form.base-form-input name="title" placeholder="Cari event"/>
+                <x-form.base-form-input name="start_date" type="date" />
+                <x-form.base-form-select name="disability_category" :options="$disabilityCategories" placeholder="Jenis Disabilitas" id="event_category"/>
+            </div>
+        {{-- </form> --}}
 
         <h3 class="text-primary text-center my-5">
             Semua Event
@@ -37,6 +38,21 @@
         {{ $events->links() }}
     </div>
 </div>
-
 @endsection
 
+{{-- @push('after-script')
+<script>
+$(document).on('change', '#event_category', function () {
+    let category_id = $(this).val();
+    console.log('CATEGORY ID', category_id)
+    $.ajax({
+        type: 'GET',
+        url: '{{ route('event.index') }}',
+        data: { 'category_id': category_id},
+        success: function(data) {
+            console.log('SUCCESS, DATA :', data);
+        }
+    })
+})
+</script>
+@endpush --}}
