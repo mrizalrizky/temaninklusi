@@ -37,13 +37,12 @@ body {
 }
 
 small {
-    font-size: .85rem;
+    font-size: 0.85rem;
 }
 
 p {
     font-size: 1.1rem;
 }
-
 
 h1,
 h2,
@@ -89,9 +88,13 @@ a {
 }
 
 caption-detail {
-    font-size: .85rem;
+    font-size: 0.85rem;
     color: #6c757d;
     font-weight: bold;
+}
+
+textarea {
+    resize: none;
 }
 
 ::placeholder {

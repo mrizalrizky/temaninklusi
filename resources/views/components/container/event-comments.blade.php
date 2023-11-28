@@ -1,56 +1,45 @@
-<div>
+<div class="d-grid gap-3 mb-2">
     @if (Auth::check() && (Auth::user()->isMember() || Auth::user()->isEO()))
-        <div class="input-group mb-3">
-            <form action="{{ route('comment.create') }}" method="POST">
-                @csrf
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" placeholder="Leave a comment..."></textarea>
-                <input type="hidden" name="event_id" value="{{ $eventId }}"/>
-                <span class="input-group-append">
-                    <button class="bg-transparent border-0" type="submit">
-                        <iconify-icon icon="iconamoon:send-fill" height="1.5em" class="text-primary"/>
-                    </button>
-                </span>
-            </form>
-        </div>
+        <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment...">
+            <input type="hidden" name="event_id" value="{{ $eventId }}"/>
+        </x-form.text-area-input>
     @endif
-    <div class="d-grid gap-4">
-        @if (count($comments) > 0)
-            @foreach ($comments as $index=>$comment)
-                <div id="user_comment">
-                    <x-card.user-comment-card :commentData="$comment" onClick="replyComment({{$index}}, {{$comment->id}})"/>
-                </div>
-            @endforeach
-            @else
-                <p>Tidak ada komentar...</p>
-        @endif
-    </div>
+    @if (count($comments) > 0)
+        @foreach ($comments as $index=>$comment)
+            <x-card.user-comment-card :commentData="$comment" onClick="replyComment({{$index}}, {{$comment->id}})"/>
+        @endforeach
+    @else
+        <p>Tidak ada komentar...</p>
+    @endif
 </div>
 
 @push('after-script')
     <script>
+        let isReply = false
         const replyComment = (index, commentId) => {
-            let element = document.querySelectorAll('#user_comment')
-            let newEl = document.createElement('div')
-            let replyEl = document.querySelectorAll('#comment_replies')
+            if(isReply) return;
+            isReply = true
 
-            console.log('REPLYEL[index]', index, replyEl[index]);
+            const element = document.querySelectorAll('#user_comment')
+            const replyEl = document.querySelector('#comment_replies')
 
+            if(replyEl) replyEl.remove()
 
-            newEl.className='input-group mb-3'
+            const fragment = document.createDocumentFragment()
+            const newEl = document.createElement('div')
+            newEl.setAttribute("id", "comment_replies");
             newEl.innerHTML = `
-                <form id="comment_replies" enctype="multipart/form-data" action="{{ route('comment.reply') }}" method="POST">
-                    @csrf
-                    <textarea class="form-control" id="textarea" name="content" rows="3" placeholder="Leave a comment..."></textarea>
-                    <input type="hidden" name="user_comment_id" value="${commentId}"
-                    <span class="input-group-append">
-                        <button class="bg-transparent border-0" type="submit">
-                            <iconify-icon icon="iconamoon:send-fill" height="1.5em" class="text-primary"/>
-                        </button>
-                    </span>
-                </form>
+                <x-form.text-area-input action="{{ route('comment.reply') }}" name="content" rows="3" placeholder="Leave a comment...">
+                    <input type="hidden" name="user_comment_id" value="${commentId}"/>
+                </x-form.text-area-input>
             `
 
-            element[index].appendChild(newEl)
+            fragment.appendChild(newEl)
+            element[index].appendChild(fragment)
+
+            setTimeout(() => {
+                isReply = false
+            }, 1000);
         }
     </script>
 @endpush

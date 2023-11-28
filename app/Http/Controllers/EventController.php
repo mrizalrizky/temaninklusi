@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\EventRequest;
 use App\Models\Event;
 use App\Models\EventDetail;
 use Illuminate\Support\Str;
@@ -18,7 +18,8 @@ class EventController extends Controller
     public function index(Request $request) {
 
         $events = Event::whereHas('eventDetails', function ($query) use ($request) {
-            $query->where('title', 'ILIKE', '%' . $request->title . '%');
+            $query->where('title', 'ILIKE', '%' . $request->title . '%')
+            ->where('show_flag', 1);
                 //   ->where('start_date', 'ILIKE', '%' . $request->start_date . '%')
                 //   ->where('slug', 'ILIKE', '%' . $request->disability_category . '%')
                 //   ->where('location', 'ILIKE', '%' . $request->event_category . '%');
@@ -36,7 +37,7 @@ class EventController extends Controller
     }
 
     public function show($slug) {
-        $event = Event::with(['eventDetails', 'organizer', 'comments', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
+        $event = Event::with(['eventDetails', 'organizer', 'comments.replies.users', 'status', 'eventFiles'])->whereHas('eventDetails', function($q) use ($slug) {
             $q->where('slug', $slug);
         })->first();
 
@@ -52,7 +53,7 @@ class EventController extends Controller
         switch($actionType) {
             case "approve":
                 if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
-
+                    return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
                 }
                 $event->update([
                     'status_id' => EventStatusConstant::APPROVED
@@ -63,7 +64,7 @@ class EventController extends Controller
 
             case 'reject':
                 if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
-
+                    return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
                 }
                 $event->update([
                     'status_id' => EventStatusConstant::REJECTED
@@ -98,8 +99,11 @@ class EventController extends Controller
         return redirect()->back()->with('success', $message);
     }
 
+    // public function edit(EventRequest $request) {
 
-    public function store(StoreEventRequest $request) {
+    // }
+
+    public function store(EventRequest $request) {
         $eventDetail = EventDetail::create([
             'title'       => $request->title,
             'description' => $request->description,
@@ -116,5 +120,17 @@ class EventController extends Controller
         ]);
 
         return redirect()->route('index');
+    }
+
+    public function delete($slug) {
+        $event = Event::with('eventDetails')->whereHas('eventDetails', function($q) use ($slug) {
+            $q->where('slug', $slug);
+        })->first();
+
+        $event->update([
+            'show_flag' => 0
+        ]);
+
+        return redirect()->back()->with('success', 'Berhasil hapus event!');
     }
 }

@@ -1,20 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-lg">
+<div class="container-lg px-4 px-lg-3">
     @if (session()->has('success'))
-    <div class="alert alert-success d-flex alert-dismissible fade show">
-        <p class="m-0">{{ session()->get('success') }}</p>
-        <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
-            data-bs-dismiss="alert" aria-label="close"></button>
-    </div>
-@enderror
+        <div class="alert alert-success d-flex alert-dismissible fade show">
+            <p class="m-0">{{ session()->get('success') }}</p>
+            <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
+                data-bs-dismiss="alert" aria-label="close"></button>
+        </div>
+    @enderror
+    @if (session()->has('failed'))
+        <div class="alert alert-danger d-flex alert-dismissible fade show">
+            <i data-feather="alert-triangle"style="margin-right: 0.5em; width: 1.2em"></i>
+            <p class="m-0">{{ session()->get('failed') }}</p>
+            <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
+                data-bs-dismiss="alert" aria-label="close"></button>
+        </div>
+    @enderror
+
     @if (Auth::check() && Auth::user()->isAdmin())
-    <div class="d-flex justify-content-end">
-        <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmApproveModal">Approve</button>
-        <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmRejectModal">Reject</button>
-        <a href="">Edit</a>
-    </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmApproveModal">Approve</button>
+            <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmRejectModal">Reject</button>
+            <a href="">Edit</a>
+        </div>
     @endif
 
     <x-dialog.base-dialog id="confirmApproveModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'approve']) }}"
@@ -38,21 +47,20 @@
     </div>
 
     <div class="d-md-flex justify-content-between">
-        <div>
+        <div class="col-md-6">
             <h2 class="text-center text-md-start mb-3">{{ $event->eventDetails['title'] }}</h2>
-            {{-- </div> --}}
-            <ul class="nav d-flex gap-3 mb-3 justify-content-center justify-content-md-start" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn btn-sm btn-primary rounded-pill py-2 px-4 text-white active" id="description-tab" data-bs-toggle="tab" data-bs-target="#pills-description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn btn-sm btn-primary rounded-pill py-2 px-4 text-white" id="details-tab" data-bs-toggle="tab" data-bs-target="#pills-details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link btn btn-sm btn-primary rounded-pill py-2 px-4 text-white" id="comments-tab" data-bs-toggle="tab" data-bs-target="#pills-comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments</button>
-                </li>
-              </ul>
-              <div class="tab-content" id="pills-tabContent">
+            <ul class="nav d-flex gap-3 mb-3 justify-content-center justify-content-md-start flex-nowrap" id="pills-tab" role="tablist">
+                <x-button.pill-button class="active" id="description-tab" dataBsTarget="#pills-description" ariaControls="description">
+                    Description
+                </x-button.pill-button>
+                <x-button.pill-button id="details-tab" dataBsTarget="#pills-details" ariaControls="details">
+                    Details
+                </x-button.pill-button>
+                <x-button.pill-button id="comments-tab" dataBsTarget="#pills-comments" ariaControls="comments">
+                    Comments
+                </x-button.pill-button>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="description-tab">
                     <p>{{ $event->eventDetails->description }}</p>
                 </div>
@@ -62,7 +70,7 @@
                 <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="comments-tab">
                     <x-container.event-comments :comments="$event->comments" eventId="{{ $event->id }}"/>
                 </div>
-              </div>
+            </div>
         </div>
 
         <div>
