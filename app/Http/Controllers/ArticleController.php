@@ -15,6 +15,12 @@ class ArticleController extends Controller
     }
 
     public function show($slug) {
-        // $article = Article::find()
+        $article = Article::where([
+            ['slug', $slug],
+            ['show_flag', True]
+            ])->get()->first();
+
+        $article->content = preg_replace('~[\r\n]+~', '<br><br>', $article->content);
+        return view('pages.blogDetail', compact('article'));
     }
 }
