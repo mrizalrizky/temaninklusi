@@ -31,9 +31,9 @@ class EventController extends Controller
     }
 
     public function showPopularEvents () {
-        $events = Event::with(['eventDetails','organizer','status', 'eventFiles'])->get();
+        $popularEvents = Event::with(['eventDetails','organizer','status', 'eventFiles'])->get();
 
-        return view('pages.index', compact('events'));
+        return view('pages.index', compact('popularEvents'));
     }
 
     public function show($slug) {
@@ -44,14 +44,14 @@ class EventController extends Controller
         return view('pages.event-detail', compact('event'));
     }
 
-    public function eventAction(Request $request, $slug, $actionType) {
+    public function eventAction($slug, $actionType) {
         $message = '';
         $event = Event::whereHas('eventDetails', function ($q) use ($slug) {
             $q->where('slug', $slug);
         })->first();
 
         switch($actionType) {
-            case "approve":
+            case "APPROVE_EVENT":
                 if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
                     return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
                 }
@@ -62,7 +62,7 @@ class EventController extends Controller
 
                 break;
 
-            case 'reject':
+            case 'REJECT_EVENT':
                 if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
                     return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
                 }
@@ -73,7 +73,7 @@ class EventController extends Controller
 
                 break;
 
-            case 'register-event':
+            case 'REGISTER_EVENT':
                 $event = RegisteredEvent::create([
                     'user_id'  => Auth::user()->id,
                     'event_id' => $event->id,
@@ -82,7 +82,7 @@ class EventController extends Controller
 
                 break;
 
-            case 'cancel-register':
+            case 'CANCEL_REGISTER_EVENT':
                 $event = RegisteredEvent::destroy([
                     'user_id'  => Auth::user()->id,
                     'event_id' => $event->id,
@@ -99,7 +99,11 @@ class EventController extends Controller
         return redirect()->back()->with('success', $message);
     }
 
-    // public function edit(EventRequest $request) {
+    // public function edit() {
+    //     return view('pages.event-edit');
+    // }
+
+    // public function update(EventRequest $request) {
 
     // }
 

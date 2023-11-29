@@ -25,12 +25,14 @@
             Semua Event
         </h3>
 
-        @if($events)
+        @if(count($events) > 0)
             <div class="row px-md-0 justify-content-center g-3 g-md-4">
                 @foreach ($events as $event)
                     <x-card.event-card :event="$event"/>
                 @endforeach
             </div>
+        @else
+            <p>No events...</p>
         @endif
 
     </section>

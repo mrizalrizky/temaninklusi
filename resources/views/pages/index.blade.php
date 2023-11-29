@@ -38,12 +38,12 @@
             </h3>
 
             {{-- Event Card --}}
-            @if($events)
-            <div class="row px-md-0 justify-content-center g-3 g-md-4">
-                @foreach ($events as $event)
-                    <x-card.event-card :event="$event"/>
-                @endforeach
-            </div>
+            @if(count($popularEvents) > 0)
+                <div class="row px-md-0 justify-content-center g-3 g-md-4">
+                    @foreach ($popularEvents as $event)
+                        <x-card.event-card :event="$event"/>
+                    @endforeach
+                </div>
             @endif
         </section>
 
