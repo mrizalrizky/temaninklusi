@@ -20,15 +20,15 @@
 
     @if (Auth::check() && Auth::user()->isAdmin())
         <div class="d-flex justify-content-end">
-            <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmApproveModal">Approve</button>
-            <button type="submit" data-bs-toggle="modal" data-bs-target="#confirmRejectModal">Reject</button>
+            <button type="submit" data-bs-toggle="modal" data-bs-target="#approveEventModal">Approve</button>
+            <button type="submit" data-bs-toggle="modal" data-bs-target="#rejectEventModal">Reject</button>
             <a href="">Edit</a>
         </div>
     @endif
 
-    <x-dialog.base-dialog id="confirmApproveModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'approve']) }}"
+    <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'APPROVE_EVENT']) }}"
                           title="Yakin akan approve event?" submitTitle="Ya" rejectTitle="Tidak"/>
-    <x-dialog.base-dialog id="confirmRejectModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'reject']) }}"
+    <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'REJECT_EVENT']) }}"
                           title="Yakin akan reject event?" submitTitle="Ya" rejectTitle="Tidak"/>
     <div id="carouselFade" class="carousel slide carousel-fade">
         <div class="carousel-inner">
@@ -79,3 +79,16 @@
     </div>
 </div>
 @endsection
+
+@push('after-stack')
+    <script>
+        const dismissAlert = () => {
+            setTimeout(() => {
+                const alertEl = document.querySelector('.alert-dismissible')
+                alertEl.remove();
+            }, 2000);
+        }
+
+        dismissAlert()
+    </script>
+@endpush
