@@ -26,11 +26,12 @@
             <a class="btn btn-sm btn-primary rounded-pill w-full py-2" href="{{ route('login') }}">
                 Daftar Sekarang
             </a>
-        @elseif (Auth::user()->isMember())
+        @endif
+        @can('register-event')
             <button type="button" class="btn btn-sm btn-primary rounded-pill w-full py-2" data-bs-toggle="modal" data-bs-target="#registerEventModal">
                 Daftar Sekarang
             </button>
-        @endif
+        @endcan
     </span>
 
     <x-dialog.base-dialog id="registerEventModal" action="{{ route('event.action',['actionType' => 'REGISTER_EVENT', 'slug' => $event->eventDetails->slug]) }}"

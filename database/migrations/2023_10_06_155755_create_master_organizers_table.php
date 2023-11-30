@@ -15,8 +15,13 @@ class CreateMasterOrganizersTable extends Migration
     {
         Schema::create('master_organizers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->string('initial');
             $table->string('name');
-            $table->string('initial')->max(2);
+            $table->string('address');
+            $table->string('contact_name');
+            $table->string('contact_phone');
+
             $table->timestamps();
         });
     }

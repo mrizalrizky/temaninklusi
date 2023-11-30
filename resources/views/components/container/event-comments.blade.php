@@ -1,12 +1,12 @@
 <div class="d-grid gap-3 mb-2">
-    @if (Auth::check() && (Auth::user()->isMember() || Auth::user()->isEO()))
+    @can('create-comment', $event)
         <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment...">
-            <input type="hidden" name="event_id" value="{{ $eventId }}"/>
+            <input type="hidden" name="event_id" value="{{ $event->id }}"/>
         </x-form.text-area-input>
-    @endif
-    @if (count($comments) > 0)
-        @foreach ($comments as $index=>$comment)
-            <x-card.user-comment-card :commentData="$comment" onClick="replyComment({{$index}}, {{$comment->id}})"/>
+    @endcan
+    @if (count($event->comments) > 0)
+        @foreach ($event->comments as $index=>$comment)
+            <x-card.user-comment-card :commentData="$comment" :event="$event" onClick="replyComment({{$index}}, {{$comment->id}})"/>
         @endforeach
     @else
         <p>Tidak ada komentar...</p>
