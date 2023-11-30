@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Card;
 
+use App\Models\Event;
 use Illuminate\View\Component;
 
 class UserCommentCard extends Component
@@ -11,10 +12,12 @@ class UserCommentCard extends Component
      *
      * @return void
      */
+    public $event;
     public $commentData;
     public $onClick;
-    public function __construct($commentData, $onClick)
+    public function __construct(Event $event, $commentData, $onClick)
     {
+        $this->event = $event;
         $this->commentData = $commentData;
         $this->onClick = $onClick;
     }

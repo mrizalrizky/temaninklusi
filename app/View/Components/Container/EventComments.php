@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Container;
 
+use App\Models\Event;
 use Illuminate\View\Component;
 
 class EventComments extends Component
@@ -11,12 +12,10 @@ class EventComments extends Component
      *
      * @return void
      */
-    public $comments;
-    public $eventId;
-    public function __construct($comments, $eventId)
+    public $event;
+    public function __construct(Event $event)
     {
-        $this->comments = $comments;
-        $this->eventId = $eventId;
+        $this->event = $event;
     }
 
     /**

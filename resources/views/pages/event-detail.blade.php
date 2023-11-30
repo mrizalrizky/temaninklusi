@@ -18,12 +18,16 @@
         </div>
     @enderror
 
-    @if (Auth::check() && Auth::user()->isAdmin())
-        <div class="d-flex justify-content-end">
+    @if (Auth::check())
+    <div class="d-flex justify-content-end">
+        @can('manage-event')
             <button type="submit" data-bs-toggle="modal" data-bs-target="#approveEventModal">Approve</button>
             <button type="submit" data-bs-toggle="modal" data-bs-target="#rejectEventModal">Reject</button>
-            <a href="">Edit</a>
-        </div>
+        @endif
+        @can('edit-event', $event)
+        <a href="#">Edit</a>
+        @endcan
+    </div>
     @endif
 
     <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'APPROVE_EVENT']) }}"
@@ -68,7 +72,7 @@
                     <x-container.event-details :event="$event"/>
                 </div>
                 <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="comments-tab">
-                    <x-container.event-comments :comments="$event->comments" eventId="{{ $event->id }}"/>
+                    <x-container.event-comments :event="$event"/>
                 </div>
             </div>
         </div>
@@ -89,6 +93,6 @@
             }, 2000);
         }
 
-        dismissAlert()
+        dismissAlert
     </script>
 @endpush

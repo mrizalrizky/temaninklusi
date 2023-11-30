@@ -6,12 +6,12 @@
         <div class="w-100">
             <div class="d-flex justify-content-between">
                 <p><span class="fw-bold">{{ $commentData->users ? $commentData->users->name : '' }}</span> - {{ $commentData->created_at ? $commentData->created_at->diffForHumans() : '' }}</p>
-                @if (Auth::check() && (Auth::user()->isMember() || Auth::user()->isEO()))
+                @can('create-comment', $event)
                     <button class="p-0 bg-transparent border-0 d-flex"
                             onclick="{{ $onClick }}">
                         <iconify-icon icon="mdi:reply" height="1.5rem" class="text-primary"/>
                     </button>
-                @endif
+                @endcan
             </div>
             <p>{{ $commentData->content }}</p>
         </div>
