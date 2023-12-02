@@ -20,7 +20,7 @@ class Email extends Mailable implements ShouldQueue
      public function __construct(String $email, String $resetToken)
     {
         $subject = 'Reset Password Akun ' . config('app.name');
-        $urlReset = env('APP_URL').'/validate-password?email='.$email.'&resetToken='.$resetToken;
+        $urlReset = env('APP_URL').'/reset-password?email='.$email.'&resetToken='.$resetToken;
 
         return $this->view('mail.reset-password')->subject($subject)->with([
             'urlReset' => $urlReset,

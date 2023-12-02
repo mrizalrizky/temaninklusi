@@ -8,7 +8,7 @@
             </div>
             <div class="row g-7 justify-content-center justify-content-md-between">
                 <div class="col-12 col-sm-10 col-md-7 d-flex align-items-center">
-                    <form enctype="multipart/form-data" action="{{ route('generate.reset-password') }}" method="POST"
+                    <form enctype="multipart/form-data" action="{{ route('generate.forgot-password') }}" method="POST"
                         class="border rounded-4 p-4 p-x-custom-2 w-100">
                         @csrf
                         @if (session()->has('failed'))
@@ -76,7 +76,7 @@
             </div>
             <div class="col-5 d-flex align-items-center d-none d-md-flex">
                 <div class="d-flex justify-content-center">
-                    <img src="assets/authentication/reset-password.png" class="img-fluid" alt="">
+                    <img src="assets/authentication/forgot-password.png" class="img-fluid" alt="">
                 </div>
             </div>
         </div>

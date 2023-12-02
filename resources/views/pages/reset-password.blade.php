@@ -33,7 +33,7 @@
                                     @endif
                                 </x-form.base-form-input>
                                 <div class="m-t-custom-2">
-                                    <button type="submit" class="btn btn-primary w-100 rounded-2">Set new password</button>
+                                    <button type="submit" class="btn btn-primary w-100 rounded-2">Ganti Password</button>
                                 </div>
                             </form>
                         </div>

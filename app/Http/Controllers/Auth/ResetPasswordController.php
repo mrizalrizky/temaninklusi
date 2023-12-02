@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
         $resetToken = $request->query('resetToken', null);
 
         if(!$email || !$resetToken) abort(404);
-        return view('pages.validate-password', [
+        return view('pages.reset-password', [
             'email' => $email,
             'resetToken' => $resetToken,
         ]);

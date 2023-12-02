@@ -27,7 +27,7 @@ class EventController extends Controller
 
         $disabilityCategories = DisabilityCategory::all();
 
-        return view('pages.event', compact('events', 'disabilityCategories'));
+        return view('pages.events.event', compact('events', 'disabilityCategories'));
     }
 
     public function showPopularEvents () {
@@ -41,7 +41,7 @@ class EventController extends Controller
             $q->where('slug', $slug);
         })->first();
 
-        return view('pages.event-detail', compact('event'));
+        return view('pages.events.event-detail', compact('event'));
     }
 
     public function eventAction($slug, $actionType) {
@@ -99,13 +99,13 @@ class EventController extends Controller
         return redirect()->back()->with('success', $message);
     }
 
-    // public function edit() {
-    //     return view('pages.event-edit');
-    // }
+    public function edit() {
+        return view('pages.events.edit-event');
+    }
 
-    // public function update(EventRequest $request) {
-
-    // }
+    public function update(EventRequest $request) {
+        return redirect()->back()->with('success', 'Berhasil edit event');
+    }
 
     public function store(EventRequest $request) {
         $eventDetail = EventDetail::create([
@@ -123,7 +123,7 @@ class EventController extends Controller
             'event_detail_id' => $eventDetail->id
         ]);
 
-        return redirect()->route('index');
+        return redirect()->route('event.index');
     }
 
     public function delete($slug) {

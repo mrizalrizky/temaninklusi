@@ -50,18 +50,18 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
 
-Route::get('/reset-password', function () {
-    return view('auth.reset-password');
-})->name('reset-password');
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->name('forgot-password');
 
 
-Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.reset-password');
+Route::post('/forgot-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.forgot-password');
 
-Route::get('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('validate.password');
-Route::post('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
+Route::get('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('reset.password');
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
 
 Route::get('/test', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword']);
 
 Route::get('/x', function () {
-    return view('pages.validate-password');
+    return view('pages.reset-password');
 });

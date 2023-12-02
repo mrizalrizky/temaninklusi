@@ -37,9 +37,9 @@
     <div id="carouselFade" class="carousel slide carousel-fade">
         <div class="carousel-inner">
             @foreach ($event->eventFiles as $eventBanner)
-            <div style="height: 27.5rem;" class="carousel-item active w-100 overflow-hidden border-0 rounded-4 my-5">
-                <img src="{{ $eventBanner->files['file_path']}}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
-            </div>
+                <div style="height: 27.5rem;" class="carousel-item active w-100 overflow-hidden border-0 rounded-4 my-5">
+                    <img src="{{ $eventBanner->files['file_path']}}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
+                </div>
             @endforeach
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselFade" data-bs-slide="prev">
@@ -66,13 +66,13 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="description-tab">
-                    <p>{{ $event->eventDetails->description }}</p>
+                    @include('pages.events.section.event-description', $event)
                 </div>
                 <div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="details-tab">
-                    <x-container.event-details :event="$event"/>
+                    @include('pages.events.section.event-details', $event)
                 </div>
                 <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="comments-tab">
-                    <x-container.event-comments :event="$event"/>
+                    @include('pages.events.section.event-comments', $event)
                 </div>
             </div>
         </div>
@@ -83,16 +83,3 @@
     </div>
 </div>
 @endsection
-
-@push('after-stack')
-    <script>
-        const dismissAlert = () => {
-            setTimeout(() => {
-                const alertEl = document.querySelector('.alert-dismissible')
-                alertEl.remove();
-            }, 2000);
-        }
-
-        dismissAlert
-    </script>
-@endpush

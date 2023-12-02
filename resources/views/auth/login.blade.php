@@ -37,7 +37,7 @@
                         </x-form.base-form-input>
 
                         <div class="text-end mb-5">
-                            <a href="{{ route('reset-password') }}" class="text-decoration-none"><small
+                            <a href="{{ route('forgot-password') }}" class="text-decoration-none"><small
                                     class="text-primary">Lupa
                                     Password?</small></a>
                         </div>
