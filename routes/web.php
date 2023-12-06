@@ -5,6 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PageTitleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,6 @@ Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
 
+Route::get('profile', function() {
+    return view('pages.profile');
+});

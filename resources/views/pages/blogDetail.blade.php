@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-md px-4 px-lg-3">
         <div class="d-flex flex-column align-items-center p-4 my-2">
-            <h4 class="mb-1">{{ $article->title }}</h4>
+            <h4 class="mb-2">{{ $article->title }}</h4>
             <small style="color: #515B60;">Source: {{ $article->created_by }}</small>
         </div>
         <div class="d-flex justify-content-center">
