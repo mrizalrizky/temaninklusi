@@ -27,6 +27,8 @@ Route::get('/about', function () {
 
 Route::prefix('blogs')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
+    Route::get('/add', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
+    Route::post('/add', [App\Http\Controllers\ArticleController::class, 'add'])->name('blog.add');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
 });
 
@@ -36,12 +38,27 @@ Route::prefix('events')->group(function () {
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
-    Route::get('/')->name('profile.index');
+    Route::get('/', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::get('/events')->name('profile.events');
 });
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
+Route::get('/logout', [App\Http\Controllers\LogoutController::class, 'logoutRouteDisable']);
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-Route::get('profile', function() {
-    return view('pages.profile');
+Route::get('/reset-password', function () {
+    return view('auth.reset-password');
+})->name('reset-password');
+
+
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.reset-password');
+
+Route::get('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('validate.password');
+Route::post('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
+
+Route::get('/test', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword']);
+
+Route::get('/x', function () {
+    return view('pages.validate-password');
 });

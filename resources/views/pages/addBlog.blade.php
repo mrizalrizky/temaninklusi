@@ -1,22 +1,48 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-md px-4 px-lg-3">
-        <div class="d-flex justify-content-center">
-            <img src="assets/about/aboutBanner.png" class="img-fluid col-10" style="max-width: 30rem" alt="">
+        <h4 class="my-4">Add Blog</h4>
+        <div class="col-8">
+            <form enctype="multipart/form-data" action="{{ route('blog.add') }}" class="ms-2" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label class="form-label text-primary label-add-blog">Choose Image</label>
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="floatingInput"
+                        name="image">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-primary label-add-blog">Title</label>
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="floatingInput"
+                        name="title">
+                    @error('title')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="form-label text-primary label-add-blog">Description</label>
+                    <textarea class="form-control" id="description" rows="3"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-primary label-add-blog">Source</label>
+                    <input type="text" class="form-control @error('source') is-invalid @enderror" id="floatingInput"
+                        name="source">
+                    @error('source')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="d-flex justify-content-end mt-5">
+                    <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4" type="submit">Add</button>
+                </div>
+            </form>
         </div>
-        <div class="mt-5 text-center mb-5">
-            <h3  class="mb-4">Misi Kami</h3>
-            <p>Menjadi solusi untuk menambah wawasan dan membantu anak-anak muda indonesia
-                dalam berkolaborasi, baik itu mempromosikan event/kegiatan antar kampus/institusi hingga menjadi platform
-                yang mewadahi mereka dalam mengembangkan diri.
-                <br>
-                <br>
-                Menjadi solusi untuk menambah wawasan dan membantu anak-anak muda indonesia
-                dalam berkolaborasi, baik itu mempromosikan event/kegiatan antar kampus/institusi hingga menjadi platform
-                yang mewadahi mereka dalam mengembangkan diri.
-            </p>
-        </div>
-
-        <x-banner title="Punya pertanyaan?" image="{{ asset('assets/about/needHelp.png') }}"/>
     </div>
 @endsection

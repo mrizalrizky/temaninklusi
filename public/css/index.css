@@ -71,7 +71,7 @@ h4 {
 }
 
 h5 {
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 h6 {
@@ -80,6 +80,34 @@ h6 {
 
 a {
     text-decoration: none;
+}
+
+::placeholder {
+    font-size: .9rem;
+    opacity: 1;
+}
+
+::-ms-input-placeholder {
+    font-size: .9rem;
+}
+
+input[type="text"]
+{
+    font-size: .9rem !important;
+}
+
+input[type="email"]
+{
+    font-size: .9rem !important;
+}
+
+input[type="password"]
+{
+    font-size: .9rem !important;
+}
+
+.label-add-blog {
+    font-size: 1rem;
 }
 
 .fw-bold {
@@ -128,6 +156,7 @@ a {
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
 /*
 .btn-danger {
     --bs-btn-color: #fff;
@@ -146,7 +175,7 @@ a {
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
 } */
 
-.btn-group-sm > .btn,
+.btn-group-sm>.btn,
 .btn-sm {
     --bs-btn-padding-y: 0.4rem;
     --bs-btn-padding-x: 1.7rem;
@@ -276,6 +305,11 @@ a {
     --bs-gutter-y: 4rem;
 }
 
+.btn-no-style {
+    border: none !important;
+    font-size: .9rem;
+}
+
 @media only screen and (max-width: 547px) {
     html {
         font-size: 90% !important;
@@ -286,6 +320,7 @@ a {
     html {
         font-size: 75% !important;
     }
+
     /* .icon {
         width: 45% !important;
     } */

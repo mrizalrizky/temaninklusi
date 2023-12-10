@@ -35,7 +35,7 @@
                                     <small>Profile</small>
                                 </a>
                             </li>
-                            <li class="p-2 {{ Request::is('events') ? 'bg-white p-2 rounded-3' : '' }}">
+                            <li class="p-2 {{ Request::is('listEvent') ? 'bg-white p-2 rounded-3' : '' }}">
                                 <a href="" class="d-flex align-items-center gap-3 text-primary">
                                     <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

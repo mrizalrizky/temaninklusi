@@ -32,19 +32,21 @@
                                 </div>
                             @enderror
                         </div> --}}
-                        <x-form.base-form-input title="Email address" type="email" value="{{ old('email') }}" name="email" :label="true">
+                        <x-form.base-form-input title="Email address" type="email" value="{{ old('email') }}"
+                            name="email" :label="true">
                             @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-2" title="Password" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-2" title="Password" type="password"
+                            value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </x-form.base-form-input>
 
@@ -56,13 +58,14 @@
                                 placeholder="●●●●●●●●">
 
                             @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                             @enderror
                         </div> -->
                         <div class="text-end mb-5">
-                            <a href="/sign-up" class="text-decoration-none"><small class="text-primary">Lupa
+                            <a href="{{ route('reset-password') }}" class="text-decoration-none"><small
+                                    class="text-primary">Lupa
                                     Password?</small></a>
                         </div>
                         <div class="px-4 m-b-custom-2">
