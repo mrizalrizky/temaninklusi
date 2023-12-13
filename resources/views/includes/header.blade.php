@@ -28,7 +28,7 @@
                         Login
                     </a>
                 @else
-                    <x-listitem.navbar-item href="#" class="d-md-none">
+                    <x-listitem.navbar-item href="{{ route('profile.index') }}" class="d-md-none">
                         Profile
                     </x-listitem.navbar-item>
                 @endif
@@ -44,7 +44,7 @@
                         Login
                     </a>
                 @else
-                    <a href="{{ route('login') }}" style="padding: 0 2.2rem">
+                    <a href="{{ route('profile.index') }}" style="padding: 0 2.2rem">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1.85rem" style="fill: #01676c"
                             viewBox="0 0 512 512">
                             <path

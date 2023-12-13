@@ -22,17 +22,18 @@
 
                         <x-form.base-form-input title="Email address" type="email" value="{{ old('email') }}" name="email" :label="true">
                             @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-2" title="Password" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-2" title="Password" type="password"
+                            value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </x-form.base-form-input>
 

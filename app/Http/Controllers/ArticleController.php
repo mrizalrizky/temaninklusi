@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -12,6 +13,35 @@ class ArticleController extends Controller
         $articles = Article::latest()->paginate(3);
 
         return view('pages.blogs.blog', compact('articles'));
+    }
+
+    public function showAddBlog() {
+        return view('pages.addBlog');
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'image' => 'required',
+            'title' => 'required||unique:articles',
+            'source' => 'required',
+        ]);
+    }
+
+    public function add(Request $request) {
+        $this->validateLogin($request);
+
+        $file = $request->file('image');
+
+        $imageName = 'blogs/'.time().'.'.$file->getClientOriginalExtension();
+        Storage::putFileAs('public/images/blogs/', $file, $imageName);
+
+        $data['image'] = $imageName;
+
+
+        // Product::create($data);
+
+        return redirect()->route('blog.index');
     }
 
     public function show($slug) {
