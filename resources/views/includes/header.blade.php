@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-{{-- <nav class="navbar navbar-expand-md {{ Request::is('/') ? 'bg-primary' : 'bg-white' }} py-4 position-sticky top-0 position-md-relative z-3"> --}}
-<nav class="navbar navbar-expand-md bg-primary py-4 position-sticky top-0 position-md-relative z-3">
-=======
 <nav class="navbar navbar-expand-md py-4 top-0 position-md-relative z-3 {{ request()->route()->named('index') ? 'bg-primary' : null }}">
->>>>>>> c00166035b23892c790f280b279afc61f1e20b60
     <div class="container-lg px-4 px-md-3">
         <a class="navbar-brand fw-bolder" href="{{ route('index') }}">{{ config('app.name') }}</a>
         <button class="ms-auto d-md-none bg-transparent" type="button" data-bs-toggle="collapse"
