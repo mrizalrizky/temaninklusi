@@ -10,7 +10,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'organizer_id',
         'event_detail_id',
         'status_id',
     ];
@@ -20,12 +20,16 @@ class Event extends Model
         return $this->belongsTo(EventDetail::class, 'event_detail_id', 'id');
     }
 
-    public function users() {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+    public function organizer() {
+        return $this->belongsTo(MasterOrganizer::class, 'organizer_id', 'id');
     }
 
     public function status() {
         return $this->belongsTo(MasterStatus::class, 'status_id', 'id');
+    }
+
+    public function comments() {
+        return $this->hasMany(UserComment::class, 'event_id', 'id');
     }
 
     public function eventFiles() {

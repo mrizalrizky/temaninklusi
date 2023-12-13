@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\PageTitleController;
+use App\Mail\Email;
+// use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -20,21 +20,30 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 // Route::get('/', [HomeController::class, 'index'])->name('index');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/', [\App\Http\Controllers\EventController::class, 'showPopularEvents'])->name('index');
+
 Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::prefix('blogs')->group(function () {
+Route::prefix('blog')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
     Route::get('/add', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
     Route::post('/add', [App\Http\Controllers\ArticleController::class, 'add'])->name('blog.add');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
+
+    Route::post('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
+    Route::get('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
 });
 
 Route::prefix('events')->group(function () {
+    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
+    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
+    Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
+
+    // Comments
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {

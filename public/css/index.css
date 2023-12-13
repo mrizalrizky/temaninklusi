@@ -37,7 +37,7 @@ body {
 }
 
 small {
-    font-size: .85rem;
+    font-size: 0.85rem;
 }
 
 .smaller {
@@ -72,7 +72,7 @@ h3 {
 }
 
 h4 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
 }
 
 h5 {
@@ -83,8 +83,27 @@ h6 {
     font-size: 0.9rem;
 }
 
+desc {
+    font-size: 1rem;
+}
+
 a {
     text-decoration: none;
+    text-transform: unset !important;
+}
+
+caption-detail {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: bold;
+}
+
+textarea {
+    resize: none;
+}
+
+::placeholder {
+    color: #999 !important;
 }
 
 ::placeholder {
@@ -146,6 +165,7 @@ input[type="password"]
 }
 
 .btn-primary {
+    background-color: var(--bs-btn-bg);
     --bs-btn-color: #fff;
     --bs-btn-bg: var(--main-color);
     --bs-btn-border-color: var(--bs-btn-bg);
@@ -301,6 +321,10 @@ input[type="password"]
     padding-bottom: 2rem !important;
 }
 
+.m-t-custom-2 {
+    margin-top: 2rem !important;
+}
+
 .m-b-custom-2 {
     margin-bottom: 2rem !important;
 }
@@ -321,9 +345,15 @@ input[type="password"]
     }
 }
 
+/* @media only screen and (max-width: 547px) {
+    html {
+        font-size: 70% !important;
+    }
+} */
+
 @media only screen and (max-width: 284px) {
     html {
-        font-size: 75% !important;
+        font-size: 60% !important;
     }
 
     /* .icon {
@@ -331,8 +361,8 @@ input[type="password"]
     } */
 }
 
-@media only screen and (max-width: 150px) {
+/* @media only screen and (max-width: 150px) {
     html {
         font-size: 60% !important;
     }
-}
+} */
