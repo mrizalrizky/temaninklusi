@@ -52,9 +52,6 @@ class EventController extends Controller
 
         switch($actionType) {
             case "APPROVE_EVENT":
-                if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
-                    return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
-                }
                 $event->update([
                     'status_id' => EventStatusConstant::APPROVED
                 ]);
@@ -63,9 +60,6 @@ class EventController extends Controller
                 break;
 
             case 'REJECT_EVENT':
-                if($event->status_id !== EventStatusConstant::WAITING_APPROVAL) {
-                    return redirect()->back()->with('failed', 'Event tidak dalam status waiting approval');
-                }
                 $event->update([
                     'status_id' => EventStatusConstant::REJECTED
                 ]);
