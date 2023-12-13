@@ -23,7 +23,7 @@
                     <div class="px-4 py-2 mb-4">
                         <ul style="list-style-type: none" class="row gap-3 p-0">
                             <li class="p-2 {{ Request::is('profile') ? 'bg-white p-2 rounded-3' : '' }}">
-                                <a href="" class="d-flex align-items-center gap-3 text-primary">
+                                <a href="{{ route('profile.index') }}" class="d-flex align-items-center gap-3 text-primary">
                                     <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -35,8 +35,8 @@
                                     <small>Profile</small>
                                 </a>
                             </li>
-                            <li class="p-2 {{ Request::is('events') ? 'bg-white p-2 rounded-3' : '' }}">
-                                <a href="" class="d-flex align-items-center gap-3 text-primary">
+                            <li class="p-2 {{ Request::is('profile/events') ? 'bg-white p-2 rounded-3' : '' }}">
+                                <a href="{{ route('profile.events') }}" class="d-flex align-items-center gap-3 text-primary">
                                     <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">

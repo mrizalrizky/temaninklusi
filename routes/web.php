@@ -40,7 +40,7 @@ Route::prefix('events')->group(function () {
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/events')->name('profile.events');
+    Route::get('/events', [App\Http\Controllers\ProfileController::class, 'event'])->name('profile.events'); //harusnya di event
 });
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);

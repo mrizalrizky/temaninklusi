@@ -40,6 +40,11 @@ small {
     font-size: .85rem;
 }
 
+.smaller {
+    font-size: .75rem;
+}
+
+
 p {
     font-size: 1.1rem;
 }

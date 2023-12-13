@@ -15,7 +15,7 @@ class Event extends Model
         'status_id',
     ];
 
-    public function eventDetails() {
+    public function eventDetail() {
         // 'nama fk di table event', 'nama key yg direfer di table eventDetail'
         return $this->belongsTo(EventDetail::class, 'event_detail_id', 'id');
     }

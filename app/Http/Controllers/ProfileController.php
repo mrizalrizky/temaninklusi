@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,15 +62,22 @@ class ProfileController extends Controller
         return redirect()->route('profile.update');
     }
 
-    public function event() {
+    public function event()
+    {
 
-        if(strtolower(Auth::user()->role->type) == 'user') {
+        if (strtolower(Auth::user()->role->type) == 'user') {
             return view('pages.registeredEvent');
-        }
 
-        else if(strtolower(Auth::user()->role->type) == 'eventorganizer') {
-            return view('pages.uploadedEvent');
-        }
+        } else if (strtolower(Auth::user()->role->type) == 'eventorganizer') {
 
+            $events = Event::where([
+                ['show_flag', true],
+                ['organizer_id', Auth::user()->id],
+            ])->paginate(3);
+
+
+
+            return view('pages.uploadedEvent', compact('events'));
+        }
     }
 }

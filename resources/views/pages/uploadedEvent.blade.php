@@ -5,9 +5,9 @@
             <div class="col-5 col-lg-4 col-xl-3">
                 <h4 class="text-center m-b-custom-2">Dashboard</h4>
             </div>
-            <div class="col-7">
-                <h4 class="text-left">Edit Profile</h4>
-                <h5 class="text-left m-b-custom-2 fw-normal">Masukan informasi yang valid</h5>
+            <div class="col-7 col-md">
+                <h4 class="text-left">Uploaded Event</h4>
+                <h5 class="text-left m-b-custom-2 fw-normal">Daftar event yang sudah kamu upload</h5>
             </div>
         </div>
         <div class="row gx-4 gx-lg-5">
@@ -23,7 +23,7 @@
                     <div class="px-4 py-2 mb-4">
                         <ul style="list-style-type: none" class="row gap-3 p-0">
                             <li class="p-2 {{ Request::is('profile') ? 'bg-white p-2 rounded-3' : '' }}">
-                                <a href="" class="d-flex align-items-center gap-3 text-primary">
+                                <a href="{{ route('profile.index') }}" class="d-flex align-items-center gap-3 text-primary">
                                     <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                             fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -35,8 +35,9 @@
                                     <small>Profile</small>
                                 </a>
                             </li>
-                            <li class="p-2 {{ Request::is('listEvent') ? 'bg-white p-2 rounded-3' : '' }}">
-                                <a href="" class="d-flex align-items-center gap-3 text-primary">
+                            <li class="p-2 {{ Request::is('profile/events') ? 'bg-white p-2 rounded-3' : '' }}">
+                                <a href="{{ route('profile.events') }}"
+                                    class="d-flex align-items-center gap-3 text-primary">
                                     <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
@@ -58,101 +59,28 @@
                     </form>
                 </div>
             </div>
-            <div class="col-7">
-                <div class="d-flex gap-2 flex-column align-items-start justify-content-center rounded-4 p-4"
-                    style="background-color: var(--secondary-color)">
-                    <div class="mb-3 d-flex gap-3 align-items-center ms-4">
-                        <img class="rounded-4 img-fluid mb-2" src="assets/profile/profile-picture.png" alt=""
-                            style="max-width: 3rem">
-                        <div class="d-flex flex-column gap-1">
-                            <h6 class="m-0">{{ Auth::user()->name }}</h6>
-                            <small style="font-size: .8rem" class="text-primary">{{ Auth::user()->role->type }}</small>
+            <div class="col-7 col-md d-flex flex-column">
+                <div class="row align-items mb-5" style="min-height: 25rem">
+                    @foreach ($events as $event)
+                    <div class="row align-items-center rounded-4 px-2 pb-5">
+                        <div class="col gx-4 gt-0" style="max-width: 10rem; max-height: 10rem">
+                            <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721"
+                                class="w-100 h-100 object-fit-cover border-0 rounded-4" alt="Blog banner">
+                        </div>
+                        <div class="col">
+                            <p class="text-primary mb-1"><small style="font-size: .8rem">Lifestyle</small></p>
+                            <h5 class="fw-bold">{{ $event->eventDetail->title }}</h5>
+                            <p style="font-size: .9rem" class="mb-0">{{ 'sdjf' }}</p>
+                            <p style="font-size: .9rem"><small class="smaller text-secondary">{{ $event->eventDetail->start_date->format('d M Y') }}</small></p>
+                            <a class="text-primary fw-bold" style="font-size: 0.75rem" href="{{ route('event.details', $event->eventDetail->slug) }}">
+                                Detail Event
+                            </a>
                         </div>
                     </div>
-                    <h5 class="mb-0">Infomasi Pribadi</h5>
-                    <div class="px-4 pt-1 pb-1 mb-4 d-flex w-100">
-                        <form action="{{ route('profile.update') }}" class="w-100" method="POST">
-                            @csrf
-                            <div class="form-group mb-2">
-                                <label for="name" class="text-primary mb-2 profile-label">Name</label>
-                                <input type="text" class="form-control py-2 @error('name') is-invalid @enderror"
-                                    id="name" aria-describedby="name" name="name"
-                                    value="{{ old('name') ?? Auth::user()->name }}" placeholder="Jane Doe">
-
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="username" class="text-primary mb-2 profile-label">Username</label>
-                                <input type="text" class="form-control py-2 @error('username') is-invalid @enderror"
-                                    id="username" aria-describedby="username" name="username"
-                                    value="{{ old('username') ?? Auth::user()->username }}" placeholder="Jane Doe">
-
-                                @error('username')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="email" class="text-primary mb-2 profile-label">Email Address</label>
-                                <input type="email" class="form-control py-2 @error('email') is-invalid @enderror"
-                                    id="email" aria-describedby="email" name="email"
-                                    value="{{ old('email') ?? Auth::user()->email }}" placeholder="Jane Doe">
-
-                                @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="oldPassword" class="text-primary mb-2 profile-label">Old Password</label>
-                                <input type="password"
-                                    class="form-control py-2 @error('oldPassword') is-invalid @enderror" id="oldPassword"
-                                    aria-describedby="oldPassword" name="oldPassword" placeholder="●●●●●●●●">
-
-                                @error('oldPassword')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="newPassword" class="text-primary mb-2 profile-label">New Password</label>
-                                <input type="password"
-                                    class="form-control py-2 @error('newPassword') is-invalid @enderror" id="newPassword"
-                                    aria-describedby="newPassword" name="newPassword" placeholder="●●●●●●●●">
-
-                                @error('newPassword')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="password_confirmation" class="text-primary mb-2 profile-label">Confirmation
-                                    Password</label>
-                                <input type="password"
-                                    class="form-control py-2 @error('password_confirmation') is-invalid @enderror"
-                                    id="password_confirmation" aria-describedby="password_confirmation"
-                                    name="password_confirmation" placeholder="●●●●●●●●">
-
-                                @error('password_confirmation')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="d-flex justify-content-start mt-4">
-                                <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4"
-                                    type="submit">Submit</button>
-                            </div>
-                        </form>
+                    @endforeach
+                    <div class="mt-4"></div>
+                    <div class="d-flex justify-content-center mt-auto">
+                        {{ $events->links() }}
                     </div>
                 </div>
             </div>
