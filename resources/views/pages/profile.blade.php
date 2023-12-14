@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="row gx-4 gx-lg-5">
-            @include('pages.profile.profile-sidebar')
+            @include('pages.profile.includes.profile-sidebar')
             <div class="col-7">
                 <div class="d-flex gap-2 flex-column align-items-start justify-content-center rounded-4 p-4"
                     style="background-color: var(--secondary-color)">
