@@ -42,14 +42,12 @@ Route::prefix('events')->group(function () {
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
-
-    // Comments
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/events', [App\Http\Controllers\ProfileController::class, 'event'])->name('profile.events'); //harusnya di event
+    Route::get('/events', [App\Http\Controllers\EventController::class, 'showEventsByRole'])->name('profile.events'); //harusnya di event
 });
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);

@@ -6,12 +6,13 @@
                 <h4 class="text-center m-b-custom-2">Dashboard</h4>
             </div>
             <div class="col-7 col-md">
-                <h4 class="text-left">Uploaded Event</h4>
-                <h5 class="text-left m-b-custom-2 fw-normal">Daftar event yang sudah kamu upload</h5>
+                <h4 class="text-left">Registered Event</h4>
+                <h5 class="text-left m-b-custom-2 fw-normal">Daftar event yang sudah kamu daftar</h5>
             </div>
         </div>
         <div class="row gx-4 gx-lg-5">
-            <div class="col-5 col-lg-4 col-xl-3">
+            @include('pages.profile.profile-sidebar')
+            {{-- <div class="col-5 col-lg-4 col-xl-3">
                 <div class="d-flex gap-2 flex-column align-items-center justify-content-center rounded-4 p-4"
                     style="background-color: var(--secondary-color)">
                     <div class="mb-3 d-flex gap-2 flex-column align-items-center">
@@ -58,7 +59,7 @@
                         </button>
                     </form>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-7 col-md d-flex flex-column">
                 <div class="row align-items mb-5" style="min-height: 25rem">
                     @foreach ($events as $event)

@@ -17,18 +17,18 @@ class UsersSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'Test User Member',
-                'username' => "user",
-                'password' => Hash::make("useruser"),
-                'email' => "user@gmail.com",
-                'role_id' => 2
-            ],
-            [
                 'name' => 'Test User Admin',
                 'username' => "admin",
                 'password' => Hash::make("adminadmin"),
                 'email' => "admin@gmail.com",
                 'role_id' => 1
+            ],
+            [
+                'name' => 'Test User Member',
+                'username' => "user",
+                'password' => Hash::make("useruser"),
+                'email' => "user@gmail.com",
+                'role_id' => 2
             ],
             [
                 'name' => 'Test User EO',

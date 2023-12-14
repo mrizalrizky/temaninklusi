@@ -1,4 +1,4 @@
 <div>
-    <p>{{ $event->eventDetails->description }}</p>
+    <p>{{ $event->eventDetail->description }}</p>
 </div>
 

@@ -4,13 +4,13 @@
             <h4>Event Details</h4>
             <ul class="d-grid gap-4 p-0 justify-content-center justify-content-md-start">
                 <x-listitem.event-list-item icon="bytesize:location">
-                    {{ $event->eventDetails['location'] }}
+                    {{ $event->eventDetail['location'] }}
                 </x-listitem.event-list-item>
                 <x-listitem.event-list-item icon="fontisto:date">
-                    {{ $event->eventDetails['start_date']->format('d M Y') }} - {{ $event->eventDetails['end_date']->format('d M Y') }}
+                    {{ $event->eventDetail['start_date']->format('d M Y') }} - {{ $event->eventDetail['end_date']->format('d M Y') }}
                 </x-listitem.event-list-item>
                 <x-listitem.event-list-item icon="ph:clock-fill">
-                    {{ $event->eventDetails['start_date']->format('H.i') }} - {{ $event->eventDetails['end_date']->format('H.i') }} WIB
+                    {{ $event->eventDetail['start_date']->format('H.i') }} - {{ $event->eventDetail['end_date']->format('H.i') }} WIB
                 </x-listitem.event-list-item>
             </ul>
         </div>

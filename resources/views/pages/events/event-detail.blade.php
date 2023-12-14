@@ -20,20 +20,41 @@
 
     @if (Auth::check())
     <div class="d-flex justify-content-end">
-        @can('manage-event')
-            <button type="submit" data-bs-toggle="modal" data-bs-target="#approveEventModal">Approve</button>
-            <button type="submit" data-bs-toggle="modal" data-bs-target="#rejectEventModal">Reject</button>
+        @if($event->isWaitingApproval())
+            @can('manage-event')
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#approveEventModal">Approve</button>
+                <button type="submit" data-bs-toggle="modal" data-bs-target="#rejectEventModal">Reject</button>
+            @endcan
         @endif
         @can('edit-event', $event)
-        <a href="#">Edit</a>
+            <a href="{{ route('event.edit') }}">Edit</a>
         @endcan
     </div>
     @endif
 
-    <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'APPROVE_EVENT']) }}"
-                          title="Yakin akan approve event?" submitTitle="Ya" rejectTitle="Tidak"/>
-    <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetails->slug, 'actionType' => 'REJECT_EVENT']) }}"
-                          title="Yakin akan reject event?" submitTitle="Ya" rejectTitle="Tidak"/>
+    <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'APPROVE_EVENT']) }}"
+                          title="Yakin akan approve event?" />
+    <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'REJECT_EVENT']) }}"
+        title="Yakin akan reject event?" />
+
+
+    {{-- @if (session()->has('approve-modal'))
+        @push('after-script')
+        <script>
+            document.addEventListener('DOMContentLoaded', () =>  {
+                const popupModal = document.getElementById('approveEventModal')
+                popupModal.style.display = 'block'
+                popupModal.classList.add('show')
+                const modalBackdrop = document.createElement('div')
+                modalBackdrop.setAttribute('id', 'modal_backdrop')
+                modalBackdrop.className = 'modal-backdrop fade show'
+                document.body.appendChild(modalBackdrop)
+
+            });
+        </script>
+        @endpush
+    @endif --}}
+
     <div id="carouselFade" class="carousel slide carousel-fade">
         <div class="carousel-inner">
             @foreach ($event->eventFiles as $eventBanner)
@@ -52,7 +73,7 @@
 
     <div class="d-md-flex justify-content-between">
         <div class="col-md-6">
-            <h2 class="text-center text-md-start mb-3">{{ $event->eventDetails['title'] }}</h2>
+            <h2 class="text-center text-md-start mb-3">{{ $event->eventDetail['title'] }}</h2>
             <ul class="nav d-flex gap-3 mb-3 justify-content-center justify-content-md-start flex-nowrap" id="pills-tab" role="tablist">
                 <x-button.pill-button class="active" id="description-tab" dataBsTarget="#pills-description" ariaControls="description">
                     Description
@@ -78,7 +99,7 @@
         </div>
 
         <div>
-            <x-event-detail-container :event="$event"/>
+            @include('pages.events.includes.event-detail-container', $event)
         </div>
     </div>
 </div>

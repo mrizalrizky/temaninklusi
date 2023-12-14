@@ -11,53 +11,7 @@
             </div>
         </div>
         <div class="row gx-4 gx-lg-5">
-            <div class="col-5 col-lg-4 col-xl-3">
-                <div class="d-flex gap-2 flex-column align-items-center justify-content-center rounded-4 p-4"
-                    style="background-color: var(--secondary-color)">
-                    <div class="mb-3 d-flex gap-2 flex-column align-items-center">
-                        <img class="rounded-4 img-fluid mb-2" src="assets/profile/profile-picture.png" alt=""
-                            style="max-width: 3rem">
-                        <h6 class="m-0">{{ Auth::user()->name }}</h6>
-                        <small style="font-size: .8rem" class="text-primary">{{ Auth::user()->role->type }}</small>
-                    </div>
-                    <div class="px-4 py-2 mb-4">
-                        <ul style="list-style-type: none" class="row gap-3 p-0">
-                            <li class="p-2 {{ Request::is('profile') ? 'bg-white p-2 rounded-3' : '' }}">
-                                <a href="{{ route('profile.index') }}" class="d-flex align-items-center gap-3 text-primary">
-                                    <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                                        </svg>
-                                    </div>
-
-                                    <small>Profile</small>
-                                </a>
-                            </li>
-                            <li class="p-2 {{ Request::is('profile/events') ? 'bg-white p-2 rounded-3' : '' }}">
-                                <a href="{{ route('profile.events') }}" class="d-flex align-items-center gap-3 text-primary">
-                                    <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-calendar-event-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5" />
-                                        </svg>
-                                    </div>
-
-                                    <small>Events</small>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn-no-style text-danger">
-                            Logout?
-                        </button>
-                    </form>
-                </div>
-            </div>
+            @include('pages.profile.profile-sidebar')
             <div class="col-7">
                 <div class="d-flex gap-2 flex-column align-items-start justify-content-center rounded-4 p-4"
                     style="background-color: var(--secondary-color)">

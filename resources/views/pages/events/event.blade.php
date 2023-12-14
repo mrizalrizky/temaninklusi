@@ -17,7 +17,7 @@
         <div class="d-flex gap-4 rounded-4 p-4 m-auto" style="width: fit-content; background-color: #01676c">
             <x-form.base-form-input name="title" placeholder="Cari event"/>
             <x-form.base-form-input name="start_date" type="date" />
-            <x-form.base-form-select name="disability_category" :options="$disabilityCategories" placeholder="Jenis Disabilitas" id="event_category"/>
+            <x-form.base-form-select name="disability_category[]" :options="$disabilityCategories" placeholder="Jenis Disabilitas" id="event_category" onclick="getEventByCategory(this)"/>
             @can('upload-event')
                 <button class="d-flex align-self-center bg-transparent border-0">
                     <iconify-icon icon="carbon:add-alt" height="2.25rem" class="text-white"></iconify-icon>
@@ -47,19 +47,24 @@
 </div>
 @endsection
 
-{{-- @push('after-script')
+@push('after-script')
 <script>
-$(document).on('change', '#event_category', function () {
-    let category_id = $(this).val();
-    console.log('CATEGORY ID', category_id)
-    $.ajax({
-        type: 'GET',
-        url: '{{ route('event.index') }}',
-        data: { 'category_id': category_id},
-        success: function(data) {
-            console.log('SUCCESS, DATA :', data);
+    const getEventByCategory = (select) => {
+        const selectedOption = select.options[select.selectedIndex];
+        const categoryId = selectedOption.value;
+
+        if (select.checked) {
+            selectedCategories.push(categoryId);
+        } else {
+            const index = selectedCategories.indexOf(categoryId);
+            if (index !== -1) {
+                selectedCategories.splice(index, 1);
+            }
         }
-    })
-})
+
+        console.log("Selected Categories:", selectedCategories);
+
+        // fetch(env('APP_URL')/events)
+    }
 </script>
-@endpush --}}
+@endpush
