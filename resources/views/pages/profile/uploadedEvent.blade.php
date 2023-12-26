@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="row gx-4 gx-lg-5">
-            @include('pages.profile.profile-sidebar')
+            @include('pages.profile.includes.profile-sidebar')
             <div class="col-7 col-md d-flex flex-column">
                 <div class="row align-items mb-5" style="min-height: 25rem">
                     @foreach ($events as $event)

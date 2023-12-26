@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DisabilityCategory extends Model
 {
     protected $fillable = [
-        'name'
+        'label'
     ];
 }

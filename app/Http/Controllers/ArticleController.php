@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -19,27 +22,49 @@ class ArticleController extends Controller
         return view('pages.addBlog');
     }
 
-    protected function validateLogin(Request $request)
+    protected function validateData(Request $request)
     {
         $request->validate([
             'image' => 'required',
-            'title' => 'required||unique:articles',
+            'title' => 'required|unique:articles',
+            'content' => 'required',
             'source' => 'required',
         ]);
     }
 
     public function add(Request $request) {
-        $this->validateLogin($request);
+        // $this->validateData($request);
+        $request->validate([
+            'image' => 'required',
+            'title' => 'required|unique:articles',
+            'content' => 'required',
+            'source' => 'required',
+        ]);
 
-        $file = $request->file('image');
+        $imageFile = $request->file('image');
 
-        $imageName = 'blogs/'.time().'.'.$file->getClientOriginalExtension();
-        Storage::putFileAs('public/images/blogs/', $file, $imageName);
+        $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
+        $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
+        if($file) {
+            $fileData = File::create([
+                'file_name' => $imageName,
+                'file_path' => $file,
+                'file_type' => 'article_banner',
+            ]);
+        }
 
-        $data['image'] = $imageName;
-
-
-        // Product::create($data);
+        Article::create([
+            'file_id' => $fileData->id,
+            'article_category_id' => 1,
+            'title' => $request->title,
+            'content' => $request->content,
+            'slug' => Str::slug($request->title),
+            'show_flag' => 1,
+            'created_by' => Auth::user()->username,
+            'updated_by' => Auth::user()->username,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
         return redirect()->route('blog.index');
     }

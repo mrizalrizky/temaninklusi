@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\EventStatusConstant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,11 +29,19 @@ class Event extends Model
         return $this->belongsTo(MasterStatus::class, 'status_id', 'id');
     }
 
+    public function registeredByUsers() {
+        return $this->belongsToMany(User::class, 'registered_events', 'event_id', 'user_id');
+    }
+
     public function comments() {
         return $this->hasMany(UserComment::class, 'event_id', 'id');
     }
 
     public function eventFiles() {
         return $this->hasMany(EventFile::class, 'event_id', 'id');
+    }
+
+    public function isWaitingApproval() {
+        return $this->status_id == EventStatusConstant::WAITING_APPROVAL;
     }
 }

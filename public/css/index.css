@@ -41,9 +41,8 @@ small {
 }
 
 .smaller {
-    font-size: .75rem;
+    font-size: 0.75rem;
 }
-
 
 p {
     font-size: 1.1rem;
@@ -107,27 +106,24 @@ textarea {
 }
 
 ::placeholder {
-    font-size: .9rem;
+    font-size: 0.9rem;
     opacity: 1;
 }
 
 ::-ms-input-placeholder {
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
-input[type="text"]
-{
-    font-size: .9rem !important;
+input[type="text"] {
+    font-size: 0.9rem !important;
 }
 
-input[type="email"]
-{
-    font-size: .9rem !important;
+input[type="email"] {
+    font-size: 0.9rem !important;
 }
 
-input[type="password"]
-{
-    font-size: .9rem !important;
+input[type="password"] {
+    font-size: 0.9rem !important;
 }
 
 .label-add-blog {
@@ -139,7 +135,7 @@ input[type="password"]
 }
 
 .profile-label {
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 .navbar-brand:hover {
@@ -200,7 +196,7 @@ input[type="password"]
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
 } */
 
-.btn-group-sm>.btn,
+.btn-group-sm > .btn,
 .btn-sm {
     --bs-btn-padding-y: 0.4rem;
     --bs-btn-padding-x: 1.7rem;
@@ -242,6 +238,10 @@ input[type="password"]
 
 .bg-primary {
     background-color: var(--bg-color) !important;
+}
+
+.bg-secondary {
+    background-color: var(--main-color) !important;
 }
 
 .alert-number {
@@ -336,7 +336,7 @@ input[type="password"]
 
 .btn-no-style {
     border: none !important;
-    font-size: .9rem;
+    font-size: 0.9rem;
 }
 
 @media only screen and (max-width: 547px) {

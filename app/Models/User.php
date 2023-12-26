@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
+    public function registeredEvents() {
+        return $this->belongsToMany(Event::class, 'registered_events', 'user_id', 'event_id');
+    }
+
     public function isAdmin() {
         return $this->role_id == RoleConstant::ADMIN;
     }

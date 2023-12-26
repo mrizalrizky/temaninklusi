@@ -5,7 +5,7 @@
 
     <form action="{{ route('event.update', $event->eventDetail->slug) }}" method="POST">
         @csrf
-        <x-form.base-form-input title="title" type="text" value="{{ $event->eventDetail->title }}"  placeholder="Janedoe" name="title" :label="true">
+        <x-form.base-form-input class="mb-4" title="title" type="text" value="{{ $event->eventDetail->title }}"  placeholder="Janedoe" name="title" :label="true">
             @error('title')
             <div class="invalid-feedback">
                 {{ $message }}

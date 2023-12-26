@@ -87,13 +87,13 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="description-tab">
-                    @include('pages.events.section.event-description', $event)
+                    @include('pages.events.includes.event-description', $event)
                 </div>
                 <div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="details-tab">
-                    @include('pages.events.section.event-details', $event)
+                    @include('pages.events.includes.event-details', $event)
                 </div>
                 <div class="tab-pane fade" id="pills-comments" role="tabpanel" aria-labelledby="comments-tab">
-                    @include('pages.events.section.event-comments', $event)
+                    @include('pages.events.includes.event-comments', $event)
                 </div>
             </div>
         </div>

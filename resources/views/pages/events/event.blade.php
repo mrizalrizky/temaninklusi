@@ -16,12 +16,12 @@
         {{-- <form action="{{ route('event.index')}}" method="GET"> --}}
         <div class="d-flex gap-4 rounded-4 p-4 m-auto" style="width: fit-content; background-color: #01676c">
             <x-form.base-form-input name="title" placeholder="Cari event"/>
-            <x-form.base-form-input name="start_date" type="date" />
-            <x-form.base-form-select name="disability_category[]" :options="$disabilityCategories" placeholder="Jenis Disabilitas" id="event_category" onclick="getEventByCategory(this)"/>
+            <x-form.base-form-input name="start_date" type="date" placeholder="DD/MM/YYYY"/>
+            <x-form.base-form-multi-select name="disability_category" :options="$disabilityCategories" placeholder="Jenis Disabilitas" id="event_category"/>
             @can('upload-event')
-                <button class="d-flex align-self-center bg-transparent border-0">
+                <a class="d-flex align-self-center bg-transparent border-0" href="{{ route('event.upload')}}">
                     <iconify-icon icon="carbon:add-alt" height="2.25rem" class="text-white"></iconify-icon>
-                </button>
+                </a>
             @endcan
         </div>
         {{-- </form> --}}

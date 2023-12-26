@@ -15,7 +15,7 @@
                                 @csrf
                                 <input type="hidden" name="email" value="{{ $email }}">
                                 <input type="hidden" name="resetToken" value="{{ $resetToken }}">
-                                <x-form.base-form-input title="Password" type="password" name="password" :label="true"
+                                <x-form.base-form-input class="mb-4" title="Password" type="password" name="password" :label="true"
                                     placeholder="●●●●●●●●">
                                     @error('password')
                                         <div class="invalid-feedback">
@@ -24,7 +24,7 @@
                                     @enderror
                                 </x-form.base-form-input>
 
-                                <x-form.base-form-input title="Konfirmasi Password" type="password"
+                                <x-form.base-form-input class="mb-4" title="Konfirmasi Password" type="password"
                                     name="password_confirmation" :label="true" placeholder="●●●●●●●●">
                                     @if ($errors->has('password_confirmation'))
                                         <div class="invalid-feedback">

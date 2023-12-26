@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(MasterStatusSeeder::class);
+        $this->call(EventCategorySeeder::class);
         $this->call(EventDetailSeeder::class);
         $this->call(FileSeeder::class);
         // $this->call(MasterCategorySeeder::class);
@@ -27,7 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MasterOrganizerSeeder::class);
         $this->call(EventSeeder::class);
         $this->call(EventFileSeeder::class);
-        // $this->call(EventCategorySeeder::class);
         $this->call(UserCommentSeeder::class);
 
 

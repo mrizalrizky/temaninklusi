@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +11,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('pages.profile');
+        return view('pages.profile.profile');
     }
 
     protected function validator(Request $request)
@@ -22,13 +20,13 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'username' => ['required', 'min: 5', 'max:20', 'unique:users'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
+                // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
             ]);
         } else {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'username' => ['required', 'min: 5', 'max:20'],
-                'email' => ['required', 'string', 'email', 'max:255', 'email:dns'],
+                // 'email' => ['required', 'string', 'email', 'max:255', 'email:dns'],
             ]);
         }
 
@@ -50,7 +48,7 @@ class ProfileController extends Controller
             User::where('id', Auth::user()->id)->update([
                 'name' => $request->name,
                 'username' => $request->username,
-                'email' => $request->email,
+                // 'email' => $request->email,
                 'password' => Hash::make($request['newPassword']),
             ]);
         } else {
@@ -60,24 +58,5 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('profile.update');
-    }
-
-    public function event()
-    {
-
-        if (strtolower(Auth::user()->role->type) == 'user') {
-            return view('pages.registeredEvent');
-
-        } else if (strtolower(Auth::user()->role->type) == 'eventorganizer') {
-
-            $events = Event::where([
-                ['show_flag', true],
-                ['organizer_id', Auth::user()->id],
-            ])->paginate(3);
-
-
-
-            return view('pages.uploadedEvent', compact('events'));
-        }
     }
 }
