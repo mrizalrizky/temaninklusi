@@ -19,6 +19,9 @@ class CreateEventDetailsTable extends Migration
             $table->text('description');
             $table->string('location');
             $table->string('slug');
+            $table->string('contact_email');
+            $table->string('contact_phone');
+            $table->integer('quota');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
 
