@@ -25,10 +25,13 @@ class EventRequest extends FormRequest
     {
         return [
             'title'       => ['required', 'min:3', 'string'],
-            'description' => ['required', 'min:3', 'string'],
+            // 'description' => ['required', 'min:3', 'string'],
+            // 'quota'      => ['required', 'min: 1'],
+            // 'contact_email' => ['required', 'email', 'email:dns'],
+            // 'contact_phone' => ['required'],
             'location'    => ['required'],
-            'start_date'  => ['required', 'date', 'after_or_equal:today'],
-            'end_date'    => ['required', 'date', 'after_or_equal:start_date']
+            // 'start_date'  => ['required', 'date', 'after_or_equal:today'],
+            // 'end_date'    => ['required', 'date', 'after_or_equal:start_date']
         ];
     }
 }

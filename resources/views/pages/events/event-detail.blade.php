@@ -27,7 +27,7 @@
             @endcan
         @endif
         @can('edit-event', $event)
-            <a href="{{ route('event.edit') }}">Edit</a>
+            <a href="{{ route('event.edit', $event->eventDetail->slug) }}">Edit</a>
         @endcan
     </div>
     @endif
