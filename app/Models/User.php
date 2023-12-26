@@ -47,8 +47,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles() {
+    public function role() {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function organizer() {
+        return $this->hasOne(MasterOrganizer::class, 'user_id');
+    }
+
+    public function registeredEvents() {
+        return $this->belongsToMany(Event::class, 'registered_events', 'user_id', 'event_id');
     }
 
     public function isAdmin() {

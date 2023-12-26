@@ -40,6 +40,10 @@ small {
     font-size: 0.85rem;
 }
 
+.smaller {
+    font-size: 0.75rem;
+}
+
 p {
     font-size: 1.1rem;
 }
@@ -71,11 +75,11 @@ h4 {
 }
 
 h5 {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
 }
 
 h6 {
-    font-size: 0.67rem;
+    font-size: 0.9rem;
 }
 
 desc {
@@ -101,12 +105,37 @@ textarea {
     color: #999 !important;
 }
 
+::placeholder {
+    font-size: 0.9rem;
+    opacity: 1;
+}
+
+::-ms-input-placeholder {
+    font-size: 0.9rem;
+}
+
+input[type="text"] {
+    font-size: 0.9rem !important;
+}
+
+input[type="email"] {
+    font-size: 0.9rem !important;
+}
+
+input[type="password"] {
+    font-size: 0.9rem !important;
+}
+
+.label-add-blog {
+    font-size: 1rem;
+}
+
 .fw-bold {
     font-weight: 600;
 }
 
-.navbar {
-    box-shadow: none;
+.profile-label {
+    font-size: 0.9rem;
 }
 
 .navbar-brand:hover {
@@ -147,10 +176,6 @@ textarea {
     --bs-btn-disabled-bg: var(--bs-btn-bg);
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
-
-.btn-primary:hover {
-    background-color: var(--bs-btn-bg);
 }
 
 /*
@@ -213,6 +238,10 @@ textarea {
 
 .bg-primary {
     background-color: var(--bg-color) !important;
+}
+
+.bg-secondary {
+    background-color: var(--main-color) !important;
 }
 
 .alert-number {
@@ -305,7 +334,12 @@ textarea {
     --bs-gutter-y: 4rem;
 }
 
-@media only screen and (max-width: 928px) {
+.btn-no-style {
+    border: none !important;
+    font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 547px) {
     html {
         font-size: 90% !important;
     }
@@ -321,6 +355,7 @@ textarea {
     html {
         font-size: 60% !important;
     }
+
     /* .icon {
         width: 45% !important;
     } */

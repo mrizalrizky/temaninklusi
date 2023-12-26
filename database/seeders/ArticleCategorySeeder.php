@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MasterCategorySeeder extends Seeder
+class ArticleCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +14,15 @@ class MasterCategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_categories')->insert([
+        DB::table('article_categories')->insert([
             [
-                'name' => 'Self Development'
+                'label' => 'Olahraga',
             ],
             [
-                'name' => 'Technology'
+                'label' => 'Teknologi',
+            ],
+            [
+                'label' => 'Edukasi'
             ]
         ]);
     }

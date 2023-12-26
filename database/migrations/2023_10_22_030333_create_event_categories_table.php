@@ -15,8 +15,7 @@ class CreateEventCategoriesTable extends Migration
     {
         Schema::create('event_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('master_category_id')->references('id')->on('master_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreignId('event_id')->references('id')->on('events')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->string('label');
 
             $table->timestamps();
         });

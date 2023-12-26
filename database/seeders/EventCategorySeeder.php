@@ -16,9 +16,11 @@ class EventCategorySeeder extends Seeder
     {
         DB::table('event_categories')->insert([
             [
-                'master_category_id' => 1,
-                'event_id'           => 1,
-            ]
+                'label' => 'Olahraga',
+            ],
+            [
+                'label' => 'Teknologi',
+            ],
         ]);
     }
 }

@@ -18,15 +18,16 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         $this->call(UsersSeeder::class);
         $this->call(MasterStatusSeeder::class);
+        $this->call(EventCategorySeeder::class);
         $this->call(EventDetailSeeder::class);
         $this->call(FileSeeder::class);
-        $this->call(MasterCategorySeeder::class);
+        // $this->call(MasterCategorySeeder::class);
+        $this->call(ArticleCategorySeeder::class);
         $this->call(ArticleSeeder::class);
         $this->call(DisabilityCategorySeeder::class);
         $this->call(MasterOrganizerSeeder::class);
         $this->call(EventSeeder::class);
         $this->call(EventFileSeeder::class);
-        $this->call(EventCategorySeeder::class);
         $this->call(UserCommentSeeder::class);
 
 

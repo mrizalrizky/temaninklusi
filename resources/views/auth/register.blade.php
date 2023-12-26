@@ -12,7 +12,7 @@
                         class="border rounded-4 p-4 p-x-custom-2">
                         @csrf
 
-                        <x-form.base-form-input title="Nama" type="text" value="{{ old('name') }}" placeholder="Jane Doe" name="name" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Nama" type="text" value="{{ old('name') }}" placeholder="Jane Doe" name="name" :label="true">
                             @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -20,7 +20,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Username" type="text" value="{{ old('username') }}"  placeholder="Janedoe" name="username" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Username" type="text" value="{{ old('username') }}"  placeholder="Janedoe" name="username" :label="true">
                             @error('username')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -28,7 +28,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Alamat email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Alamat email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -36,7 +36,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Password" type="password" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Password" type="password" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -44,7 +44,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Konfirmasi Password" type="password" name="password_confirmation" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Konfirmasi Password" type="password" name="password_confirmation" :label="true" placeholder="●●●●●●●●">
                             @if ($errors->has('password_confirmation'))
                             <div class="invalid-feedback">
                                 Konfirmasi password tidak cocok.
