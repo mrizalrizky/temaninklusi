@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Constants\EventStatusConstant;
 use App\Constants\RoleConstant;
 use App\Models\DisabilityCategory;
+use App\Models\EventCategory;
 use App\Models\RegisteredEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -119,14 +120,21 @@ class EventController extends Controller
     }
 
     public function edit($slug) {
-        // $event = Event::with('eventDetail')->whereHas('eventDetail', function ($q) use ($slug) {
-        //     $q->where('slug', $slug);
-        // })->first();
+        $event = Event::with('eventDetail')->whereHas('eventDetail', function ($q) use ($slug) {
+            $q->where('slug', $slug);
+        })->first();
 
-        return view('pages.events.event-edit', compact('event'));
+        $eventCategories = EventCategory::all();
+        $disabilityCategories = DisabilityCategory::all();
+
+        return view('pages.events.edit-event', compact('event', 'eventCategories', 'disabilityCategories'));
     }
 
     public function update(EventRequest $request) {
+        // $event->update([
+        //     'updated_by' => Auth::user()->username,
+        // ]);
+
         return redirect()->back()->with('success', 'Berhasil edit event');
     }
 

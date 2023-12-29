@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-md px-4 px-lg-3 d-md-flex justify-content-center ">
+    <div class="d-md-flex justify-content-center container-md px-4 px-lg-3">
         <div class="col-lg-6 border border-1 rounded-4 align-items-center p-5">
-            <form enctype="multipart/form-data" action="{{ route('event.create') }}" method="POST" id="eventForm">
+            <form action="{{ route('event.create') }}" method="POST" id="eventForm">
                 @csrf
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-home-tab">
-                        @include('pages.events.includes.upload-event-information', $eventCategories)
+                        @include('pages.events.includes.edit-event-information', $eventCategories)
                     </div>
                     <div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        @include('pages.events.includes.upload-event-detail', $disabilityCategories)
+                        @include('pages.events.includes.edit-event-detail', $disabilityCategories)
                     </div>
                     <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        @include('pages.events.includes.upload-event-additional')
+                        @include('pages.events.includes.edit-event-additional')
                     </div>
                 </div>
                 <div class="d-flex">

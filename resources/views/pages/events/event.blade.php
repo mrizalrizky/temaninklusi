@@ -8,7 +8,7 @@
             <h3 class="text-primary">
             Mulai cari event & kegiatan
             </h3>
-            <p class="text-primary fw-bold">buat bantu kamu kembangin diri!</p>
+            <p class="text-primary">buat bantu kamu kembangin diri!</p>
         </div>
     </section>
 

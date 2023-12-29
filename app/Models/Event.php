@@ -14,6 +14,9 @@ class Event extends Model
         'organizer_id',
         'event_detail_id',
         'status_id',
+        'license_flag',
+        'event_category_id',
+        'show_flag',
     ];
 
     public function eventDetail() {

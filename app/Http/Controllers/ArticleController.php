@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\ArticleCategory;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,8 @@ class ArticleController extends Controller
     }
 
     public function showAddBlog() {
-        return view('pages.addBlog');
+        $articleCategories = ArticleCategory::all();
+        return view('pages.addBlog', compact('articleCategories'));
     }
 
     protected function validateData(Request $request)
@@ -32,8 +34,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function add(Request $request) {
-        // $this->validateData($request);
+    public function create(Request $request) {
         $request->validate([
             'image' => 'required',
             'title' => 'required|unique:articles',
@@ -73,7 +74,7 @@ class ArticleController extends Controller
         $article = Article::where([
             ['slug', $slug],
             ['show_flag', True]
-            ])->get()->first();
+            ])->first();
 
         $article->content = preg_replace('~[\r\n]+~', '<br><br>', $article->content);
         return view('pages.blogs.blogDetail', compact('article'));

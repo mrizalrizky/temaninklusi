@@ -14,6 +14,9 @@ class EventDetail extends Model
         'description',
         'location',
         'slug',
+        'quota',
+        'contact_email',
+        'contact_phone',
         'start_date',
         'end_date'
     ];

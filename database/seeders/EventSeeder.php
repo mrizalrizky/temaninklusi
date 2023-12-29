@@ -19,11 +19,13 @@ class EventSeeder extends Seeder
                 'organizer_id'    => 2,
                 'event_detail_id' => 1,
                 'status_id'       => 1,
+                'event_category_id' => 2,
             ],
             [
                 'organizer_id'    => 1,
                 'event_detail_id' => 2,
                 'status_id'       => 2,
+                'event_category_id' => 1,
             ],
         ]);
     }
