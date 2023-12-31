@@ -23,4 +23,12 @@ class Article extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function file() {
+        return $this->belongsTo(File::class, 'file_id', 'id');
+    }
+
+    public function ArticleCategory() {
+        return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');
+    }
 }

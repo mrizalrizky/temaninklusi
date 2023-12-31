@@ -20,6 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->longText('content');
             $table->string('slug');
+            $table->string('source', 16);
             $table->tinyInteger('show_flag')->default(1);
             $table->string('created_by');
             $table->string('updated_by');
