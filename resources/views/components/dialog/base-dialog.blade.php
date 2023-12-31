@@ -13,6 +13,7 @@
 
                 <form action="{{ $action }}" method="POST">
                     @csrf
+                    @method($method)
                     <button type="submit" class="btn btn-primary">{{ $submitTitle }}</button>
                     {{ $slot }}
                 </form>

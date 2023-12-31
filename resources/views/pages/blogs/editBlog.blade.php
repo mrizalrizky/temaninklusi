@@ -7,13 +7,22 @@
         </div>
         <div class="d-md-flex justify-content-center">
             <div class="col col-xl-7 border border-1 rounded-4 align-items-center p-5">
-                <form enctype="multipart/form-data" action="{{ route('blog.update', $article->slug) }}" class="ms-2" method="POST">
-                    @method('PUT')
+                <form enctype="multipart/form-data" action="{{ route('blog.validate') }}" class="ms-2" method="POST">
                     @csrf
+                    @if (Session::get('uploadArticleModal'))
+                        @php
+                            $data = Session::get('uploadArticleModal');
+                        @endphp
+                    @else
+                        @php
+                            $data = null;
+                        @endphp
+                    @endif
+                    <input type="hidden" value="{{ $article->slug }}" name="slug">
                     <div class="row">
                         <div class="col">
                             <x-form.base-form-input class="mb-4" title="Judul Artikel" name="title" type="text"
-                                value="{{ $article->title }}" :label="true">
+                                value="{{ $data ? $data['title'] : $article->title }}" :label="true">
                                 @error('title')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -23,7 +32,8 @@
                         </div>
                         <div class="col">
                             <label for="article_category" class="text-primary fw-bold mb-2">Kategori Artikel</label>
-                            <x-form.base-form-select name="article_category" id="article_category" value="{{ $article->ArticleCategory->id }}"
+                            <x-form.base-form-select name="article_category" id="article_category"
+                                value="{{ $data ? $data['article_category'] : $article->ArticleCategory->id }}"
                                 placeholder="Pilih kategori" :options="$articleCategories" />
                         </div>
                     </div>
@@ -31,7 +41,7 @@
                     <div class="row">
                         <div class="col">
                             <x-form.base-form-input class="mb-4" title="Sumber" name="source" type="text"
-                                value="{{ $article->source }}" :label="true">
+                                value="{{ $data ? $data['source'] : $article->source }}" :label="true">
                                 @error('source')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -51,12 +61,25 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    @if ($data)
+                        <div class="mb-4">
+                            <label class="form-label text-primary label-add-blog">Thumbnail</label>
+                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" />
+                        </div>
+                        <input type="hidden" name="imageUploaded" value="{{ $data['imageUploaded'] ?? '' }}">
+                    @else
+                        <div class="mb-4">
+                            <label class="form-label text-primary label-add-blog">Thumbnail</label>
+                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" />
+                        </div>
+                    @endif
+                    {{-- <div class="mb-4">
                         <label class="form-label text-primary label-add-blog">Thumbnail</label>
                         <div class="image-thumbnail">
                             <label for="image" style="width: 11rem; height: 11rem; background-color: #f4f4f4"
                                 class="d-block rounded-3 position-relative z-10" id="label-image">
-                                <img src="{{ asset('/storage/'.$article->file->file_path) }}" style="max-width: 11rem; max-height: 11rem;"
+                                <img src="{{ asset('/storage/' . $article->file->file_path) }}"
+                                    style="max-width: 11rem; max-height: 11rem;"
                                     class="object-fit-contain position-absolute top-50 start-50 translate-middle"
                                     id="thumbnail" alt="">
                                 <img style="max-width: 2.5rem" src="{{ asset('assets/icons/addImage.png') }}"
@@ -70,7 +93,7 @@
                                 </div>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- <div class="mb-4">
                     <label class="form-label text-primary label-add-blog">Title</label>
@@ -84,8 +107,7 @@
                 </div> --}}
                     <div class="mb-4">
                         <label for="content" class="form-label text-primary label-add-blog">Content</label>
-                        <textarea class="form-control @error('content') is-invalid @enderror" name="content"
-                            id="content" rows="4">{{ $article->content }}</textarea>
+                        <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="4">{{ $data ? $data['content'] : $article->content }}</textarea>
                         @error('content')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -96,10 +118,16 @@
                         <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4"
                             type="submit">Edit</button>
                     </div>
-                    <x-dialog.base-dialog id="uploadArticleModal"
-                        action="{{ route('blog.create', ['actionType' => 'submit']) }}"
-                        title="Yakin akan upload artikel?" />
                 </form>
+
+                <x-dialog.base-dialog id="uploadArticleModal" action="{{ route('blog.update', $article->slug) }}"
+                    title="Yakin akan tambah artikel?" method="PUT">
+                    @if (session()->has('uploadArticleModal'))
+                        @foreach (session()->get('uploadArticleModal') as $key => $value)
+                            <input name="{{ $key }}" value="{{ $value }}" type="hidden" />
+                        @endforeach
+                    @endif
+                </x-dialog.base-dialog>
 
                 @push('after-script')
                     <script>
@@ -112,9 +140,6 @@
                 @if (session()->has('uploadArticleModal'))
                     @push('after-script')
                         <script>
-                            imageThumbnail = () => {
-                                console.log(100)
-                            }
                             document.addEventListener('DOMContentLoaded', () => {
                                 const popupModal = document.getElementById('uploadArticleModal')
                                 popupModal.style.display = 'block'

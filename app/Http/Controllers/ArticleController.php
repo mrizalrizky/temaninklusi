@@ -26,46 +26,66 @@ class ArticleController extends Controller
         return view('pages.addBlog', compact('articleCategories'));
     }
 
-    private $data;
-
     protected function validateData(Request $request)
     {
-        $request->validate([
+        $validation = [
             'content' => 'required',
             'source' => 'required',
-        ]);
+            'article_category' => 'required',
+        ];
 
-        if ($this->data) {
-            if ($this->data->title != $request->title) {
-                $request->validate([
-                    'title' => 'required|unique:articles',
-                ]);
+        if ($request->slug) {
+            $article = Article::where([
+                ['slug', $request->slug],
+                ['show_flag', True]
+            ])->first();
+
+            if ($article->title != $request->title) {
+                $validation['title'] = 'required|unique:articles';
             } else {
-                $request->validate([
-                    'title' => 'required',
-                ]);
+                $validation['title'] = 'required';
             }
         } else {
-            $request->validate([
-                'image' => 'required',
-                'title' => 'required|unique:articles',
-            ]);
+            $validation['image'] = 'required';
+            $validation['title'] = 'required|unique:articles';
         }
 
-        return redirect()->back()->with('uploadArticleModal', $request->all());
+        $request->validate($validation);
+
+        $file = $request->file('image');
+        $fileId = 0;
+        $data = $request->all();
+        unset($data['image']);
+
+        if ($file) {
+            // $imageName = time() . '.' . $file->getClientOriginalExtension();
+            // Storage::putFileAs('public/images', $file, $imageName);
+
+            $imageFile = $request->file('image');
+
+            // $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
+            $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+            $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
+
+            $data['imageUploaded'] = 'images/blogs/' . $imageName;
+        }
+        return redirect()->back()->with('uploadArticleModal', $data);
     }
 
-    public function create(Request $request) {
-        $fileType = 'article_banner';
-        $imageFile = $request->file('image');
-        $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-        Storage::putFileAs('public/images/blogs/'. $fileType, $imageFile, $imageName);
-        $data['image'] = $imageName;
+    public function create(Request $request)
+    {
+        // $fileType = 'article_banner';
+        // $imageFile = $request->file('image');
+        // $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+        // Storage::putFileAs('public/images/blogs/' . $fileType, $imageFile, $imageName);
+        // $data['image'] = $imageName;
+        $temp = explode('/', $request->imageUploaded);
         $fileData = File::create([
-            'file_name' => $imageName,
-            'file_path' => 'images/blogs/' . $fileType,
-            'file_type' => $fileType,
+            'file_name' => $temp[count($temp) - 1],
+            'file_path' => 'images/blogs/' . $temp[count($temp) - 1],
+            'file_type' => 'article_banner',
         ]);
+
 
         Article::create([
             'file_id' => $fileData->id,
@@ -76,6 +96,7 @@ class ArticleController extends Controller
             'source' => $request->source,
             'show_flag' => true,
             'created_by' => Auth::user()->username,
+            'updated_by' => Auth::user()->username,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -112,33 +133,34 @@ class ArticleController extends Controller
             ['show_flag', True]
         ])->first();
 
-        $this->data = $article;
         $this->validateData($request);
 
-        $file = $request->file('image');
+        // $file = $request->file('image');
         $fileId = 0;
-        if ($file) {
-            $imageName = time() . '.' . $file->getClientOriginalExtension();
-            Storage::putFileAs('public/images', $file, $imageName);
+        // if ($file) {
+        //     $imageName = time() . '.' . $file->getClientOriginalExtension();
+        //     // Storage::putFileAs('public/images', $file, $imageName);
 
-            $data['image'] = $imageName;
+        //     $imageFile = $request->file('image');
 
-            $imageFile = $request->file('image');
-
-            // $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
-            $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-            $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
+        //     // $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
+        //     $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+        //     $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
+        // dd($request);
+        if ($request->imageUploaded) {
+            $temp = explode('/', $request->imageUploaded);
             $fileData = File::create([
-                'file_name' => $imageName,
-                'file_path' => 'images/blogs/' . $imageName,
+                'file_name' => $temp[count($temp) - 1],
+                'file_path' => 'images/blogs/' . $temp[count($temp) - 1],
                 'file_type' => 'article_banner',
             ]);
 
             $fileId = $fileData->id;
         }
+        // }
 
         $data = [
-            'article_category_id' => $request->category,
+            'article_category_id' => $request->article_category,
             'title' => $request->title,
             'content' => $request->content,
             'slug' => Str::slug($request->title),
@@ -147,7 +169,7 @@ class ArticleController extends Controller
             'updated_at' => now()
         ];
 
-        if($fileId) $data['file_id'] = $fileId;
+        if ($fileId) $data['file_id'] = $fileId;
 
         $article->update($data);
 
