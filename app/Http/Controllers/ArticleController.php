@@ -46,54 +46,36 @@ class ArticleController extends Controller
                 ]);
             }
         } else {
-
             $request->validate([
                 'image' => 'required',
                 'title' => 'required|unique:articles',
             ]);
         }
+
+        return redirect()->back()->with('uploadArticleModal', $request->all());
     }
 
-    public function create(Request $request)
-    {
-        $request->validate([
-            'image' => 'required',
-            'title' => 'required|unique:articles',
-            'content' => 'required',
-            'source' => 'required',
-        ]);
-
-        $file = $request->file('image');
-
-        $imageName = time() . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('public/images', $file, $imageName);
-
-        $data['image'] = $imageName;
-
+    public function create(Request $request) {
+        $fileType = 'article_banner';
         $imageFile = $request->file('image');
-
-        // $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
         $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-        $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
-        if ($file) {
-            $fileData = File::create([
-                'file_name' => $imageName,
-                'file_path' => 'images/blogs/' . $imageName,
-                'file_type' => 'article_banner',
-            ]);
-        }
-
+        Storage::putFileAs('public/images/blogs/'. $fileType, $imageFile, $imageName);
+        $data['image'] = $imageName;
+        $fileData = File::create([
+            'file_name' => $imageName,
+            'file_path' => 'images/blogs/' . $fileType,
+            'file_type' => $fileType,
+        ]);
 
         Article::create([
             'file_id' => $fileData->id,
-            'article_category_id' => $request->category,
+            'article_category_id' => $request->article_category,
             'title' => $request->title,
             'content' => $request->content,
             'slug' => Str::slug($request->title),
             'source' => $request->source,
-            'show_flag' => 1,
+            'show_flag' => true,
             'created_by' => Auth::user()->username,
-            'updated_by' => Auth::user()->username,
             'created_at' => now(),
             'updated_at' => now()
         ]);

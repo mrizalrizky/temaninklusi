@@ -29,6 +29,7 @@ Route::get('/about', function () {
 Route::prefix('blogs')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
     Route::get('/add', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
+    Route::post('/add/validate', [App\Http\Controllers\ArticleController::class, 'validateData'])->name('blog.validate');
     Route::post('/add', [App\Http\Controllers\ArticleController::class, 'create'])->name('blog.create');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
     Route::get('/edit/{slug}', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
@@ -40,7 +41,8 @@ Route::prefix('events')->group(function () {
     Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/upload', [App\Http\Controllers\EventController::class, 'showUploadEventPage'])->name('event.upload');
-    Route::post('/upload', [App\Http\Controllers\EventController::class, 'requestValidate'])->name('event.create');
+    Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
+    Route::post('/upload', [App\Http\Controllers\EventController::class, 'create'])->name('event.create');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
     Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
     Route::post('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
