@@ -36,7 +36,7 @@ class ArticleController extends Controller
         ]);
 
         if ($this->data) {
-            if ($this->data->email != $request->email) {
+            if ($this->data->title != $request->title) {
                 $request->validate([
                     'title' => 'required|unique:articles',
                 ]);

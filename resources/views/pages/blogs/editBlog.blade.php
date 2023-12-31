@@ -23,7 +23,7 @@
                         </div>
                         <div class="col">
                             <label for="article_category" class="text-primary fw-bold mb-2">Kategori Artikel</label>
-                            <x-form.base-form-select name="article_category" id="article_category" value="{{ $article->ArticleCategory->label }}"
+                            <x-form.base-form-select name="article_category" id="article_category" value="{{ $article->ArticleCategory->id }}"
                                 placeholder="Pilih kategori" :options="$articleCategories" />
                         </div>
                     </div>
