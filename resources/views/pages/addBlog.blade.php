@@ -7,18 +7,12 @@
         </div>
         <div class="d-md-flex justify-content-center">
             <div class="col col-xl-7 border border-1 rounded-4 align-items-center p-5">
-                {{-- @if (Session::get('uploadArticleModal'))
-                    <form enctype="multipart/form-data" action="{{ route('blog.create') }}" class="ms-2" method="POST">
-                    @else
-                        <form enctype="multipart/form-data" action="{{ route('blog.validate') }}" class="ms-2"
-                            method="POST">
-                @endif --}}
                 <form enctype="multipart/form-data" action="{{ route('blog.validate') }}" class="ms-2"
-                            method="POST">
+                      method="POST">
                 @csrf
-                @if (Session::get('uploadArticleModal'))
+                @if (Session::get('articleModal'))
                     @php
-                        $data = Session::get('uploadArticleModal');
+                        $data = Session::get('articleModal');
                     @endphp
                 @else
                     @php
@@ -56,7 +50,7 @@
                     </div>
                     <div class="col">
                         <x-form.base-form-input class="mb-4" title="Penulis" name="created_by" type="text"
-                            value="{{ Auth::user()->username }}" :label="true" disabled>
+                            value="{{ Auth::user()->name }}" :label="true" disabled>
                             @error('created_by')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -66,18 +60,18 @@
                     </div>
                 </div>
 
-                @if ($data)
                 <div class="mb-4">
                     <label class="form-label text-primary label-add-blog">Thumbnail</label>
-                    <x-button.upload-image-button />
+                    <x-button.upload-image-button name="article_banner" />
                 </div>
-                    <input type="hidden" name="imageUploaded" value="{{ $data['imageUploaded'] }}">
-                @else
+                @if ($data)
+                    <input type="hidden" name="article_banner" value="{{ $data['article_banner'] }}">
+                {{-- @else
                     <div class="mb-4">
                         <label class="form-label text-primary label-add-blog">Thumbnail</label>
-                        <x-button.upload-image-button />
+                        <x-button.upload-image-button name="article_banner" />
                     </div>
-                @endif
+                @endif --}}
 
                 <div class="mb-4">
                     <label for="content" class="form-label text-primary label-add-blog">Content</label>
@@ -91,30 +85,22 @@
                 <div class="d-flex justify-content-end mt-5">
                     <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4" type="submit">Upload</button>
                 </div>
-                {{-- <x-dialog.base-dialog id="uploadArticleModal" action="{{ route('blog.create') }}"
-                    title="Yakin akan tambah artikel?"> --}}
-                    {{-- @if (session()->has('uploadArticleModal'))
-                        @foreach (session()->get('uploadArticleModal') as $key => $value)
-                            <input name="{{ $key }}" value="{{ $value }}" type="hidden"/>
-                        @endforeach
-                    @endif --}}
-                {{-- </x-dialog.base-dialog> --}}
                 </form>
 
-                <x-dialog.base-dialog id="uploadArticleModal" action="{{ route('blog.create') }}"
+                <x-dialog.base-dialog id="articleModal" action="{{ route('blog.create') }}"
                                       title="Yakin akan tambah artikel?">
-                    @if (session()->has('uploadArticleModal'))
-                        @foreach (session()->get('uploadArticleModal') as $key => $value)
+                    @if (session()->has('articleModal'))
+                        @foreach (session()->get('articleModal') as $key => $value)
                             <input name="{{ $key }}" value="{{ $value }}" type="hidden"/>
                         @endforeach
                     @endif
                     </x-dialog.base-dialog>
 
-                @if (session()->has('uploadArticleModal'))
+                @if (session()->has('articleModal'))
                     @push('after-script')
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {
-                                const popupModal = document.getElementById('uploadArticleModal')
+                                const popupModal = document.getElementById('articleModal')
                                 popupModal.style.display = 'block'
                                 popupModal.classList.add('show')
                                 const modalBackdrop = document.createElement('div')

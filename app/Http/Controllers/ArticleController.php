@@ -46,46 +46,33 @@ class ArticleController extends Controller
                 $validation['title'] = 'required';
             }
         } else {
-            $validation['image'] = 'required';
+            $validation['article_banner'] = 'required';
             $validation['title'] = 'required|unique:articles';
         }
 
         $request->validate($validation);
 
-        $file = $request->file('image');
-        $fileId = 0;
+        $imageFile = $request->file('article_banner');
         $data = $request->all();
-        unset($data['image']);
+        unset($data['article_banner']);
 
-        if ($file) {
-            // $imageName = time() . '.' . $file->getClientOriginalExtension();
-            // Storage::putFileAs('public/images', $file, $imageName);
-
-            $imageFile = $request->file('image');
-
-            // $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
+        if ($imageFile) {
             $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-            $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
+            Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
 
-            $data['imageUploaded'] = 'images/blogs/' . $imageName;
+            $data['article_banner'] = 'images/blogs/' . $imageName;
         }
-        return redirect()->back()->with('uploadArticleModal', $data);
+        return redirect()->back()->with('articleModal', $data);
     }
 
     public function create(Request $request)
     {
-        // $fileType = 'article_banner';
-        // $imageFile = $request->file('image');
-        // $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-        // Storage::putFileAs('public/images/blogs/' . $fileType, $imageFile, $imageName);
-        // $data['image'] = $imageName;
-        $temp = explode('/', $request->imageUploaded);
+        $temp = explode('/', $request->article_banner);
         $fileData = File::create([
             'file_name' => $temp[count($temp) - 1],
             'file_path' => 'images/blogs/' . $temp[count($temp) - 1],
             'file_type' => 'article_banner',
         ]);
-
 
         Article::create([
             'file_id' => $fileData->id,
@@ -96,7 +83,6 @@ class ArticleController extends Controller
             'source' => $request->source,
             'show_flag' => true,
             'created_by' => Auth::user()->username,
-            'updated_by' => Auth::user()->username,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -135,29 +121,15 @@ class ArticleController extends Controller
 
         $this->validateData($request);
 
-        // $file = $request->file('image');
-        $fileId = 0;
-        // if ($file) {
-        //     $imageName = time() . '.' . $file->getClientOriginalExtension();
-        //     // Storage::putFileAs('public/images', $file, $imageName);
-
-        //     $imageFile = $request->file('image');
-
-        //     // $imageName = Str::slug($request->title).time().'.'.$imageFile->getClientOriginalExtension();
-        //     $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-        //     $file = Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
-        // dd($request);
-        if ($request->imageUploaded) {
-            $temp = explode('/', $request->imageUploaded);
-            $fileData = File::create([
+        // $fileId = 0;
+        if ($request->article_banner) {
+            $currentFile = File::find($article->file_id);
+            $temp = explode('/', $request->article_banner);
+            $currentFile->update([
                 'file_name' => $temp[count($temp) - 1],
                 'file_path' => 'images/blogs/' . $temp[count($temp) - 1],
-                'file_type' => 'article_banner',
             ]);
-
-            $fileId = $fileData->id;
         }
-        // }
 
         $data = [
             'article_category_id' => $request->article_category,
@@ -165,11 +137,11 @@ class ArticleController extends Controller
             'content' => $request->content,
             'slug' => Str::slug($request->title),
             'source' => $request->source,
-            'updated_by' => Auth::user()->username,
+            'updated_by' => Auth::user()->name,
             'updated_at' => now()
         ];
 
-        if ($fileId) $data['file_id'] = $fileId;
+        // dd($data);
 
         $article->update($data);
 

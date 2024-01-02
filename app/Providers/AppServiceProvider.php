@@ -29,16 +29,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::defaultView('vendor.pagination.bootstrap-4');
 
-        Gate::define('edit-event', function (User $user, Event $event) {
-            return $user->isAdmin() || ($user->isEO() && $user->id == $event->organizer->user_id);
-        });
-
         // ADD, DELETE, EDIT ARTICLE
         Gate::define('manage-article', function (User $user) {
             return $user->isAdmin();
         });
 
-        // APPROVE, REJCT, DELETE EVENT
+        // APPROVE, REJCT, EDIT, DELETE EVENT
         Gate::define('manage-event', function (User $user) {
             return $user->isAdmin();
         });

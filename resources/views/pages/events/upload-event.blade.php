@@ -3,17 +3,17 @@
 @section('content')
     <div class="container-md px-4 px-lg-3 d-md-flex justify-content-center ">
         <div class="col-lg-6 border border-1 rounded-4 align-items-center p-5">
-            <form enctype="multipart/form-data" action="{{ route('event.create') }}" method="POST" id="eventForm">
+            <form enctype="multipart/form-data" action="{{ route('event.validate') }}" method="POST" id="eventForm">
                 @csrf
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-home-tab">
-                        @include('pages.events.includes.upload-event-information', $eventCategories)
+                        @include('pages.events.includes.upload-event-information', ['eventCategories' => $eventCategories, 'data' => session()->get('eventModal')])
                     </div>
                     <div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        @include('pages.events.includes.upload-event-detail', $disabilityCategories)
+                        @include('pages.events.includes.upload-event-detail', ['disabilityCategories' => $disabilityCategories, 'data' => session()->get('eventModal')])
                     </div>
                     <div class="tab-pane fade" id="nav-3" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        @include('pages.events.includes.upload-event-additional')
+                        @include('pages.events.includes.upload-event-additional', ['data' => session()->get('eventModal')])
                     </div>
                 </div>
                 <div class="d-flex">
@@ -23,11 +23,42 @@
                     <button id="nextBtn" type="button" class="btn btn-primary rounded-5 ms-auto" style="width: fit-content" onclick="navigatePage('next')">
                         <iconify-icon icon="ep:arrow-right-bold" height="1rem" class="text-white"></iconify-icon>
                     </button>
-                    <button id="submitBtn" type="submit" data-bs-toggle="modal" data-bs-target="#uploadEventModal" class="btn btn-primary rounded-5 ms-auto d-none" style="width: fit-content">
+                    <button id="submitBtn" type="submit" class="btn btn-primary rounded-5 ms-auto d-none" style="width: fit-content">
                         Upload
                     </button>
                 </div>
             </form>
+
+            <x-dialog.base-dialog id="eventModal" action="{{ route('event.create') }}"
+                                  title="Yakin akan upload event?">
+                @if (session()->has('eventModal'))
+                    @foreach (session()->get('eventModal') as $key => $value)
+                        @if (is_array($value))
+                            @foreach ($value as $arrayValue)
+                                <input name="{{ $key }}[]" value="{{ $arrayValue }}" type="hidden"/>
+                            @endforeach
+                        @else
+                            <input name="{{ $key }}" value="{{ $value }}" type="hidden"/>
+                        @endif
+                    @endforeach
+                @endif
+            </x-dialog.base-dialog>
+
+            @if (session()->has('eventModal'))
+                @push('after-script')
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const popupModal = document.getElementById('eventModal')
+                        popupModal.style.display = 'block'
+                        popupModal.classList.add('show')
+                        const modalBackdrop = document.createElement('div')
+                        modalBackdrop.setAttribute('id', 'modal_backdrop')
+                        modalBackdrop.className = 'modal-backdrop fade show'
+                        document.body.appendChild(modalBackdrop)
+                    });
+                </script>
+                @endpush
+            @endif
         </div>
     </div>
 @endsection

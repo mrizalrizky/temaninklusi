@@ -16,7 +16,7 @@ class MasterOrganizerSeeder extends Seeder
     {
         DB::table('master_organizers')->insert([
             [
-                'user_id' => 2,
+                'user_id' => 3,
                 'name'    => 'Java Festival Production',
                 'initial' => 'JF',
                 'address' => 'Jakarta Pusat',
@@ -24,7 +24,7 @@ class MasterOrganizerSeeder extends Seeder
                 'contact_phone' => '0885182591',
             ],
             [
-                'user_id' => 1,
+                'user_id' => 3,
                 'name'    => 'Boss Creator',
                 'initial' => 'BC',
                 'address' => 'Jakarta Selatan',

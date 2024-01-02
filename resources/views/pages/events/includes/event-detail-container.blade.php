@@ -27,14 +27,21 @@
                 Daftar Sekarang
             </a>
         @endif
-        @can('register-event')
+        @can('register-event', $event)
             <button type="button" class="btn btn-sm btn-primary rounded-pill w-full py-2" data-bs-toggle="modal" data-bs-target="#registerEventModal">
                 Daftar Sekarang
+            </button>
+        @endcan
+        @can('cancel-register-event', $event)
+            <button type="button" class="btn btn-sm btn-danger rounded-pill w-full py-2" data-bs-toggle="modal" data-bs-target="#cancelRegisterModal">
+                Cancel
             </button>
         @endcan
     </span>
 
     <x-dialog.base-dialog id="registerEventModal" action="{{ route('event.action',['actionType' => 'REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
                           title="Yakin akan mendaftar event?" submitTitle="Ya" rejectTitle="Tidak"/>
+    <x-dialog.base-dialog id="cancelRegisterModal" action="{{ route('event.action',['actionType' => 'REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
+                          title="Yakin akan batal registrasi event?" submitTitle="Ya" rejectTitle="Tidak"/>
 
 </div>

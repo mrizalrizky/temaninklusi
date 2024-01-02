@@ -5,6 +5,16 @@
         <div class="col-lg-6 border border-1 rounded-4 align-items-center p-5">
             <form action="{{ route('event.create') }}" method="POST" id="eventForm">
                 @csrf
+                @if (Session::get('articleModal'))
+                    @php
+                        $data = Session::get('articleModal');
+                    @endphp
+                @else
+                    @php
+                        $data = null;
+                    @endphp
+                @endif
+                <input type="hidden" name="slug" value="{{ $event->eventDetail->slug }}" >
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-home-tab">
                         @include('pages.events.includes.edit-event-information', $eventCategories)
@@ -24,7 +34,7 @@
                         <iconify-icon icon="ep:arrow-right-bold" height="1rem" class="text-white"></iconify-icon>
                     </button>
                     <button id="submitBtn" type="submit" data-bs-toggle="modal" data-bs-target="#uploadEventModal" class="btn btn-primary rounded-5 ms-auto d-none" style="width: fit-content">
-                        Upload
+                        Edit
                     </button>
                 </div>
             </form>
@@ -78,9 +88,6 @@
         const selectedStep = document.getElementById(`nav-${step}`);
         selectedStep.classList.add('show', 'active');
 
-        const prevButton = document.getElementById('prevBtn');
-        const nextButton = document.getElementById('nextBtn');
-        console.log('STEP', step);
         switch(step) {
             case 1:
                 prevBtn.classList.add('d-none')

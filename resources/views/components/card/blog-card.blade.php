@@ -1,6 +1,6 @@
 <div class="row align-items-center justify-content-center gap-4 mb-3">
     <div class="col-md-3" style="height: 12rem;">
-        <img src="{{ asset('/storage/'.$article->file->file_path) }}" class="w-100 h-100 object-fit-cover border-0 rounded-4" alt="Blog banner">
+        <img src="{{ Storage::url($article->file->file_path) }}" class="w-100 h-100 object-fit-cover border-0 rounded-4" alt="Blog banner">
     </div>
 
     <div class="col-md-5">

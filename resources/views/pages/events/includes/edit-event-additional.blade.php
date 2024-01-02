@@ -1,39 +1,61 @@
 <div class="form-group mb-4">
-    <label for="license_flag" class="text-primary fw-bold mb-2">Apakah event kamu sudah memilik izin atau lisensi?</label>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input py-2" type="radio" name="license_flag" id="" onchange="getUserType()" checked/>
-        <label for="license_flag" class="form-check-label text-primary mb-2 @error('license_Flag') is-invalid @enderror">Sudah</label>
+    <label for="license_flag" class="text-primary fw-bold mb-2">Apakah event kamu sudah memiliki izin atau lisensi?</label>
+    <div class="d-block">
+        <div class="form-check form-check-inline">
+            {{-- <input class="form-check-input py-2" type="radio" name="license_flag" value="0" id="license_false" onchange="displayNewField()" {!! old('license_flag') ? old('license_flag') == 0 ? 'checked': '' : 'checked' !!}/> --}}
+            <input class="form-check-input py-2" type="radio" name="license_flag" value="0" id="license_false" onchange="displayNewField()" {!! (old('license_flag') ? (old('license_flag') == 0 ? 'checked': '') : ($event->license_flag == 0 ? 'checked' : '')) !!}/>
+            <label for="license_false" class="form-check-label text-primary fw-bold mb-2 @error('license_flag') is-invalid @enderror">
+                Belum
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input py-2" type="radio" name="license_flag" value="1" id="license_true" onchange="displayNewField()" {!! (old('license_flag') ? (old('license_flag') == 1 ? 'checked': '') : ($event->license_flag == 1 ? 'checked' : '')) !!}/>
+            <label for="license_true" class="form-check-label text-primary fw-bold mb-2 @error('license_flag') is-invalid @enderror">
+                Sudah
+            </label>
+        </div>
     </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input py-2" type="radio" name="license_flag" value="{{ App\Constants\RoleConstant::EVENT_ORGANIZER }}" id="event_organizer" onchange="getUserType()"/>
-        <label for="license_flag" class="form-check-label text-primary mb-2 @error('license_flag') is-invalid @enderror">
-            Belum
-        </label>
-    </div>
-    @error('license_flag')
+    @if($errors->has('license_flag'))
         <div class="invalid-feedback">
             {{ $message }}
         </div>
     @enderror
 </div>
 
+<div class="form-group mb-4" id="license" style="{{ old('license_flag') ? (old('license_flag') != 1 ? 'display: none' : 'display: inline-block') : ($event->license_flag != 1 ? 'display: none' : 'display: inline-block') }}">
+    <label for="license_file" class="text-primary fw-bold">Upload lisensi atau izin</label>
+    <x-button.upload-image-button name="license_file"/>
+</div>
+
 <div class="row">
-    <div class="col">
-        <label class="form-label text-primary fw-bold" for="facilities">Fasilitas Event</label>
-        <textarea class="form-control" name="facilities" id="faq" cols="30" rows="3"
-                  placeholder="Fasilitas apa yang disediakan dan dapat mendukung jalannya event dengan baik?"></textarea>
+    <div class="col" id="event_facilities">
+        <label class="form-label text-primary fw-bold" for="event_facilities">Fasilitas Event</label>
+        <br/>
+        <button type="button" class="btn btn-primary rounded-5" onclick="addField('event_facilities', 'event_facility')">+ Add</button>
+
+        <div>
+            @foreach ($event->eventDetail->event_facilities as $eventFacility)
+                <input type="text" class="form-control py-2" name="event_facility" value="{{ $eventFacility }}"/>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col" id="event_benefits">
+        <label class="form-label text-primary fw-bold" for="event_benefits">Benefit</label>
+        <br/>
+        <button type="button" class="btn btn-primary rounded-5" onclick="addField('event_benefits', 'event_benefit')">+ Add</button>
+        <div>
+            @foreach ($event->eventDetail->event_benefits as $eventBenefit)
+                <input type="text" class="form-control py-2" name="event_benefit" value="{{ $eventBenefit }}"/>
+            @endforeach
+        </div>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <label class="form-label text-primary fw-bold" for="benefit">Benefit</label>
-        <textarea class="form-control" name="Benefit" id="benefit" cols="30" rows="3"
-                  placeholder="Sertakan kebijakan privasi yang menjelaskan event kamu"></textarea>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <x-form.base-form-input class="mb-4" title="Link media sosial" name="social_media_link" type="text" name="social_media_link" :label="true" placeholder="Instagram">
+        <x-form.base-form-input class="mb-4" title="Link media sosial" name="social_media_link" type="text" value="{{ old('social_media_link') ?? $event->eventDetail->social_media_link }}" :label="true" placeholder="Instagram">
             @error('organizer_name')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -42,3 +64,26 @@
         </x-form.base-form-input>
     </div>
 </div>
+
+
+@push('after-script')
+    <script>
+        const displayNewField = () => {
+            const getClickedRadio = event.target.id === 'license_true';
+            const divStyle = document.getElementById('license')
+            getClickedRadio ? divStyle.style.display = 'inline-block' : divStyle.style.display = 'none'
+        }
+
+        const addField = (type, fieldName) => {
+            const eventFacilityEl = document.getElementById(type)
+            const fragment = document.createDocumentFragment()
+            let inputEl = document.createElement('input')
+            inputEl.className = 'form-control py-2'
+            inputEl.type = 'text'
+            inputEl.name = fieldName
+
+            fragment.appendChild(inputEl)
+            eventFacilityEl.children[3].append(fragment)
+        }
+    </script>
+@endpush

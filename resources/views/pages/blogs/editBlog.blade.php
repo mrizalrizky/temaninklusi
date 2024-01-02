@@ -9,9 +9,9 @@
             <div class="col col-xl-7 border border-1 rounded-4 align-items-center p-5">
                 <form enctype="multipart/form-data" action="{{ route('blog.validate') }}" class="ms-2" method="POST">
                     @csrf
-                    @if (Session::get('uploadArticleModal'))
+                    @if (Session::get('articleModal'))
                         @php
-                            $data = Session::get('uploadArticleModal');
+                            $data = Session::get('articleModal');
                         @endphp
                     @else
                         @php
@@ -51,7 +51,7 @@
                         </div>
                         <div class="col">
                             <x-form.base-form-input class="mb-4" title="Penulis" name="created_by" type="text"
-                                value="{{ $article->created_by }}" :label="true">
+                                value="{{ $article->created_by }}" :label="true" disabled>
                                 @error('created_by')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -64,13 +64,13 @@
                     @if ($data)
                         <div class="mb-4">
                             <label class="form-label text-primary label-add-blog">Thumbnail</label>
-                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" />
+                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" name="article_banner" />
                         </div>
-                        <input type="hidden" name="imageUploaded" value="{{ $data['imageUploaded'] ?? '' }}">
+                        <input type="hidden" name="article_banner" value="{{ $data['article_baner'] ?? '' }}">
                     @else
                         <div class="mb-4">
                             <label class="form-label text-primary label-add-blog">Thumbnail</label>
-                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" />
+                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" name="article_banner" />
                         </div>
                     @endif
                     {{-- <div class="mb-4">
@@ -120,10 +120,10 @@
                     </div>
                 </form>
 
-                <x-dialog.base-dialog id="uploadArticleModal" action="{{ route('blog.update', $article->slug) }}"
-                    title="Yakin akan tambah artikel?" method="PUT">
-                    @if (session()->has('uploadArticleModal'))
-                        @foreach (session()->get('uploadArticleModal') as $key => $value)
+                <x-dialog.base-dialog id="articleModal" action="{{ route('blog.update', $article->slug) }}"
+                    title="Yakin akan edit artikel?" method="PUT">
+                    @if (session()->has('articleModal'))
+                        @foreach (session()->get('articleModal') as $key => $value)
                             <input name="{{ $key }}" value="{{ $value }}" type="hidden" />
                         @endforeach
                     @endif
@@ -137,11 +137,11 @@
                     </script>
                 @endpush
 
-                @if (session()->has('uploadArticleModal'))
+                @if (session()->has('articleModal'))
                     @push('after-script')
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {
-                                const popupModal = document.getElementById('uploadArticleModal')
+                                const popupModal = document.getElementById('articleModal')
                                 popupModal.style.display = 'block'
                                 popupModal.classList.add('show')
                                 const modalBackdrop = document.createElement('div')

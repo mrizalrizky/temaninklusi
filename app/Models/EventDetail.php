@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,11 @@ class EventDetail extends Model
         'contact_phone',
         'start_date',
         'end_date'
+    ];
+
+    protected $casts = [
+        'event_facilities' => AsCollection::class,
+        'event_benefits' => AsCollection::class,
     ];
 
     protected $dates = [

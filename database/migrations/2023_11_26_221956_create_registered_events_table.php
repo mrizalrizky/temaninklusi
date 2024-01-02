@@ -14,7 +14,7 @@ class CreateRegisteredEventsTable extends Migration
     public function up()
     {
         Schema::create('registered_events', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('event_id')->references('id')->on('events')->onUpdate('CASCADE')->onDelete('CASCADE');
 

@@ -20,18 +20,22 @@
 
     @if (Auth::check())
     <div class="d-flex justify-content-end">
-        @if($event->isWaitingApproval())
-            @can('manage-event')
+        @can('manage-event')
+            @if($event->isWaitingApproval())
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#approveEventModal">Approve</button>
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#rejectEventModal">Reject</button>
-            @endcan
-        @endif
-        @can('edit-event', $event)
-            <a href="{{ route('event.edit', $event->eventDetail->slug) }}">Edit</a>
+            @else
+                <a href="{{ route('event.edit', $event->eventDetail->slug) }}">Edit</a>
+                <button type="butto" data-bs-toggle="modal" data-bs-target="#deleteEventModal">Delete</a>
+            @endif
         @endcan
     </div>
     @endif
 
+    <x-dialog.base-dialog id="deleteEventModal" action="{{ route('event.delete', $event->eventDetail->slug) }}"
+                          title="Yakin akan hapus event?">
+        {{ method_field('DELETE') }}
+    </x-dialog.base-dialog>
     <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'APPROVE_EVENT']) }}"
                           title="Yakin akan approve event?" />
     <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'REJECT_EVENT']) }}"
@@ -70,6 +74,9 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </button>
     </div>
+
+    {{-- @dd(Auth::user()->registeredEvents) --}}
+    {{-- @dd(in_array($event->id, Auth::user()->registeredEvents, true)) --}}
 
     <div class="d-md-flex justify-content-between">
         <div class="col-md-6">
