@@ -3,6 +3,13 @@
 @section('content')
 
 <div class="container-lg px-4 px-lg-3">
+    @if (session()->has('success'))
+        <div class="alert alert-success d-flex alert-dismissible fade show">
+            <p class="m-0">{{ session()->get('success') }}</p>
+            <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
+                data-bs-dismiss="alert" aria-label="close"></button>
+        </div>
+    @enderror
     <section>
         <div class="text-center my-5">
             <h3 class="text-primary">

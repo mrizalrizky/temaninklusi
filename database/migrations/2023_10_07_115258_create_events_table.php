@@ -19,6 +19,8 @@ class CreateEventsTable extends Migration
             $table->foreignId('event_detail_id')->references('id')->on('event_details')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('status_id')->references('id')->on('master_statuses')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('event_category_id')->references('id')->on('event_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('banner_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE')->nullable();
+            $table->foreignId('license_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE')->nullable();
             $table->boolean('license_flag');
             $table->boolean('show_flag')->default(true);
             $table->string('created_by', 64)->nullable();

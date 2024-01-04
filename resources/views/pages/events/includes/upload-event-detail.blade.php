@@ -12,8 +12,13 @@
 
 <div class="row">
     <div class="col form-group mb-4">
-        <label for="eligibility" class="text-primary fw-bold mb-2">Eligibility</label>
-        <x-form.base-form-multi-select name="disability_category" id="disability_category" :options="$disabilityCategories" placeholder="Event anda ramah untuk disabilitas apa?"/>
+        <label for="disability_categories" class="text-primary fw-bold mb-2 @error('disability_categories') is-invalid @enderror">Eligibility</label>
+        <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories" placeholder="Event anda ramah untuk disabilitas apa?" :selectedValues="$data ? $data['disability_categories'] : (old('disability_categories') ?? null)"/>
+        @error('disability_categories')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
     </div>
 </div>
 

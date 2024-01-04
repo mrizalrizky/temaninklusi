@@ -28,8 +28,6 @@ class EventDetailSeeder extends Seeder
                 'contact_phone' => '02191858181',
                 'quota' => 100,
                 'social_media_link' => 'https:/instagram.com/boss.creator',
-                'created_by' => 'Boss Creator',
-                'updated_by' => 'Boss Creator',
             ],
             [
                 'title' => 'Belajar ReactJS Pemula',
@@ -44,8 +42,6 @@ class EventDetailSeeder extends Seeder
                 'event_facilities' => collect(['Fasilitas 1 BRP', 'Fasilitas 2 BRP', 'Fasilitas 3 BRP']),
                 'event_benefits' => collect(['Benefit 1 BRP', 'Benefit 2 BRP', 'Benefit 3 BRP']),
                 'social_media_link' => 'https:/instagram.com/javafestivalproduction',
-                'created_by' => 'JFP',
-                'updated_by' => 'JFP',
             ],
         ]);
     }

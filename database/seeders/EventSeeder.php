@@ -22,6 +22,10 @@ class EventSeeder extends Seeder
                 'event_category_id' => 2,
                 'show_flag' => 1,
                 'license_flag' => 0,
+                'banner_file_id' => 1,
+                'license_file_id' => 2,
+                'created_by' => 'Boss Creator',
+                'updated_by' => 'Boss Creator',
             ],
             [
                 'organizer_id'    => 1,
@@ -30,6 +34,10 @@ class EventSeeder extends Seeder
                 'event_category_id' => 1,
                 'show_flag' => 1,
                 'license_flag' => 0,
+                'banner_file_id' => 1,
+                'license_file_id' => 2,
+                'created_by' => 'JFP',
+                'updated_by' => 'JFP',
             ],
         ]);
     }

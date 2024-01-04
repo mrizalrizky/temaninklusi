@@ -41,31 +41,11 @@
     <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'REJECT_EVENT']) }}"
         title="Yakin akan reject event?" />
 
-
-    {{-- @if (session()->has('approve-modal'))
-        @push('after-script')
-        <script>
-            document.addEventListener('DOMContentLoaded', () =>  {
-                const popupModal = document.getElementById('approveEventModal')
-                popupModal.style.display = 'block'
-                popupModal.classList.add('show')
-                const modalBackdrop = document.createElement('div')
-                modalBackdrop.setAttribute('id', 'modal_backdrop')
-                modalBackdrop.className = 'modal-backdrop fade show'
-                document.body.appendChild(modalBackdrop)
-
-            });
-        </script>
-        @endpush
-    @endif --}}
-
     <div id="carouselFade" class="carousel slide carousel-fade">
         <div class="carousel-inner">
-            @foreach ($event->eventFiles as $eventBanner)
-                <div style="height: 27.5rem;" class="carousel-item active w-100 overflow-hidden border-0 rounded-4 my-5">
-                    <img src="{{ $eventBanner->files['file_path']}}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
-                </div>
-            @endforeach
+            <div style="height: 27.5rem;" class="carousel-item active w-100 overflow-hidden border-0 rounded-4 my-5">
+                <img src="{{ Storage::url($event->eventBanner->file_path) }}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
+            </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselFade" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -74,9 +54,6 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </button>
     </div>
-
-    {{-- @dd(Auth::user()->registeredEvents) --}}
-    {{-- @dd(in_array($event->id, Auth::user()->registeredEvents, true)) --}}
 
     <div class="d-md-flex justify-content-between">
         <div class="col-md-6">

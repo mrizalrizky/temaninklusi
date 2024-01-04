@@ -47,6 +47,7 @@ Route::prefix('events')->group(function () {
     Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
     Route::post('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
+    Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('event.delete');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {

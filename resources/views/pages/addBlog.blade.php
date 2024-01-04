@@ -33,7 +33,7 @@
                     <div class="col">
                         <label for="article_category" class="text-primary fw-bold mb-2">Kategori Artikel</label>
                         <x-form.base-form-select name="article_category" id="article_category" placeholder="Pilih Kategori"
-                            :options="$articleCategories" value="{{ $data ? $data['article_category'] : old('article_category') }}" />
+                            :options="$articleCategories" selectedValue="{{ $data ? $data['article_category'] : old('article_category') }}" />
                     </div>
                 </div>
 
@@ -70,8 +70,8 @@
                     <div class="mb-4">
                         <label class="form-label text-primary label-add-blog">Thumbnail</label>
                         <x-button.upload-image-button name="article_banner" />
-                    </div>
-                @endif --}}
+                    </div> --}}
+                @endif
 
                 <div class="mb-4">
                     <label for="content" class="form-label text-primary label-add-blog">Content</label>

@@ -19,7 +19,10 @@ class EventDetail extends Model
         'contact_email',
         'contact_phone',
         'start_date',
-        'end_date'
+        'end_date',
+        'social_media_link',
+        'event_facilities',
+        'event_benefits',
     ];
 
     protected $casts = [

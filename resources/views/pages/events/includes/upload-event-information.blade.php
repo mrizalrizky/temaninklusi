@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col">
         <label for="event_category" class="text-primary fw-bold mb-2">Kategori Event</label>
-        <x-form.base-form-select name="event_category" id="event_category" placeholder="Pilih Kategori" :options="$eventCategories" value="{{ old('event_category') }}" />
+        <x-form.base-form-select name="event_category" id="event_category" placeholder="Pilih Kategori" :options="$eventCategories" selectedValue="{{ $data ? $data['event_category'] : old('event_category') }}" />
     </div>
     <div class="col">
         <x-form.base-form-input class="mb-4" title="Jumlah Tiket" type="number" min="1" name="quota" value="{{ $data ? $data['quota'] : old('quota') }}" :label="true">

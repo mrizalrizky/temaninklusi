@@ -8,7 +8,7 @@
         <li>
             <a class="dropdown-item" href="#">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="{{ $option->label }}" name="{{ $name }}[]" id="{{ $id }}"/>
+                    <input class="form-check-input" type="checkbox" value="{{ $option->id }}" name="{{ $name }}[]" id="{{ $id }}" {!! $selectedValues != "" ?(in_array($option->id, $selectedValues) ? 'checked' : '') : null !!}  />
                     <label class="form-check-label" for="{{ $id }}">{{ $option->label}}</label>
                 </div>
             </a>
@@ -16,3 +16,4 @@
         @endforeach
     </ul>
 </div>
+

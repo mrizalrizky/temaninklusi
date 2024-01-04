@@ -14,9 +14,13 @@ class Event extends Model
         'organizer_id',
         'event_detail_id',
         'status_id',
-        'license_flag',
         'event_category_id',
+        'banner_file_id',
+        'license_file_id',
+        'license_flag',
         'show_flag',
+        'created_by',
+        'updated_by',
     ];
 
     public function eventDetail() {
@@ -32,6 +36,20 @@ class Event extends Model
         return $this->belongsTo(MasterStatus::class, 'status_id', 'id');
     }
 
+    public function eventCategory() {
+        return $this->belongsTo(EventCategory::class, 'event_category_id', 'id');
+    }
+
+    public function eventBanner() {
+        return $this->belongsTo(File::class, 'banner_file_id', 'id');
+    }
+
+    public function eventLicense() {
+        return $this->belongsTo(File::class, 'license_file_id', 'id');
+    }
+
+
+
     public function registeredByUsers() {
         return $this->belongsToMany(User::class, 'registered_events', 'event_id', 'user_id');
     }
@@ -40,9 +58,6 @@ class Event extends Model
         return $this->hasMany(UserComment::class, 'event_id', 'id');
     }
 
-    public function eventFiles() {
-        return $this->hasMany(EventFile::class, 'event_id', 'id');
-    }
 
     public function isWaitingApproval() {
         return $this->status_id == EventStatusConstant::WAITING_APPROVAL;

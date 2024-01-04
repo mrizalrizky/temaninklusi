@@ -24,8 +24,8 @@ class CreateEventDetailsTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->string('location', 64);
-            $table->json('event_facilities');
-            $table->jsonb('event_benefits');
+            $table->json('event_facilities')->nullable();
+            $table->jsonb('event_benefits')->nullable();
             $table->string('social_media_link', 64);
 
             $table->timestamps();
