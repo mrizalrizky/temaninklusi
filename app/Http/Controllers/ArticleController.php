@@ -8,6 +8,7 @@ use App\Models\ArticleCategory;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -46,48 +47,56 @@ class ArticleController extends Controller
                 $validation['title'] = 'required';
             }
         } else {
-            $validation['article_banner'] = 'required';
             $validation['title'] = 'required|unique:articles';
+            $validation['article_banner'] = 'required';
         }
 
         $request->validate($validation);
 
-        $imageFile = $request->file('article_banner');
+        $articleBannerFile = $request->file('article_banner');
         $data = $request->all();
         unset($data['article_banner']);
+        $titleSlug = Str::slug($request->title);
 
-        if ($imageFile) {
-            $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-            Storage::putFileAs('public/images/blogs', $imageFile, $imageName);
-
-            $data['article_banner'] = 'images/blogs/' . $imageName;
+        if ($articleBannerFile) {
+            $imageName = 'article_banner' . '.' . $articleBannerFile->getClientOriginalExtension();
+            Storage::putFileAs('public/images/blogs/' . $titleSlug, $articleBannerFile, $imageName);
+            $data['article_banner'] = $imageName;
         }
         return redirect()->back()->with('articleModal', $data);
     }
 
     public function create(Request $request)
     {
-        $temp = explode('/', $request->article_banner);
-        $fileData = File::create([
-            'file_name' => $temp[count($temp) - 1],
-            'file_path' => 'images/blogs/' . $temp[count($temp) - 1],
-            'file_type' => 'article_banner',
-        ]);
+        DB::beginTransaction();
+        try {
+            $titleSlug = Str::slug($request->title, '-');
+            $fileData = File::create([
+                'file_name' => $request->article_banner,
+                'file_path' => '/images/blogs/' . $titleSlug . '/',
+                'file_type' => 'article_banner',
+            ]);
 
-        Article::create([
-            'file_id' => $fileData->id,
-            'article_category_id' => $request->article_category,
-            'title' => $request->title,
-            'content' => $request->content,
-            'slug' => Str::slug($request->title),
-            'source' => $request->source,
-            'show_flag' => true,
-            'created_by' => Auth::user()->username,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+            Article::create([
+                'file_id' => $fileData->id,
+                'article_category_id' => $request->article_category,
+                'title' => $request->title,
+                'content' => $request->content,
+                'slug' => $titleSlug,
+                'source' => $request->source,
+                'show_flag' => true,
+                'created_by' => Auth::user()->username,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
 
-        return redirect()->route('blog.index');
+            DB::commit();
+            return redirect()->route('blog.index')->with('success', 'Tips dan artikel berhasil dibuat.');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('failed', 'Tips dan artikel gagal dibuat. Silahkan coba lagi.');
+        }
+
     }
 
     public function show($slug)
@@ -114,37 +123,61 @@ class ArticleController extends Controller
 
     public function update(Request $request, $slug)
     {
-        $article = Article::where([
-            ['slug', $slug],
-            ['show_flag', True]
-        ])->first();
+        DB::beginTransaction();
+        try {
 
-        $this->validateData($request);
+            $article = Article::where([
+                ['slug', $slug],
+                ['show_flag', True]
+            ])->first();
 
-        // $fileId = 0;
-        if ($request->article_banner) {
-            $currentFile = File::find($article->file_id);
-            $temp = explode('/', $request->article_banner);
-            $currentFile->update([
-                'file_name' => $temp[count($temp) - 1],
-                'file_path' => 'images/blogs/' . $temp[count($temp) - 1],
-            ]);
+            $this->validateData($request);
+
+            if ($request->article_banner) {
+                $currentFile = File::find($article->file_id);
+                $currentFile->update([
+                    'file_name' => $request->article_banner,
+                    'file_path' => '/images/blogs/' . $slug ,
+                ]);
+            }
+
+            $data = [
+                'article_category_id' => $request->article_category,
+                'title' => $request->title,
+                'content' => $request->content,
+                'slug' => $slug,
+                'source' => $request->source,
+                'updated_by' => Auth::user()->name,
+                'updated_at' => now()
+            ];
+
+            $article->update($data);
+
+            DB::commit();
+            return redirect()->route('blog.details', $slug)->with('success', 'Tips dan artikel berhasil diedit.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('failed', 'Tips dan artikel gagal diedit. Silahkan coba lagi.');
         }
+    }
 
-        $data = [
-            'article_category_id' => $request->article_category,
-            'title' => $request->title,
-            'content' => $request->content,
-            'slug' => Str::slug($request->title),
-            'source' => $request->source,
-            'updated_by' => Auth::user()->name,
-            'updated_at' => now()
-        ];
+    public function delete($slug) {
+        DB::beginTransaction();
+        try {
+            $article = Article::where([
+                ['slug', $slug],
+                ['show_flag', True]
+            ])->first();
 
-        // dd($data);
+            $article->update([
+                'show_flag' => false
+            ]);
 
-        $article->update($data);
-
-        return redirect()->route('blog.details', $article->slug)->with('success', 'Berhasil edit data!');
+            DB::commit();
+            return redirect()->route('blog.index')->with('success', 'Tips dan artikel berhasil dihapus.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('blog.index')->with('success', 'Tips dan artikel gagal dihapus. Silahkan coba lagi.');
+        }
     }
 }

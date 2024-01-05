@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col form-group mb-4">
         <label for="eligibility" class="text-primary fw-bold mb-2">Eligibility</label>
-        <x-form.base-form-multi-select name="disability_category" id="disability_category" :options="$disabilityCategories" placeholder="Event anda ramah untuk disabilitas apa?"/>
+        <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories" placeholder="Event anda ramah untuk disabilitas apa?"/>
     </div>
 </div>
 

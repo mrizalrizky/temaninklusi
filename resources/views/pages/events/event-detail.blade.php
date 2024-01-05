@@ -2,22 +2,6 @@
 
 @section('content')
 <div class="container-lg px-4 px-lg-3">
-    @if (session()->has('success'))
-        <div class="alert alert-success d-flex alert-dismissible fade show">
-            <p class="m-0">{{ session()->get('success') }}</p>
-            <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
-                data-bs-dismiss="alert" aria-label="close"></button>
-        </div>
-    @enderror
-    @if (session()->has('failed'))
-        <div class="alert alert-danger d-flex alert-dismissible fade show">
-            <i data-feather="alert-triangle"style="margin-right: 0.5em; width: 1.2em"></i>
-            <p class="m-0">{{ session()->get('failed') }}</p>
-            <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
-                data-bs-dismiss="alert" aria-label="close"></button>
-        </div>
-    @enderror
-
     @if (Auth::check())
     <div class="d-flex justify-content-end">
         @can('manage-event')
@@ -26,33 +10,26 @@
                 <button type="submit" data-bs-toggle="modal" data-bs-target="#rejectEventModal">Reject</button>
             @else
                 <a href="{{ route('event.edit', $event->eventDetail->slug) }}">Edit</a>
-                <button type="butto" data-bs-toggle="modal" data-bs-target="#deleteEventModal">Delete</a>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteEventModal">Delete</a>
             @endif
+            <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'APPROVE_EVENT']) }}"
+                                  title="Yakin akan approve event?" />
+            <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'REJECT_EVENT']) }}"
+                                  title="Yakin akan reject event?" />
+            <x-dialog.base-dialog id="deleteEventModal" action="{{ route('event.delete', $event->eventDetail->slug) }}"
+                                  title="Yakin akan hapus event?">
+                {{ method_field('DELETE') }}
+            </x-dialog.base-dialog>
         @endcan
     </div>
     @endif
 
-    <x-dialog.base-dialog id="deleteEventModal" action="{{ route('event.delete', $event->eventDetail->slug) }}"
-                          title="Yakin akan hapus event?">
-        {{ method_field('DELETE') }}
-    </x-dialog.base-dialog>
-    <x-dialog.base-dialog id="approveEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'APPROVE_EVENT']) }}"
-                          title="Yakin akan approve event?" />
-    <x-dialog.base-dialog id="rejectEventModal" action="{{ route('event.action',['slug' => $event->eventDetail->slug, 'actionType' => 'REJECT_EVENT']) }}"
-        title="Yakin akan reject event?" />
-
-    <div id="carouselFade" class="carousel slide carousel-fade">
+    <div class="carousel slide carousel-fade">
         <div class="carousel-inner">
             <div style="height: 27.5rem;" class="carousel-item active w-100 overflow-hidden border-0 rounded-4 my-5">
-                <img src="{{ Storage::url($event->eventBanner->file_path) }}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
+                <img src="{{ Storage::disk('public')->exists($event->eventBanner->file_path . $event->eventBanner->file_name) ? Storage::disk('public')->url($event->eventBanner->file_path . $event->eventBanner->file_name) : $event->eventBanner->file_path }}" class="w-100 h-100 object-fit-cover border-0 rounded" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselFade" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselFade" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
     </div>
 
     <div class="d-md-flex justify-content-between">

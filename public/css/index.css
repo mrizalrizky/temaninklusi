@@ -196,7 +196,7 @@ input[type="password"] {
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
 } */
 
-.btn-group-sm>.btn,
+.btn-group-sm > .btn,
 .btn-sm {
     --bs-btn-padding-y: 0.4rem;
     --bs-btn-padding-x: 1.7rem;
@@ -339,7 +339,7 @@ input[type="password"] {
     font-size: 0.9rem;
 }
 
-.image-thumbnail>input {
+.image-thumbnail > input {
     display: none;
 }
 

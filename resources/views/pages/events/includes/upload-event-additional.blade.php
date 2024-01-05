@@ -1,30 +1,35 @@
 <div class="form-group mb-4">
-    <label for="license_flag" class="text-primary fw-bold mb-2">Apakah event kamu sudah memiliki izin atau lisensi?</label>
+    <label for="event_license_flag" class="text-primary fw-bold mb-2">Apakah event kamu sudah memiliki izin atau lisensi?</label>
     <div class="d-block">
         <div class="form-check form-check-inline">
-            <input class="form-check-input py-2" type="radio" name="license_flag" value="0" id="license_false" onchange="displayNewField()" {!! $data ? ($data['license_flag'] == 0 ? 'checked' : (old('license_flag') ? (old('license_flag') == 0 ? 'checked': '') : 'checked')) : 'checked' !!}/>
-            <label for="license_false" class="form-check-label text-primary fw-bold mb-2 @error('license_flag') is-invalid @enderror">
+            <input class="form-check-input py-2" type="radio" name="event_license_flag" value="0" id="license_false" onchange="displayNewField()" {!! $data ? ($data['event_license_flag'] == 0 ? 'checked' : (old('event_license_flag') ? (old('event_license_flag') == 0 ? 'checked': '') : 'checked')) : 'checked' !!}/>
+            <label for="license_false" class="form-check-label text-primary fw-bold mb-2 @error('event_license_flag') is-invalid @enderror">
                 Belum
             </label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input py-2" type="radio" name="license_flag" value="1" id="license_true" onchange="displayNewField()" {!! $data ? ($data['license_flag'] == 1 ? 'checked' : '') : (old('license_flag') == 1 ? 'checked' : '') !!}/>
-            {{-- <input class="form-check-input py-2" type="radio" name="license_flag" value="1" id="license_true" onchange="displayNewField()" {!! $data ? ($data['license_flag'] == 1 ? 'checked' : (old('license_flag') ? (old('license_flag') == 1 ? 'checked': '') : '')) : '' !!}/> --}}
-            <label for="license_true" class="form-check-label text-primary fw-bold mb-2 @error('license_flag') is-invalid @enderror">
+            <input class="form-check-input py-2" type="radio" name="event_license_flag" value="1" id="license_true" onchange="displayNewField()" {!! $data ? ($data['event_license_flag'] == 1 ? 'checked' : '') : (old('event_license_flag') == 1 ? 'checked' : '') !!}/>
+            <label for="license_true" class="form-check-label text-primary fw-bold mb-2 @error('event_license_flag') is-invalid @enderror">
                 Sudah
             </label>
         </div>
     </div>
-    @if($errors->has('license_flag'))
+
+    @if($errors->has('event_license_flag'))
         <div class="invalid-feedback">
             {{ $message }}
         </div>
     @enderror
 </div>
 
-<div class="form-group mb-4" id="license" style="{{ $data ? ($data['license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
-    <label for="license_file" class="text-primary fw-bold">Upload lisensi atau izin</label>
-    <x-button.upload-image-button name="license_file"/>
+<div class="form-group mb-4" id="license" style="{{ $data ? ($data['event_event_license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('event_event_license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
+    <label for="event_license_file" class="text-primary fw-bold">Upload lisensi atau izin</label>
+    <x-button.upload-image-button name="event_license_file"/>
+</div>
+
+<div class="form-group mb-4">
+    <label for="event_proposal_file" class="text-primary fw-bold">Upload event proposal</label>
+    <x-button.upload-image-button name="event_proposal_file"/>
 </div>
 
 <div class="row">
@@ -62,6 +67,7 @@
         @enderror
     </div>
 </div>
+
 <div class="row">
     <div class="col">
         <x-form.base-form-input class="mb-4" title="Link media sosial" name="social_media_link" type="text" name="social_media_link" value="{{ $data ? $data['social_media_link'] : old('social_media_link') }}" :label="true" placeholder="Instagram">

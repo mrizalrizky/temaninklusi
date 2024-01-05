@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\EventDetail;
 use Illuminate\Support\Str;
 use App\Constants\EventStatusConstant;
+use App\Constants\FileTypeConstant;
 use App\Constants\RoleConstant;
 use App\Models\DisabilityCategory;
 use App\Models\EventCategory;
@@ -22,22 +23,38 @@ use Illuminate\Support\Facades\Storage;
 class EventController extends Controller
 {
     public function index(Request $request) {
+        // dd($request->filled('title'));
+        $query = Event::whereHas('eventDetail', function ($query) use ($request) {
+            if ($request->filled('title')) {
+                $query->where('title', 'ILIKE', '%' . $request->title . '%');
+            }
 
-        $events = Event::whereHas('eventDetail', function ($query) use ($request) {
-            $query->where('title', 'ILIKE', '%' . $request->title . '%')
-            ->where('show_flag', true);
-                //   ->where('start_date', 'ILIKE', '%' . $request->start_date . '%')
-                //   ->where('slug', 'ILIKE', '%' . $request->disability_category . '%')
-                //   ->where('location', 'ILIKE', '%' . $request->event_category . '%');
-        })->paginate(6);
+            if ($request->filled('start_date')) {
+                $query->where('start_date', 'ILIKE', '%' . $request->start_date . '%');
+            }
 
+            if($request->filled('event_category')) {
+                $query->where('event_category_id', $request->event_category);
+            }
+
+            $query->where('show_flag', true);
+        });
+
+        if ($request->filled('disability_categories')) {
+            $query->whereHas('disabilityCategories', function ($query) use ($request) {
+                $query->whereIn('disability_categories.id', $request->disability_categories);
+            });
+        }
+
+        $events = $query->paginate(1);
+        $eventCategories = EventCategory::all();
         $disabilityCategories = DisabilityCategory::all();
 
-        return view('pages.events.event', compact('events', 'disabilityCategories'));
+        return view('pages.events.event', compact('events', 'eventCategories', 'disabilityCategories'));
     }
 
     public function showPopularEvents () {
-        $popularEvents = Event::with(['eventDetail','organizer','status', 'eventBanner'])->get();
+        $popularEvents = Event::with(['eventDetail','organizer','status', 'eventBanner'])->limit(3)->get();
 
         return view('pages.index', compact('popularEvents'));
     }
@@ -137,53 +154,55 @@ class EventController extends Controller
     }
 
     public function update(Request $request, $slug) {
-        $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
-            $q->where('slug', $slug);
-        })->first();
+        DB::beginTransaction();
+        try {
+            $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            })->first();
 
-        $this->validateData($request);
+            $this->validateData($request);
 
-        $event->update([
-            'updated_by' => Auth::user()->username,
-        ]);
-
-        return redirect()->back()->with('success', 'Berhasil edit event');
+            DB::commit();
+            return redirect()->route('event.details')->with('success', 'Event berhasil diedit.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('failed', 'Event gagal diedit. Silahkan coba lagi.');
+        }
     }
 
-    private function storeFile($requestData, $requestFile, $fileType, $folderType) {
+    private function storeFile($requestData, $requestFile, $fileType) {
         $titleSlug = Str::slug($requestData['title'], '-');
         unset($requestData[$fileType]);
-        $fileName = $fileType . '-' . time() . '.' . $requestFile->getClientOriginalExtension();
-        Storage::putFileAs('public/images/' . $folderType . '/' . $titleSlug, $requestFile, $fileName);
-        $data[$fileType] = 'images/'. $folderType . '/'. $titleSlug . '/'. $fileName;
+        $fileName = $fileType . '.' . $requestFile->getClientOriginalExtension();
+        Storage::putFileAs('public/images/events/' . $titleSlug, $requestFile, $fileName);
+        $requestData[$fileType] = $fileName;
+        return $requestData;
     }
 
     protected function validateData(Request $request) {
         $rules = [
             'title'                 => 'required',
+            'organizer_name'        => 'required',
             'event_category'        => 'required',
             'quota'                 => 'required',
             'contact_email'         => 'required',
             'contact_phone'         => 'required',
             'event_banner'          => 'required',
             'description'           => 'required',
-            'license_flag'          => 'required',
-            'license_file'          => 'required_if:license_flag,==,1',
+            'event_license_flag'          => 'required',
+            'event_license_file'          => 'required_if:event_license_flag,==,1',
             'disability_categories' => 'required|array|min:1',
             'start_date'            => 'required',
             'end_date'              => 'required',
-            'event_banner'          => 'required',
+            // 'event_banner'          => 'required',
             'location'              => 'required',
             'event_facilities'      => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
-                    if (empty(array_filter($value, fn ($item) => $item !== null))) {
-                        $fail("Field fasilitas event tidak boleh kosong");
-                    }
+                if (empty(array_filter($value, fn ($item) => $item !== null))) {
+                    $fail("Field fasilitas event tidak boleh kosong");
                 }
-            ],
-            'event_benefits'        => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
-                    // if (count(array_filter($value, function ($item) {
-                    //     return $item !== null;
-                    // })) === 0) {
+            }
+        ],
+        'event_benefits'        => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
                     if(empty(array_filter($value, fn ($item) => $item !== null))) {
                         $fail("Field benefit event tidak boleh kosong");
                     }
@@ -211,67 +230,49 @@ class EventController extends Controller
             }
         } else { // Upload Event
             $rules['title'] = 'required|unique:event_details';
+            $rules['event_banner'] = 'required';
         }
 
         $request->validate($rules, $errorMessages);
 
         // If validation passes
         $data = $request->all();
-        // $titleSlug = Str::slug($request->title, '-');
 
-        $eventBannerFile = $request->file('event_banner');
+        $eventBannerFile = $request->file(FileTypeConstant::EVENT_BANNER);
         if($eventBannerFile) {
-            // $fileType = 'event_banner';
-            // unset($data[$fileType]);
-            // $eventBannerFileName = $fileType . '-' . time() . '.' . $eventBannerFile->getClientOriginalExtension();
-            // Storage::putFileAs('public/images/events/' . $titleSlug, $eventBannerFile, $eventBannerFileName);
-            // $data[$fileType] = 'images/events/' . $titleSlug . '/'. $eventBannerFileName;
-
-            $data = $this->storeFile($data, $eventBannerFile, 'event_banner' , 'events');
+            $data = $this->storeFile($data, $eventBannerFile, FileTypeConstant::EVENT_BANNER );
         }
 
-        if($request->license_flag == 1 && $request->file('license_file')) {
-            $licenseFile = $request->file('license_file');
-            $data = $this->storeFile($data, $licenseFile, 'article_banner', 'blogs');
-            // $fileType = 'license_file';
-            // $licenseFile = $request->file($fileType);
-            // unset($data[$fileType]);
-            // if($licenseFile) {
-            //     $licenseFileName = $fileType . '-' . time() . '.' . $licenseFile->getClientOriginalExtension();
-            //     Storage::putFileAs('public/images/events/' . $titleSlug . '/', $licenseFile, $licenseFileName);
-            //     $data[$fileType] = 'images/events/'. $titleSlug . '/' . $licenseFileName;
-            // }
+        if($request->event_license_flag == 1 && $request->file(FileTypeConstant::EVENT_LICENSE_FILE)) {
+            $licenseFile = $request->file(FileTypeConstant::EVENT_LICENSE_FILE);
+            $data = $this->storeFile($data, $licenseFile, FileTypeConstant::EVENT_LICENSE_FILE);
         }
-
-        dd($data);
 
         return redirect()->back()->with('eventModal', $data);
     }
 
     public function create(Request $request) {
         DB::beginTransaction();
-
         try {
-            $temp = explode('/', $request->event_banner);
+            $titleSlug = Str::slug($request->title, '-');
             $bannerFileData = File::create([
-                'file_name' => $temp[count($temp) - 1],
-                'file_path' => '/images/events/' . Str::slug($request->title) . $temp[count($temp) - 1],
-                'file_type' => 'event_banner',
+                'file_name' => $request->event_banner,
+                'file_path' => '/images/events/' . $titleSlug . '/',
+                'file_type' => FileTypeConstant::EVENT_BANNER,
             ]);
 
             $licenseFileData = null;
-            if($request->license_flag == 1) {
-                $temp = explode('/', $request->license_file);
+            if($request->event_license_flag == 1) {
                 $licenseFileData = File::create([
-                    'file_name' => $temp[count($temp) - 1],
-                    'file_path' => '/images/events/' . Str::slug($request->title) . $temp[count($temp) - 1],
-                    'file_type' => 'license_file',
+                    'file_name' => $request->event_license_file,
+                    'file_path' => '/images/events/' .$titleSlug . '/',
+                    'file_type' => FileTypeConstant::EVENT_LICENSE_FILE,
                 ]);
             }
 
             $eventDetail = EventDetail::create([
                 'title'             => $request->title,
-                'slug'              => Str::slug($request->title, '-'),
+                'slug'              => $titleSlug,
                 'description'       => $request->description,
                 'quota'             => $request->quota,
                 'contact_email'     => $request->contact_email,
@@ -289,15 +290,14 @@ class EventController extends Controller
                 'event_detail_id'   => $eventDetail->id,
                 'status_id'         => EventStatusConstant::WAITING_APPROVAL,
                 'event_category_id' => $request->event_category,
-                'license_flag'      => $request->license_flag,
-                'banner_file_id'    => $bannerFileData->id ?? null,
-                'license_file_id'   => $licenseFileData->id ?? null,
+                'event_license_flag'      => $request->event_license_flag,
+                'event_banner_file_id'    => $bannerFileData->id ?? null,
+                'event_license_file_id'   => $licenseFileData->id ?? null,
                 'show_flag'         => false,
                 'created_by'        => Auth::user()->username,
                 'updated_by'        => Auth::user()->username,
             ]);
 
-            $test = array();
             if($request->disability_categories) {
                 foreach($request->disability_categories as $disabilityCategory) {
                     $test[$disabilityCategory] = EventDisabilityCategory::create([
@@ -307,25 +307,31 @@ class EventController extends Controller
                 }
             }
 
-            dd($request);
-            throw $request;
             DB::commit();
+            return redirect()->route('event.index')->with('success', 'Event berhasil dibuat. Silahkan menunggu approval admin.');
         } catch (\Throwable $th) {
             DB::rollback();
+            return redirect()->back()->with('failed', 'Event gagal dibuat. Silahkan coba lagi.');
         }
-
-        return redirect()->route('event.index')->with('success', 'Event berhasil dibuat. Silahkan menunggu approval admin');
     }
 
     public function delete($slug) {
-        $event = Event::whereHas('eventDetail', function($q) use ($slug) {
-            $q->where('slug', $slug);
-        })->first();
+        DB::beginTransaction();
+        try {
+            $event = Event::whereHas('eventDetail', function($q) use ($slug) {
+                $q->where('slug', $slug);
+            })->first();
 
-        $event->update([
-            'show_flag' => false
-        ]);
+            $event->update([
+                'show_flag' => false
+            ]);
 
-        return redirect()->route('event.index')->with('success', 'Berhasil hapus event!');
+            DB::commit();
+            return redirect()->route('event.index')->with('success', 'Event berhasil dihapus.');
+        } catch (\Throwable $th) {
+           DB::rollBack();
+           return redirect()->back()->with('failed', 'Event gagal dihapus. Silahkan coba lagi.');
+        }
+
     }
 }

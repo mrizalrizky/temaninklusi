@@ -24,7 +24,7 @@ class Article extends Model
         'updated_at',
     ];
 
-    public function file() {
+    public function articleBanner() {
         return $this->belongsTo(File::class, 'file_id', 'id');
     }
 

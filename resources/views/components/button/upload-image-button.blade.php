@@ -8,7 +8,7 @@
             class="position-absolute top-50 start-50 translate-middle" alt="">
     </label>
     <input type="file" class="form-control @error($name) is-invalid @enderror" id="{{ $name }}"
-           onchange="imageThumbnail()" name="{{ $name }}">
+           onchange="setImageThumbnail('thumbnail')" name="{{ $name }}">
     @error($name)
         <div class="invalid-feedback">
             {{ $message }}
@@ -17,7 +17,8 @@
 
     @push('after-script')
         <script>
-            const imageThumbnail = () => {
+            const setImageThumbnail = (id) => {
+                const thumbnail = document.getElementById(id)
                 thumbnail.src = URL.createObjectURL(event.target.files[0])
             }
         </script>
