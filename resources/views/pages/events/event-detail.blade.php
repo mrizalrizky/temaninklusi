@@ -81,10 +81,12 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center">
+            <div class="align-items-start d-flex">
+
+                <div class="d-flex justify-content-center">
                 @include('pages.events.includes.event-detail-container', $event)
             </div>
-        </section>
+        </div>
         </section>
     </div>
 @endsection
