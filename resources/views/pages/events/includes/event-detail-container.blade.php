@@ -10,6 +10,9 @@
     </div>
 
     <ul class="d-grid gap-4 p-0 justify-content-center justify-content-md-start">
+        <x-listitem.event-list-item icon="iconamoon:category-fill">
+            {{ $event->eventCategory->label }}
+        </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bytesize:location">
             {{ $event->eventDetail->location }}
         </x-listitem.event-list-item>
@@ -39,9 +42,9 @@
         @endcan
     </span>
 
-    <x-dialog.base-dialog id="registerEventModal" action="{{ route('event.action',['actionType' => 'REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
+    <x-dialog.base-dialog id="registerEventModal" action="{{ route('event.action',['actionType' => 'USER_REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
                           title="Yakin akan mendaftar event?" submitTitle="Ya" rejectTitle="Tidak"/>
-    <x-dialog.base-dialog id="cancelRegisterModal" action="{{ route('event.action',['actionType' => 'REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
+    <x-dialog.base-dialog id="cancelRegisterModal" action="{{ route('event.action',['actionType' => 'USER_CANCEL_REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
                           title="Yakin akan batal registrasi event?" submitTitle="Ya" rejectTitle="Tidak"/>
 
 </div>

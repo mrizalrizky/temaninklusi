@@ -28,6 +28,6 @@ class ProfileListItem extends Component
      */
     public function render()
     {
-        return view('components.list-item.profile-list-item');
+        return view('components.listitem.profile-list-item');
     }
 }

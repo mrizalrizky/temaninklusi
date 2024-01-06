@@ -89,7 +89,7 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
                 'name' => $data['organizer_name'],
                 'address' => $data['organizer_address'],
-                'contact_name' => $data['organizer_contact_name'],
+                'contact_email' => $data['organizer_contact_email'],
                 'contact_phone' => $data['organizer_contact_phone'],
             ]);
         };

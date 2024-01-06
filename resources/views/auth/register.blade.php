@@ -48,7 +48,15 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="Alamat email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Nomor Telepon Pribadi" type="text" value="{{ old('phone_number') }}"  placeholder="0123456789" name="phone_number" :label="true">
+                            @error('phone_number')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </x-form.base-form-input>
+
+                        <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -83,6 +91,15 @@
                                 @enderror
                             </x-form.base-form-input>
 
+                            <x-form.base-form-input class="mb-4" title="Nama Kontak Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_name') }}"
+                                placeholder="Nama Kontak Perusahaan atau Organisasi" name="organizer_contact_name" :label="true">
+                                @error('organizer_contact_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
+
                             <x-form.base-form-input class="mb-4" title="Alamat Perusahaan atau Organisasi" type="text" value="{{ old('organizer_address') }}"
                                 placeholder="Alamat Perusahaan atau Organisasi" name="organizer_address" :label="true">
                                 @error('organizer_address')
@@ -92,14 +109,15 @@
                                 @enderror
                             </x-form.base-form-input>
 
-                            <x-form.base-form-input class="mb-4" title="Nama Kontak Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_name') }}"
-                                placeholder="Nama Kontak Perusahaan atau Organisasi" name="organizer_contact_name" :label="true">
-                                @error('organizer_contact_name')
+                            <x-form.base-form-input class="mb-4" title="Alamat Email Perusahaan atau Organisasi" type="text" value="{{ old('organizer_email') }}"
+                                placeholder="Alamat Email Perusahaan atau Organisasi" name="organizer_email" :label="true">
+                                @error('organizer_email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </x-form.base-form-input>
+
 
                             <x-form.base-form-input class="mb-4" title="No. Telp Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_phone') }}"
                                 placeholder="No. Telp Perusahaan atau Organisasi" name="organizer_contact_phone" :label="true">
