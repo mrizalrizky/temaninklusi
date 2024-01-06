@@ -7,8 +7,8 @@
         <div class="card-body text-center px-4">
             {{-- <h4 class="card-title text-primary">{{ $title }}</h4>
             <desc class="text-dark">{{ $description }}</desc> --}}
-            <h4 class="card-title text-primary">{{ $title }}</h5>
-            <small class="text-dark">{{ $description }}</small>
+            <h5 class="card-title text-primary mb-2">{{ $title }}</h5>
+            <p>{{ $description }}</p>
         </div>
     </div>
 </div>

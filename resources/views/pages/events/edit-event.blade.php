@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-md-flex justify-content-center container-md px-4 px-lg-3">
+<div class="container-md px-4 px-lg-3">
+    <div class="my-5 text-center text-md-start">
+        <h4 class="text-primary">Edit Event</h4>
+    </div>
         <div class="col-lg-6 border border-1 rounded-4 align-items-center p-5">
             <form action="{{ route('event.create') }}" method="POST" id="eventForm">
                 @csrf

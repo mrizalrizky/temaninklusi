@@ -1,7 +1,7 @@
 <div class="d-grid gap-5">
     <div class="row">
         <div class="col">
-            <h4>Event Details</h4>
+            <p>Event Details</p>
             <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
                 <x-listitem.event-list-item icon="iconamoon:category-fill">
                     {{ $event->eventCategory->label }}
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="col">
-            <h4>Fasilitas</h4>
+            <p>Fasilitas</p>
             <ul>
                 @foreach ($event->eventDetail->event_facilities as $eventFacility)
                     @if ($eventFacility !== null)
@@ -31,7 +31,7 @@
             </ul>
         </div>
         <div class="col">
-            <h4>Organizer Details</h4>
+            <p>Organizer Details</p>
             <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
                 <x-listitem.event-list-item icon="mdi:email-open">
                     {{ $event->organizer->name }}
@@ -48,7 +48,7 @@
 
     <div class="row">
         <div class="col">
-            <h4>Benefit</h4>
+            <p>Benefit</p>
             <ul>
                 @foreach ($event->eventDetail->event_benefits as $eventBenefit)
                     @if ($eventBenefit !== null)

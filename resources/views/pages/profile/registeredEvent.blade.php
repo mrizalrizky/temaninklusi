@@ -14,7 +14,7 @@
             @include('pages.profile.includes.profile-sidebar')
             <div class="col-7 col-md d-flex flex-column">
                 <div class="row align-items mb-5" style="min-height: 25rem">
-                    @if(count($events) > 0))
+                    @if(count($events) > 0)
                         @foreach ($events as $event)
                         <div class="row align-items-center rounded-4 px-2 pb-5">
                             <div class="col gx-4 gt-0" style="max-width: 10rem; max-height: 10rem">
@@ -24,7 +24,6 @@
                             <div class="col">
                                 <p class="text-primary mb-1"><small style="font-size: .8rem">Lifestyle</small></p>
                                 <h5 class="fw-bold">{{ $event->eventDetail->title }}</h5>
-                                <p style="font-size: .9rem" class="mb-0">{{ 'sdjf' }}</p>
                                 <p style="font-size: .9rem"><small class="smaller text-secondary">{{ $event->eventDetail->start_date->format('d M Y') }}</small></p>
                                 <a class="text-primary fw-bold" style="font-size: 0.75rem" href="{{ route('event.details', $event->eventDetail->slug) }}">
                                     Detail Event

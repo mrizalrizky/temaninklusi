@@ -39,7 +39,7 @@ class ArticleController extends Controller
             $article = Article::where([
                 ['slug', $request->slug],
                 ['show_flag', True]
-            ])->first();
+            ])->firstOrFail();
 
             if ($article->title != $request->title) {
                 $validation['title'] = 'required|unique:articles';
@@ -91,10 +91,10 @@ class ArticleController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('blog.index')->with('success', 'Tips dan artikel berhasil dibuat.');
+            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dibuat!');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->back()->with('failed', 'Tips dan artikel gagal dibuat. Silahkan coba lagi.');
+            return redirect()->back()->with('action-failed', 'Tips dan artikel gagal dibuat. Silahkan coba lagi!');
         }
 
     }
@@ -104,7 +104,7 @@ class ArticleController extends Controller
         $article = Article::where([
             ['slug', $slug],
             ['show_flag', True]
-        ])->first();
+        ])->firstOrFail();
 
         $article->content = preg_replace('~[\r\n]+~', '<br><br>', $article->content);
         return view('pages.blogs.blogDetail', compact('article'));
@@ -115,7 +115,7 @@ class ArticleController extends Controller
         $article = Article::where([
             ['slug', $slug],
             ['show_flag', True]
-        ])->first();
+        ])->firstOrFail();
 
         $articleCategories = ArticleCategory::all();
         return view('pages.blogs.editBlog', compact('article', 'articleCategories'));
@@ -129,7 +129,7 @@ class ArticleController extends Controller
             $article = Article::where([
                 ['slug', $slug],
                 ['show_flag', True]
-            ])->first();
+            ])->firstOrFail();
 
             $this->validateData($request);
 
@@ -154,10 +154,10 @@ class ArticleController extends Controller
             $article->update($data);
 
             DB::commit();
-            return redirect()->route('blog.details', $slug)->with('success', 'Tips dan artikel berhasil diedit.');
+            return redirect()->route('blog.details', $slug)->with('action-success', 'Tips dan artikel berhasil diedit!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('failed', 'Tips dan artikel gagal diedit. Silahkan coba lagi.');
+            return redirect()->back()->with('action-failed', 'Tips dan artikel gagal diedit. Silahkan coba lagi!');
         }
     }
 
@@ -167,17 +167,16 @@ class ArticleController extends Controller
             $article = Article::where([
                 ['slug', $slug],
                 ['show_flag', True]
-            ])->first();
+            ])->firstOrFail();
 
             $article->update([
                 'show_flag' => false
             ]);
-
             DB::commit();
-            return redirect()->route('blog.index')->with('success', 'Tips dan artikel berhasil dihapus.');
+            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dihapus!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('blog.index')->with('success', 'Tips dan artikel gagal dihapus. Silahkan coba lagi.');
+            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel gagal dihapus. Silahkan coba lagi!');
         }
     }
 }

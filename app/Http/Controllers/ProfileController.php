@@ -53,7 +53,7 @@ class ProfileController extends Controller
             ]);
         } else {
             throw ValidationException::withMessages([
-                'failed' => 'Failed to Change Password!'
+                'action-failed' => 'Failed to Change Password!'
             ]);
         }
 
