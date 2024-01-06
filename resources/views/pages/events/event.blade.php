@@ -25,7 +25,7 @@
             </div>
         </form>
 
-        <h3 class="text-primary text-center my-5">Semua Event</h3>
+        <h4 class="text-primary text-center my-5">Semua Event</h4>
         @if(count($events) > 0)
         <div class="row px-md-0 justify-content-center g-3 g-md-4">
         @foreach ($events as $event)

@@ -1,9 +1,9 @@
 <div class="dropdown">
-    <button class="form-control py-2 dropdown-toggle" type="button" name="{{ $name }}[]" id="dropdownMenuButton"
+    <button class="form-control py-2 text-start dropdown-toggle d-flex w-full justify-content-between align-items-center" style="font-size: .9rem" type="button" name="{{ $name }}[]" id="dropdownMenuButton"
             data-bs-toggle="dropdown" aria-expanded="false">
     {{ $placeholder }}
     </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <ul class="dropdown-menu w-100 mt-2" aria-labelledby="dropdownMenuButton">
         @foreach ($options as $option)
         <li>
             <a class="dropdown-item">

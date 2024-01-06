@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md py-4 top-0 position-md-relative z-3 {{ request()->route()->named('index') ? 'bg-primary' : null }}">
+<nav class="navbar navbar-expand-md py-4 top-0 position-md-relative z-3 {{ request()->route()->named('index') ? 'bg-primary-2' : null }}">
     <div class="container-lg px-4 px-md-3">
         <a class="navbar-brand fw-bolder" href="{{ route('index') }}">{{ config('app.name') }}</a>
         <button class="ms-auto d-md-none bg-transparent" type="button" data-bs-toggle="collapse"
@@ -8,7 +8,7 @@
         </button>
 
         <div class="collapse navbar-collapse flex-grow-0 ms-2" id="navbarSupportedContent">
-            <ul class="navbar-nav gap-sm-3 mt-2 px-2">
+            <ul class="navbar-nav gap-md-3 mt-2 px-2">
                 <x-listitem.navbar-item href="{{ route('index') }}">
                     Home
                 </x-listitem.navbar-item>
@@ -44,7 +44,7 @@
                         Login
                     </a>
                 @else
-                    <a href="{{ route('profile.index') }}" style="padding: 0 2.2rem">
+                    <a href="{{ route('profile.index') }}" style="padding: 0 1.2rem">
                         <svg xmlns="http://www.w3.org/2000/svg" height="1.85rem" style="fill: #01676c"
                             viewBox="0 0 512 512">
                             <path

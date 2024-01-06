@@ -7,7 +7,7 @@
         <p class="text-primary">buat bantu kamu terinspirasi!</p>
     </div>
 
-    <section class="d-grid gap-5 pb-5">
+    <section class="d-grid gap-5 mb-5">
     @foreach ($articles as $article)
         <x-card.blog-card :article="$article"/>
     @endforeach
