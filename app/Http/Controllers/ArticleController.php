@@ -91,10 +91,10 @@ class ArticleController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('blog.index')->with('success', 'Tips dan artikel berhasil dibuat.');
+            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dibuat!');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->back()->with('failed', 'Tips dan artikel gagal dibuat. Silahkan coba lagi.');
+            return redirect()->back()->with('action-failed', 'Tips dan artikel gagal dibuat. Silahkan coba lagi!');
         }
 
     }
@@ -154,10 +154,10 @@ class ArticleController extends Controller
             $article->update($data);
 
             DB::commit();
-            return redirect()->route('blog.details', $slug)->with('success', 'Tips dan artikel berhasil diedit.');
+            return redirect()->route('blog.details', $slug)->with('action-success', 'Tips dan artikel berhasil diedit!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('failed', 'Tips dan artikel gagal diedit. Silahkan coba lagi.');
+            return redirect()->back()->with('action-failed', 'Tips dan artikel gagal diedit. Silahkan coba lagi!');
         }
     }
 
@@ -174,10 +174,10 @@ class ArticleController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('blog.index')->with('success', 'Tips dan artikel berhasil dihapus.');
+            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dihapus!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('blog.index')->with('success', 'Tips dan artikel gagal dihapus. Silahkan coba lagi.');
+            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel gagal dihapus. Silahkan coba lagi!');
         }
     }
 }
