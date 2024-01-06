@@ -46,7 +46,7 @@ small {
 
 
 p {
-    font-size: 1.1rem;
+    font-size: 1.02rem;
 }
 
 h1,
@@ -68,7 +68,7 @@ h2 {
 }
 
 h3 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
 }
 
 h4 {
@@ -84,7 +84,7 @@ h6 {
 }
 
 desc {
-    font-size: 1rem;
+    font-size: 1.02rem;
 }
 
 a {
@@ -93,7 +93,7 @@ a {
 }
 
 caption-detail {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #6c757d;
     font-weight: bold;
 }
@@ -128,6 +128,19 @@ input[type="email"]
 input[type="password"]
 {
     font-size: .9rem !important;
+}
+
+input[type="datetime-local"] {
+    font-size: 0.9rem !important;
+}
+
+select {
+    font-size: 0.9rem !important;
+}
+
+label.mandatory::after {
+    content: ' *';
+    color: red;
 }
 
 .label-add-blog {
@@ -180,6 +193,16 @@ input[type="password"]
     --bs-btn-disabled-bg: var(--bs-btn-bg);
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border: none;
+    color: black;
+}
+
+.btn-secondary:hover {
+    color: white !important
 }
 
 /*
@@ -241,6 +264,10 @@ input[type="password"]
 }
 
 .bg-primary {
+    background-color: var(--main-color) !important;
+}
+
+.bg-primary-2 {
     background-color: var(--bg-color) !important;
 }
 
@@ -265,12 +292,12 @@ input[type="password"]
     --bs-pagination-border-width: 1px;
     --bs-pagination-border-color: #dee2e6;
     --bs-pagination-border-radius: 1rem;
-    --bs-pagination-hover-color: var(--bs-link-hover-color);
+    --bs-pagination-hover-color: var(--main-color);
     --bs-pagination-hover-bg: #e9ecef;
     --bs-pagination-hover-border-color: #dee2e6;
-    --bs-pagination-focus-color: var(--bs-link-hover-color);
+    --bs-pagination-focus-color: var(--main-color);
     --bs-pagination-focus-bg: #e9ecef;
-    --bs-pagination-focus-box-shadow: 0 0 0 0.25remrgba (13, 110, 253, 0.25);
+    --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba (13, 110, 253, 0.25);
     --bs-pagination-active-color: #fff;
     --bs-pagination-active-bg: var(--bs-color);
     --bs-pagination-active-border-color: var(--bs-color);
@@ -339,9 +366,17 @@ input[type="password"]
     font-size: .9rem;
 }
 
+.elipsis-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
 @media only screen and (max-width: 547px) {
     html {
-        font-size: 90% !important;
+        font-size: 95% !important;
     }
 }
 
@@ -353,7 +388,7 @@ input[type="password"]
 
 @media only screen and (max-width: 284px) {
     html {
-        font-size: 60% !important;
+        font-size: 85% !important;
     }
 
     /* .icon {
@@ -366,3 +401,39 @@ input[type="password"]
         font-size: 60% !important;
     }
 } */
+
+.alert-save, .alert-delete, .alert-error {
+    position: absolute;
+    left: 50%;
+    top: -100px;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: .3s all ease-in;
+    z-index: 99;
+}
+
+.alert-save.active, .alert-delete.active, .alert-error.active {
+    position: absolute;
+    left: 50%;
+    top: 1rem;
+    opacity: 1;
+    transform: translateX(-50%);
+    animation: .5s animate ease-in;
+}
+
+@keyframes animate {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+
+    to {
+        top: 1rem;
+        opacity: 1;
+    }
+}
+
+.badge {
+    padding: 0.57em 0.77em;
+    font-size: 0.8em;
+}

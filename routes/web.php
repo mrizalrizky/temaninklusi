@@ -26,7 +26,7 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::prefix('blog')->group(function () {
+Route::prefix('blogs')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
     Route::get('/add', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
     Route::post('/add', [App\Http\Controllers\ArticleController::class, 'add'])->name('blog.add');
@@ -37,10 +37,28 @@ Route::prefix('blog')->group(function () {
 });
 
 Route::prefix('events')->group(function () {
-    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
-    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
+    Route::group(['middleware' => 'auth'],function () {
+        Route::group(['middleware' => 'can:upload-event'], function () {
+            Route::get('/upload', [App\Http\Controllers\EventController::class, 'showUploadEventPage'])->name('event.upload');
+            Route::post('/upload', [App\Http\Controllers\EventController::class, 'create'])->name('event.create');
+            Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
+        });
+
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
+
+        Route::group(['middleware' => 'can:manage-event'], function () {
+            Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
+            Route::post('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
+            Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('event.delete');
+        });
+
+        Route::group(['middleware' => 'can:create-comment'], function() {
+            Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
+            Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
+        });
+    });
+
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
 
     // Comments
@@ -60,14 +78,11 @@ Route::get('/reset-password', function () {
     return view('auth.reset-password');
 })->name('reset-password');
 
+Route::get('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('reset.password');
+Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
 
-Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.reset-password');
-
-Route::get('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('validate.password');
-Route::post('/validate-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
-
-Route::get('/test', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword']);
-
-Route::get('/x', function () {
-    return view('pages.validate-password');
-});
+Route::get('/admin-dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/manage-user', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
+Route::get('/manage-event', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
+Route::delete('/manage-user/{id}', [\App\Http\Controllers\UserController::class, 'bannedUser'])->name('admin.banned-user');
+Route::put('/unbanned-user/{id}', [\App\Http\Controllers\UserController::class, 'unbannedUser'])->name('admin.unbanned-user');

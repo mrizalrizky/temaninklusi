@@ -4,10 +4,10 @@
     </div>
 
     <div class="col-md-5">
-        <p class="text-primary mb-1"><small style="font-size: .8rem">Lifestyle</small></p>
+        <p class="text-primary mb-1"><small style="font-size: .9rem">{{ $article->articleCategory->label ?? ''}}</small></p>
         <h5 class="fw-bold">{{ $article->title }}</h5>
-        <p style="font-size: .9rem">{{ $article->content}}</p>
-        <a class="text-primary fw-bold" style="font-size: 0.75rem" href="{{route('blog.index')}}/{{ $article->slug }}">
+        <p class="elipsis-description">{{ Str::limit($article->content, 128) }}</p>
+        <a class="text-primary fw-bold" style="font-size: 0.75rem" href="{{ route('blog.index')}}/{{ $article->slug }}">
             Read More
         </a>
     </div>

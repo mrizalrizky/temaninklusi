@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-primary">
+    <div class="bg-primary-2">
         <div class="container-lg text-center pt-4 pb-4">
             <h3 class="text-primary mb-2">
                 Cari event yang ramah untuk <strong>Disabilitas?</strong> Temukan
