@@ -18,13 +18,19 @@ use App\Models\RegisteredEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
+
+use Session;
 
 class EventController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // dd($request->filled('title'));
         $query = Event::whereHas('eventDetail', function ($query) use ($request) {
+            $query->where('status_id', EventStatusConstant::APPROVED);
             if ($request->filled('title')) {
                 $query->where('title', 'ILIKE', '%' . $request->title . '%');
             }
@@ -33,7 +39,7 @@ class EventController extends Controller
                 $query->where('start_date', 'ILIKE', '%' . $request->start_date . '%');
             }
 
-            if($request->filled('event_category')) {
+            if ($request->filled('event_category')) {
                 $query->where('event_category_id', $request->event_category);
             }
 
@@ -46,17 +52,28 @@ class EventController extends Controller
             });
         }
 
-        $events = $query->paginate(3);
+        $events = $query->paginate(6);
         $eventCategories = EventCategory::all();
         $disabilityCategories = DisabilityCategory::all();
 
-        return view('pages.events.event', compact('events', 'eventCategories', 'disabilityCategories'));
+        $request->session()->put('searchKeyword', $request->title);
+
+        return view('pages.events.event')->with([
+            'events' => $events,
+            'eventCategories' => $eventCategories,
+            'disabilityCategories' => $disabilityCategories,
+            'searchKeyword' => $request->title,
+        ]);
     }
 
-    public function showPopularEvents () {
-        $popularEvents = Event::with(['eventDetail','organizer','status', 'eventBanner'])->limit(3)->get();
+    public function showNewestEvents()
+    {
+        $newestEvents = Event::where([
+            ['status_id', EventStatusConstant::APPROVED],
+            ['show_flag', true],
+        ])->with(['eventDetail', 'organizer', 'status', 'eventBanner'])->latest()->limit(3)->get();
 
-        return view('pages.index', compact('popularEvents'));
+        return view('pages.index', compact('newestEvents'));
     }
 
     public function showEventsByRole()
@@ -68,6 +85,7 @@ class EventController extends Controller
             return view('pages.profile.registeredEvent', compact('events'));
         } else if ($user->role_id == RoleConstant::EVENT_ORGANIZER) {
             $events = Event::where([
+                ['status_id', EventStatusConstant::APPROVED],
                 ['show_flag', true],
                 ['organizer_id', $user->organizer->id],
             ])->paginate(3);
@@ -77,78 +95,81 @@ class EventController extends Controller
         }
     }
 
-    public function showUploadEventPage () {
+    public function showUploadEventPage()
+    {
         $eventCategories = EventCategory::all();
         $disabilityCategories = DisabilityCategory::all();
 
         return view('pages.events.upload-event', compact('eventCategories', 'disabilityCategories'));
     }
 
-    public function show($slug) {
-        $event = Event::with(['eventCategory', 'eventDetail', 'organizer', 'comments.replies.users', 'status', 'eventBanner'])->whereHas('eventDetail', function($q) use ($slug) {
+    public function show($slug)
+    {
+        $event = Event::with(['eventCategory', 'eventDetail', 'organizer', 'comments.replies.users', 'status', 'eventBanner'])->whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug);
             //   ->where('show_flag', false);
-        })->firstOrFail ();
+        })->firstOrFail();
 
         // $this->authorize('view', $event);
 
         return view('pages.events.event-detail', compact('event'));
     }
 
-    public function eventAction($slug, $actionType) {
+    public function eventAction($slug, $actionType)
+    {
         $message = '';
         $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug);
             //   ->where('show_flag', true);
         })->firstOrFail();
 
-        switch($actionType) {
+        switch ($actionType) {
             case "APPROVE_EVENT":
-                if($event->isWaitingApproval()) {
+                if ($event->isWaitingApproval()) {
                     $event->update([
                         'show_flag' => true,
                         'status_id' => EventStatusConstant::APPROVED
                     ]);
                     $message = "Event berhasil diapprove!";
-                // } else {
-                //     $message = "Event tidak dapat diapprove. Silahkan coba lagi!";
+                    // } else {
+                    //     $message = "Event tidak dapat diapprove. Silahkan coba lagi!";
                 }
                 break;
 
             case 'REJECT_EVENT':
-                if($event->isWaitingApproval()) {
+                if ($event->isWaitingApproval()) {
                     $event->update([
                         'show_flag' => false,
                         'status_id' => EventStatusConstant::REJECTED
                     ]);
                     $message = "Event berhasil direject!";
-                // } else {
-                //     $message = "Event tidak dapat direject. Silahkan coba lagi!";
+                    // } else {
+                    //     $message = "Event tidak dapat direject. Silahkan coba lagi!";
                 }
                 break;
 
             case 'USER_REGISTER_EVENT':
-                if(!Auth::user()->registeredEvents->contains($event)) {
+                if (!Auth::user()->registeredEvents->contains($event)) {
                     RegisteredEvent::create([
                         'user_id'  => Auth::user()->id,
                         'event_id' => $event->id,
                     ]);
                     $message = "Anda berhasil terdaftar kedalam event ini. Silahkan menunggu informasi selanjutnya";
-                // } else {
-                //     $message = 'Anda sudah terdaftar kedalam event ini!';
+                    // } else {
+                    //     $message = 'Anda sudah terdaftar kedalam event ini!';
                 }
 
                 break;
 
             case 'USER_CANCEL_REGISTER_EVENT':
-                if(Auth::user()->registeredEvents->contains($event)) {
+                if (Auth::user()->registeredEvents->contains($event)) {
                     RegisteredEvent::destroy([
                         'user_id'  => Auth::user()->id,
                         'event_id' => $event->id,
                     ]);
                     $message = "Anda berhasil melakukan cancel registrasi event ini.";
-                // } else {
-                //     $message = "Anda belum terdaftar kedalam event ini!";
+                    // } else {
+                    //     $message = "Anda belum terdaftar kedalam event ini!";
                 }
 
                 break;
@@ -161,10 +182,11 @@ class EventController extends Controller
         return redirect()->back()->with('action-success', $message);
     }
 
-    public function edit($slug) {
+    public function edit($slug)
+    {
         $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug)
-              ->where('show_flag', true);
+                ->where('show_flag', true);
         })->firstOrFail();
 
         $eventCategories = EventCategory::all();
@@ -173,7 +195,8 @@ class EventController extends Controller
         return view('pages.events.edit-event', compact('event', 'eventCategories', 'disabilityCategories'));
     }
 
-    public function update(Request $request, $slug) {
+    public function update(Request $request, $slug)
+    {
         DB::beginTransaction();
         try {
             $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
@@ -190,7 +213,8 @@ class EventController extends Controller
         }
     }
 
-    private function storeFile($requestData, $requestFile, $fileType) {
+    private function storeFile($requestData, $requestFile, $fileType)
+    {
         $titleSlug = Str::slug($requestData['title'], '-');
         unset($requestData[$fileType]);
         $fileName = $fileType . '.' . $requestFile->getClientOriginalExtension();
@@ -199,7 +223,8 @@ class EventController extends Controller
         return $requestData;
     }
 
-    protected function validateData(Request $request) {
+    protected function validateData(Request $request)
+    {
         // dd($request);
         $rules = [
             'title'                 => 'sometimes|required',
@@ -217,27 +242,29 @@ class EventController extends Controller
             'start_date'            => 'required',
             'end_date'              => 'required',
             'location'              => 'required',
-            'event_facilities'      => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
-                        if (empty(array_filter($value, fn ($item) => $item !== null))) {
-                            $fail("Field fasilitas event tidak boleh kosong");
-                        }
+            'event_facilities'      => [
+                'required', 'array', 'min:1', 'max:3', function ($attribute, $value, $fail) {
+                    if (empty(array_filter($value, fn ($item) => $item !== null))) {
+                        $fail("Field fasilitas event tidak boleh kosong");
                     }
-                ],
-            'event_benefits'        => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
-                        if(empty(array_filter($value, fn ($item) => $item !== null))) {
-                            $fail("Field benefit event tidak boleh kosong");
-                        }
-                    },
-                ],
+                }
+            ],
+            'event_benefits'        => [
+                'required', 'array', 'min:1', 'max:3', function ($attribute, $value, $fail) {
+                    if (empty(array_filter($value, fn ($item) => $item !== null))) {
+                        $fail("Field benefit event tidak boleh kosong");
+                    }
+                },
+            ],
             'social_media_link' => 'required',
         ];
 
-        if($request->slug) { // Edit
+        if ($request->slug) { // Edit
             $event = Event::whereHas('eventDetail', function ($q) use ($request) {
                 $q->where('slug', $request->slug);
             })->firstOrFail();
 
-            if($event->title !== $request->title) {
+            if ($event->title !== $request->title) {
                 $rules['title'] = 'required|unique:event_details';
             } else {
                 $rules['title'] = 'required';
@@ -261,16 +288,16 @@ class EventController extends Controller
         $data = $request->all();
 
         $eventBannerFile = $request->file(FileTypeConstant::EVENT_BANNER);
-        if($eventBannerFile) {
-            $data = $this->storeFile($data, $eventBannerFile, FileTypeConstant::EVENT_BANNER );
+        if ($eventBannerFile) {
+            $data = $this->storeFile($data, $eventBannerFile, FileTypeConstant::EVENT_BANNER);
         }
 
         $eventProposalFile = $request->file(FileTypeConstant::EVENT_PROPOSAL_FILE);
-        if($eventProposalFile) {
+        if ($eventProposalFile) {
             $data = $this->storeFile($data, $eventProposalFile, FileTypeConstant::EVENT_PROPOSAL_FILE);
         }
 
-        if($request->event_license_flag == 1 && $request->file(FileTypeConstant::EVENT_LICENSE_FILE)) {
+        if ($request->event_license_flag == 1 && $request->file(FileTypeConstant::EVENT_LICENSE_FILE)) {
             $licenseFile = $request->file(FileTypeConstant::EVENT_LICENSE_FILE);
             $data = $this->storeFile($data, $licenseFile, FileTypeConstant::EVENT_LICENSE_FILE);
         }
@@ -278,7 +305,8 @@ class EventController extends Controller
         return redirect()->back()->with('eventModal', $data);
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         DB::beginTransaction();
         try {
             $titleSlug = Str::slug($request->title, '-');
@@ -289,10 +317,10 @@ class EventController extends Controller
             ]);
 
             $licenseFileData = null;
-            if($request->event_license_flag == 1) {
+            if ($request->event_license_flag == 1) {
                 $licenseFileData = File::create([
                     'file_name' => $request->event_license_file,
-                    'file_path' => '/images/events/' .$titleSlug . '/',
+                    'file_path' => '/images/events/' . $titleSlug . '/',
                     'file_type' => FileTypeConstant::EVENT_LICENSE_FILE,
                 ]);
             }
@@ -325,8 +353,8 @@ class EventController extends Controller
                 // 'updated_by'        => Auth::user()->username,
             ]);
 
-            if($request->disability_categories) {
-                foreach($request->disability_categories as $disabilityCategory) {
+            if ($request->disability_categories) {
+                foreach ($request->disability_categories as $disabilityCategory) {
                     EventDisabilityCategory::create([
                         'event_id' => $createdEvent->id,
                         'disability_category_id' => $disabilityCategory
@@ -343,10 +371,11 @@ class EventController extends Controller
         }
     }
 
-    public function delete($slug) {
+    public function delete($slug)
+    {
         DB::beginTransaction();
         try {
-            $event = Event::whereHas('eventDetail', function($q) use ($slug) {
+            $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
                 $q->where('slug', $slug);
             })->firstOrFail();
 
@@ -357,9 +386,8 @@ class EventController extends Controller
             DB::commit();
             return redirect()->route('event.index')->with('action-success', 'Event berhasil dihapus!');
         } catch (\Throwable $th) {
-           DB::rollBack();
-           return redirect()->back()->with('action-failed', 'Event gagal dihapus. Silahkan coba lagi!');
+            DB::rollBack();
+            return redirect()->back()->with('action-failed', 'Event gagal dihapus. Silahkan coba lagi!');
         }
-
     }
 }

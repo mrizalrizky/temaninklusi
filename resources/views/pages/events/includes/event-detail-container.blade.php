@@ -1,4 +1,4 @@
-<div class="border rounded-4 p-5 d-grid gap-3" style="max-width: 25rem">
+<div class="border rounded-4 p-custom-2 p-md-5 d-grid gap-3" style="max-width: 25rem">
     <div class="d-flex justify-content-center justify-content-md-start align-items-center gap-3">
         <x-tag.organizer-tag :organizer="$event->organizer">
             <div class="d-flex gap-1 align-items-center">

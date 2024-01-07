@@ -139,7 +139,7 @@ label.mandatory::after {
     color: red;
 }
 
-input[type="datetime-local"] {
+input[type="date"] {
     font-size: 0.9rem !important;
 }
 
@@ -207,11 +207,12 @@ label.mandatory::after {
 .btn-secondary {
     background-color: var(--secondary-color);
     border: none;
-    color: black;
+    color: var(--main-color);
 }
 
 .btn-secondary:hover {
-    color: white !important
+    color: black !important;
+    background-color: var(--bg-color);
 }
 
 /*
@@ -358,6 +359,10 @@ label.mandatory::after {
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: var(--bs-btn-color);
     --bs-gradient: none;
+}
+
+.p-custom-2 {
+    padding: 2rem !important;
 }
 
 .p-x-custom-2 {

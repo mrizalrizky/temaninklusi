@@ -6,7 +6,7 @@
         <h4 class="text-primary">Edit Event</h4>
     </div>
         <div class="col-lg-6 border border-1 rounded-4 align-items-center p-5">
-            <form action="{{ route('event.create') }}" method="POST" id="eventForm">
+            <form action="{{ route('event.validate') }}" method="POST" id="eventForm">
                 @csrf
                 @if (Session::get('articleModal'))
                     @php

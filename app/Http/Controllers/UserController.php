@@ -21,8 +21,9 @@ class UserController extends Controller
             User::where([
                 ['id', $id],
             ])->first()->update([
-                'is_banned' => true
+                'ban_flag' => true
             ]);
+
             return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil di banned!');
         } catch (\Throwable $th) {
             return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal dibanned, silahkan coba lagi!');
@@ -35,7 +36,7 @@ class UserController extends Controller
             User::where([
                 ['id', $id],
             ])->first()->update([
-                'is_banned' => false
+                'ban_flag' => false
             ]);
             return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil di unbanned!');
         } catch (\Throwable $th) {

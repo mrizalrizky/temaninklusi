@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\EventController::class, 'showPopularEvents'])->name('index');
+Route::get('/', [\App\Http\Controllers\EventController::class, 'showNewestEvents'])->name('index');
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -46,16 +46,15 @@ Route::prefix('events')->group(function () {
             Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
         });
 
-        Route::group(['middleware' => 'can:manage-event'], function () {
+        Route::group(['middleware' => 'can:is-admin'], function () {
             Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
             Route::put('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
             Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('event.delete');
+            Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
         });
 
-        Route::group(['middleware' => 'can:create-comment'], function() {
             Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
             Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
-        });
     });
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');

@@ -24,26 +24,27 @@
                             <td class="text-center"><small class="badge mb-0"
                                     style="background: var(--main-color)">{{ $user->role->type }}</small>
                             </td>
-                            @if ($user->is_banned)
+                            @if ($user->ban_flag)
                             <td class="text-center">
                                 <button type="button" class="badge btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#unbannedUser">Unbanned</a>
+                                    data-bs-target="#unbannedUser-{{$user->id}}">Unbanned</a>
 
                             </td>
                             @else
                             <td class="text-center">
                                 <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#bannedUser">Banned</a>
+                                    data-bs-target="#bannedUser-{{$user->id}}">Banned</a>
 
                             </td>
                             @endif
                         </tr>
 
-                        <x-dialog.base-dialog id="bannedUser" action="{{ route('admin.banned-user', $user->id) }}"
+                        <x-dialog.base-dialog id="bannedUser-{{$user->id}}" action="{{ route('admin.banned-user', $user->id) }}"
                             title="Yakin akan banned user?">
                             {{ method_field('DELETE') }}
                         </x-dialog.base-dialog>
-                        <x-dialog.base-dialog id="unbannedUser" action="{{ route('admin.unbanned-user', $user->id) }}"
+
+                        <x-dialog.base-dialog id="unbannedUser-{{$user->id}}" action="{{ route('admin.unbanned-user', $user->id) }}"
                             title="Yakin akan unbanned user?">
                             {{ method_field('PUT') }}
                         </x-dialog.base-dialog>

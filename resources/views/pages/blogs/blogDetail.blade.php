@@ -9,7 +9,7 @@
                         class="badge btn btn-danger">Delete</button>
                 </div>
 
-                <x-dialog.base-dialog id="deleteEventModal" action="{{ route('blog.delete', $article->slug) }}"
+                <x-dialog.base-dialog id="deleteArticleModal" action="{{ route('blog.delete', $article->slug) }}"
                     title="Yakin akan hapus artikel?">
                     {{ method_field('DELETE') }}
                 </x-dialog.base-dialog>

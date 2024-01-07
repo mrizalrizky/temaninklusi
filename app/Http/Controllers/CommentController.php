@@ -17,7 +17,7 @@ class CommentController extends Controller
             'user_id'  => Auth::user()->id,
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('section', 'comment');
     }
 
     public function replyComment(Request $request) {
@@ -27,6 +27,6 @@ class CommentController extends Controller
             'user_id'         => Auth::user()->id
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('section', 'comment');
     }
 }

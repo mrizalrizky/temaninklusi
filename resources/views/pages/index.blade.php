@@ -31,12 +31,12 @@
 
         <section class="mb-5">
             <h3 class="text-primary text-center my-4 py-3">
-                Event Pilihan
+                Event Terbaru
             </h3>
 
-            @if(count($popularEvents) > 0)
+            @if(count($newestEvents) > 0)
                 <div class="row px-md-0 justify-content-center g-3 g-md-4">
-                    @foreach ($popularEvents as $event)
+                    @foreach ($newestEvents as $event)
                         <x-card.event-card :event="$event"/>
                     @endforeach
                 </div>
