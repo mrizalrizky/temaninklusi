@@ -22,7 +22,7 @@
                 <div class="row gap-4 gap-sm-3">
                     <div class="col-12 col-sm">
                         <x-form.base-form-input title="Judul Artikel" name="title" type="text"
-                            value="{{ $data ? $data['title'] : old('title') }}" :label="true">
+                            value="{{ $data ? $data['title'] : old('title') }}" :label="true" mandatory>
                             @error('title')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -40,7 +40,7 @@
                 <div class="row gap-4 gap-sm-3">
                     <div class="col-12 col-sm">
                         <x-form.base-form-input title="Sumber" name="source" type="text"
-                            value="{{ $data ? $data['source'] : old('source') }}" :label="true">
+                            value="{{ $data ? $data['source'] : old('source') }}" :label="true" mandatory>
                             @error('source')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -61,7 +61,7 @@
                 </div>
 
                 <div>
-                    <label class="form-label text-primary label-add-blog fw-bold mandatory">Thumbnail</label>
+                    <label class="form-label text-primary label-add-blog fw-bold mandatory">Banner Artikel</label>
                     <x-button.upload-image-button name="article_banner" />
                 </div>
                 @if ($data)
@@ -74,7 +74,7 @@
                 @endif
 
                 <div>
-                    <label for="content" class="form-label text-primary label-add-blog fw-bold mandatory">Content</label>
+                    <label for="content" class="form-label text-primary label-add-blog fw-bold mandatory">Konten</label>
                     <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="4">{{ $data ? $data['content'] : old('content') }}</textarea>
                     @error('content')
                         <div class="invalid-feedback">

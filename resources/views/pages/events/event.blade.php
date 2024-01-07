@@ -18,7 +18,7 @@
                 </form>
                 <div class="d-flex gap-3 col-12 col-md">
                     <button type="button" style="min-width: 10rem" class="col-11 col-md btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        data-bs-whatever="@mdo">Advance Search</button>
+                        data-bs-whatever="@mdo">Advanced Search</button>
                     @can('upload-event')
                         <div class="col d-flex align-items-center">
                             <a class="d-flex align-self-center bg-transparent border-0" href="{{ route('event.upload') }}">
@@ -45,7 +45,7 @@
             {{ $events->withQueryString()->links() }}
         </div>
     </div>
-    {{-- @dd($events) --}}
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -56,14 +56,21 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('event.index') }}" class="d-flex flex-column gap-4 mt-3" method="GET">
-                        <x-form.base-form-input name="title" type="text" placeholder="Cari event"
-                            value="{{ old('title') }}" />
-                        <x-form.base-form-input name="start_date" type="date" placeholder="DD/MM/YYYY"
-                            value="{{ old('start_date') }}" />
-                        <x-form.base-form-select name="event_category" id="event_category" placeholder="Kategori Event"
-                            :options="$eventCategories" selectedValue="{{ old('event_category') }}" />
-                        <x-form.base-form-multi-select name="disability_categories" :options="$disabilityCategories"
-                            placeholder="Jenis Disabilitas" id="disability_categories" />
+                        <x-form.base-form-input title="Judul Event" name="title" type="text" placeholder="Cari event"
+                            value="{{ old('title') }}" :label="true" />
+                        <x-form.base-form-input title="Tanggal Event Dimulai" name="start_date" type="date" placeholder="DD/MM/YYYY"
+                            value="{{ old('start_date') }}" :label="true"/>
+                        <div class="form-group">
+                            <label for="event_category" class="text-primary fw-bold mb-2">Kategori Event</label>
+                            <x-form.base-form-select title="Kategori Event" name="event_category" id="event_category" placeholder="Kategori Event"
+                                                     :options="$eventCategories" selectedValue="{{ old('event_category') }}" :label="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="eligibility" class="text-primary fw-bold mb-2">Eligibility</label>
+                            <x-form.base-form-multi-select title="Eligibility" name="disability_categories" :options="$disabilityCategories"
+                            placeholder="Jenis Disabilitas" id="disability_categories" :label="true" />
+                        </div>
                         <button class="d-flex align-self-center bg-transparent border-0" type="submit">
                             <iconify-icon icon="mingcute:search-line" height="2.25rem" class="text-white"></iconify-icon>
                         </button>

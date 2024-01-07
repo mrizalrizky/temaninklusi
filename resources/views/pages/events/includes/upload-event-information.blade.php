@@ -1,8 +1,8 @@
 <section class="d-flex flex-column gap-4">
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
-            <x-form.base-form-input title="Nama Event" name="title" type="text"
-                value="{{ $data ? $data['title'] : old('title') }}" :label="true">
+            <x-form.base-form-input title="Judul Event" name="title" type="text"
+                value="{{ $data ? $data['title'] : old('title') }}" :label="true" mandatory>
                 @error('title')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -31,7 +31,7 @@
         </div>
         <div class="col-12 col-md">
             <x-form.base-form-input title="Kuota Event" type="number" min="1" name="quota"
-                value="{{ $data ? $data['quota'] : old('quota') }}" :label="true">
+                value="{{ $data ? $data['quota'] : old('quota') }}" :label="true" mandatory>
                 @error('quota')
                     <div class="invalid-feedback">
                         {{ $message }}

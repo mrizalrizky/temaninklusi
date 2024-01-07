@@ -27,13 +27,13 @@
                             @if ($user->ban_flag)
                             <td class="text-center">
                                 <button type="button" class="badge btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#unbannedUser-{{$user->id}}">Unbanned</a>
+                                    data-bs-target="#unbannedUser-{{$user->id}}">Unbanned</button>
 
                             </td>
                             @else
                             <td class="text-center">
                                 <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#bannedUser-{{$user->id}}">Banned</a>
+                                    data-bs-target="#bannedUser-{{$user->id}}">Banned</button>
 
                             </td>
                             @endif

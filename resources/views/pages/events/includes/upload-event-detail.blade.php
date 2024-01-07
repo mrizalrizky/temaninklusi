@@ -29,7 +29,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
             <x-form.base-form-input title="Lokasi Event" type="text" name="location"
-                value="{{ $data ? $data['location'] : old('location') }}" :label="true">
+                value="{{ $data ? $data['location'] : old('location') }}" :label="true" mandatory>
                 @error('location')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -42,7 +42,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
             <x-form.base-form-input title="Tanggal Event Dimulai" type="datetime-local" name="start_date"
-                value="{{ $data ? $data['start_date'] : old('start_date') }}" :label="true">
+                value="{{ $data ? $data['start_date'] : old('start_date') }}" :label="true" mandatory>
                 @error('start_date')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -52,7 +52,7 @@
         </div>
         <div class="col-12 col-md form-group">
             <x-form.base-form-input title="Tanggal Event Selesai" type="datetime-local" name="end_date"
-                value="{{ $data ? $data['end_date'] : old('end_date') }}" :label="true">
+                value="{{ $data ? $data['end_date'] : old('end_date') }}" :label="true" mandatory>
                 @error('end_date')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -64,7 +64,7 @@
 
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
-            <label for="event_banner" class="text-primary fw-bold form-label mandatory">Poster Event</label>
+            <label for="event_banner" class="text-primary fw-bold form-label mandatory">Banner Event</label>
             <x-button.upload-image-button name="event_banner" />
         </div>
         @if ($data)

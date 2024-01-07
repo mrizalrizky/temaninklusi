@@ -11,10 +11,12 @@ class Toast extends Component
      *
      * @return void
      */
+    public $id;
     public $bgColor;
     public $sessionName;
-    public function __construct($bgColor, $sessionName)
+    public function __construct($id, $bgColor, $sessionName)
     {
+        $this->id = $id;
         $this->bgColor = $bgColor;
         $this->sessionName = $sessionName;
     }

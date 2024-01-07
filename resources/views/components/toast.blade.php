@@ -1,6 +1,6 @@
 @if (session()->has($sessionName))
-    <div class="container-sm border-none alert-delete active alert alert-danger mw-md-75 mw-xl-50 d-flex align-items-center gap-3"
-        style="width: 80%; background-color: {{ $bgColor }};" role="alert" id="alert-delete">
+    <div {{ $attributes->merge(['class' => "container-sm border-none active alert mw-md-75 mw-xl-50 d-flex align-items-center gap-3"]) }}
+        style="width: 80%; background-color: {{ $bgColor }};" role="alert" id="{{ $id }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
             class="bi bi-check-circle-fill" viewBox="0 0 16 16">
             <path

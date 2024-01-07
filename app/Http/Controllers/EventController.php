@@ -205,6 +205,30 @@ class EventController extends Controller
 
             $this->validateData($request);
 
+            if ($request->event_banner) {
+                $currentFile = File::find($event->file_id);
+                $currentFile->update([
+                    'file_name' => $request->event_banner,
+                    'file_path' => '/images/events/' . $slug ,
+                ]);
+            }
+
+            $data = [
+                'title'             => $request->title,
+                'description'       => $request->description,
+                'start_date'        => $request->start_date,
+                'end_date'          => $request->end_date,
+                'location'          => $request->location,
+                'event_facilities'  => $request->event_facilities,
+                'event_benefits'    => $request->event_benefits,
+                'social_media_link' => $request->social_media_link,
+                'event_category_id' => $request->event_category,
+                'updated_by'        => Auth::user()->name,
+                'updated_at'        => now()
+            ];
+
+            $event->update($data);
+
             DB::commit();
             return redirect()->route('event.details', $slug)->with('action-success', 'Event berhasil diedit!');
         } catch (\Throwable $th) {
@@ -225,19 +249,16 @@ class EventController extends Controller
 
     protected function validateData(Request $request)
     {
-        // dd($request);
         $rules = [
-            'title'                 => 'sometimes|required',
             'organizer_name'        => 'sometimes|required',
-            'event_category'        => 'required',
-            'quota'                 => 'required',
+            'event_category'        => 'sometimes|required',
+            'quota'                 => 'sometimes|required',
             'contact_email'         => 'sometimes|required',
             'contact_phone'         => 'sometimes|required',
-            'event_banner'          => 'required',
             'description'           => 'required',
             'event_license_flag'    => 'required',
-            'event_license_file'    => 'required_if:event_license_flag,==,1|mimes:pdf',
-            'event_proposal_file'   => 'required|mimes:pdf',
+            // 'event_license_file'    => 'required_if:event_license_flag,==,1|mimes:pdf',
+            // 'event_proposal_file'   => 'required|mimes:pdf',
             'disability_categories' => 'required|array|min:1',
             'start_date'            => 'required',
             'end_date'              => 'required',
@@ -264,7 +285,7 @@ class EventController extends Controller
                 $q->where('slug', $request->slug);
             })->firstOrFail();
 
-            if ($event->title !== $request->title) {
+            if ($event->eventDetail->title !== $request->title) {
                 $rules['title'] = 'required|unique:event_details';
             } else {
                 $rules['title'] = 'required';
@@ -272,6 +293,8 @@ class EventController extends Controller
         } else { // Upload Event
             $rules['title'] = 'required|unique:event_details';
             $rules['event_banner'] = 'required|mimes:jpg,jpeg,png,pneg,svg';
+            $rules['event_proposal_file'] = 'required|mimes:pdf';
+            $rules['event_license_file'] = 'required_if:event_license_flag,==,1|mimes:pdf';
         }
 
         $errorMessages = [
@@ -301,6 +324,7 @@ class EventController extends Controller
             $licenseFile = $request->file(FileTypeConstant::EVENT_LICENSE_FILE);
             $data = $this->storeFile($data, $licenseFile, FileTypeConstant::EVENT_LICENSE_FILE);
         }
+
 
         return redirect()->back()->with('eventModal', $data);
     }

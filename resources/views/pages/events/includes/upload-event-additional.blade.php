@@ -44,7 +44,7 @@
 
 <div class="form-group overflow-hidden" id="license"
     style="{{ $data ? ($data['event_license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('event_license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
-    <label for="event_license_file" class="text-primary form-label fw-bold @error('event_license_file') is-invalid @enderror">Upload lisensi atau izin</label>
+    <label for="event_license_file" class="text-primary form-label fw-bold @error('event_license_file') is-invalid @enderror">Upload Lisensi atau Izin</label>
     <br/>
     <input type="file" name="event_license_file" id="event_license_file" accept="application/pdf">
     @error('event_license_file')
@@ -55,7 +55,7 @@
 </div>
 
 <div class="form-group overflow-hidden">
-    <label for="event_proposal_file" class="text-primary form-label fw-bold mandatory @error('event_proposal_file') is-invalid @enderror">Upload event proposal</label>
+    <label for="event_proposal_file" class="text-primary form-label fw-bold mandatory @error('event_proposal_file') is-invalid @enderror">Upload Event Proposal</label>
     <br/>
     <input type="file" name="event_proposal_file" id="event_proposal_file" accept="application/pdf">
     @error('event_proposal_file')
@@ -123,9 +123,9 @@
 
 <div class="row gap-4 gap-sm-3">
     <div class="col-12 col-md">
-        <x-form.base-form-input class="mb-4" title="Link media sosial" name="social_media_link" type="text"
+        <x-form.base-form-input class="mb-4" title="Link Media Sosial" name="social_media_link" type="text"
             name="social_media_link" value="{{ $data ? $data['social_media_link'] : old('social_media_link') }}"
-            :label="true" placeholder="Instagram">
+            :label="true" placeholder="Instagram" mandatory>
             @error('social_media_link')
                 <div class="invalid-feedback">
                     {{ $message }}

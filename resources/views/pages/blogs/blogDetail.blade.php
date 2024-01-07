@@ -20,7 +20,7 @@
             <small style="color: #515B60;">Source: {{ $article->source ?? '-' }}</small>
         </div>
         <div class="d-flex justify-content-center mb-5">
-            <img src={{ Storage::disk('public')->exists($article->articleBanner->file_path) ? Storage::disk('public')->url($article->articleBanner->file_path . $article->articleBanner->file_name) : $article->articleBanner->file_path }}
+            <img src={{ Storage::disk('public')->exists($article->articleBanner->file_path) ? Storage::disk('public')->url($article->articleBanner->file_path . $article->articleBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}
                 class="img-fluid col-10 object-fit-contain rounded-4" style="max-width: 30rem; max-height: 20rem"
                 alt="">
         </div>

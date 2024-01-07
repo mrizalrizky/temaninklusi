@@ -1,7 +1,9 @@
 <div class="d-grid gap-3 mb-2">
-        <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment..." :disabled="true">
-            <input type="hidden" name="event_id" value="{{ $event->id }}"/>
-        </x-form.text-area-input>
+    @if (Auth::check())
+    <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment..." :disabled="true">
+        <input type="hidden" name="event_id" value="{{ $event->id }}"/>
+    </x-form.text-area-input>
+    @endif
     @if (count($event->comments) > 0)
         @foreach ($event->comments as $index=>$comment)
             <x-card.user-comment-card :commentData="$comment" :event="$event" onClick="replyComment({{$index}}, {{$comment->id}})"/>
