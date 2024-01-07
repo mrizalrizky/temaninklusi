@@ -17,7 +17,7 @@
             <label for="disability_categories"
                 class="text-primary fw-bold mandatory mb-2 @error('disability_categories') is-invalid @enderror">Eligibility</label>
             <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories"
-                placeholder="Event anda ramah untuk disabilitas apa?" :selectedValues="$data ? $data['disability_categories'] : old('disability_categories') ?? null" />
+                placeholder="Ramah untuk disabilitas apa?" :selectedValues="$data ? $data['disability_categories'] : old('disability_categories') ?? null" />
             @error('disability_categories')
                 <div class="invalid-feedback">
                     {{ $message }}

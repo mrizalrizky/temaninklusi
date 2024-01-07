@@ -1,6 +1,6 @@
 <div class="d-grid gap-5">
     <div class="row">
-        <div class="col">
+        {{-- <div class="col">
             <h5>Event Details</h5>
             <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
                 <x-listitem.event-list-item icon="iconamoon:category-fill">
@@ -19,9 +19,27 @@
                     {{ $event->eventDetail->quota ?? '-'}} Peserta
                 </x-listitem.event-list-item>
             </ul>
-        </div>
+        </div> --}}
         <div class="col">
-            <h5>Fasilitas</h5>
+            <h5>Organizer Details</h5>
+            <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
+            <x-listitem.event-list-item icon="mdi:email-open">
+                {{ $event->organizer->name }}
+            </x-listitem.event-list-item>
+            <x-listitem.event-list-item icon="mdi:email-open">
+                {{ $event->organizer->contact_email }}
+            </x-listitem.event-list-item>
+            <x-listitem.event-list-item icon="mingcute:phone-call-fill">
+                {{ $event->organizer->contact_phone }}
+            </x-listitem.event-list-item>
+        </ul>
+    </div>
+
+    <div class="col">
+        <div class="row">
+
+            {{-- <div class="col"> --}}
+                <h5>Fasilitas</h5>
             <ul>
                 @foreach ($event->eventDetail->event_facilities as $eventFacility)
                     @if ($eventFacility !== null)
@@ -29,25 +47,8 @@
                     @endif
                 @endforeach
             </ul>
-        </div>
-        <div class="col">
-            <h5>Organizer Details</h5>
-            <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
-                <x-listitem.event-list-item icon="mdi:email-open">
-                    {{ $event->organizer->name }}
-                </x-listitem.event-list-item>
-                <x-listitem.event-list-item icon="mdi:email-open">
-                    {{ $event->organizer->name }}
-                </x-listitem.event-list-item>
-                <x-listitem.event-list-item icon="mingcute:phone-call-fill">
-                    {{ $event->organizer->name }}
-                </x-listitem.event-list-item>
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col">
+        {{-- </div> --}}
+        {{-- <div class="col"> --}}
             <h5>Benefit</h5>
             <ul>
                 @foreach ($event->eventDetail->event_benefits as $eventBenefit)
@@ -56,6 +57,9 @@
                     @endif
                 @endforeach
             </ul>
-        </div>
+        {{-- </div> --}}
     </div>
+    </div>
+</div>
+
 </div>

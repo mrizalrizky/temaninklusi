@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-md px-4 px-lg-3">
-        @can('manage-article')
+        @can('is-admin')
             <div class="d-flex justify-content-end my-2">
                 <div class="d-flex gap-2 my-2">
                     <a href="{{ route('blog.edit', $article->slug) }}" class="badge btn btn-primary">Edit</a>

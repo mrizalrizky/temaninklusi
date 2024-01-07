@@ -22,6 +22,7 @@ class MasterOrganizerSeeder extends Seeder
                 'address' => 'Jakarta Pusat',
                 'contact_name' => 'ADM',
                 'contact_phone' => '0885182591',
+                'contact_email' => 'jfp@gmail.com',
             ],
             [
                 'user_id' => 3,
@@ -30,6 +31,7 @@ class MasterOrganizerSeeder extends Seeder
                 'address' => 'Jakarta Selatan',
                 'contact_name' => 'OPS',
                 'contact_phone' => '08218485911',
+                'contact_email' => 'boss.creator@gmail.com'
             ],
         ]);
     }

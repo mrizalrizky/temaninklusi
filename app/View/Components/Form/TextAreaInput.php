@@ -15,12 +15,14 @@ class TextAreaInput extends Component
     public $rows;
     public $placeholder;
     public $action;
-    public function __construct($name, $rows, $placeholder = '', $action)
+    public $disabled;
+    public function __construct($name, $rows, $placeholder = '', $action, $disabled = false)
     {
         $this->name = $name;
         $this->rows = $rows;
         $this->placeholder = $placeholder;
         $this->action = $action;
+        $this->disabled = $disabled;
     }
 
     /**

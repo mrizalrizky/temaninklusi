@@ -9,32 +9,15 @@
         <div class="px-4 py-2 mb-4">
             <ul style="list-style-type: none" class="row gap-3 p-0">
                 <x-listitem.profile-list-item label="Profile" icon="bi:person-fill" href="profile.index"/>
-                {{-- <li class="p-2 {{ Request::is('profile') ? 'bg-white p-2 rounded-3' : '' }}">
-                    <a href="{{ route('profile.index') }}" class="d-flex align-items-center gap-3 text-primary">
-                        <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
-                            <iconify-icon icon="bi:person-fill" height="1.5rem" class="text-primary"></iconify-icon>
-                        </div>
-
-
-                        <small class="fw-bold">Profile</small>
-                    </a>
-                </li> --}}
+                @can('has-events')
                 <x-listitem.profile-list-item label="Events" icon="bi:calendar-event-fill" href="profile.events"/>
-                {{-- <li class="p-2 {{ Request::is('profile/events') ? 'bg-white p-2 rounded-3' : '' }}">
-                    <a href="{{ route('profile.events') }}" class="d-flex align-items-center gap-3 text-primary">
-                        <div style="width: 1.5rem" class="d-flex align-items-center justify-content-center">
-                            <iconify-icon icon="bi:calendar-event-fill" height="1rem" class="text-primary"></iconify-icon>
-                        </div>
-
-                        <small class="fw-bold">Events</small>
-                    </a>
-                </li> --}}
+                @endcan
             </ul>
         </div>
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit" class="border-0 bg-transparent text-danger">
-                Logout?
+                Logout
             </button>
         </form>
     </div>

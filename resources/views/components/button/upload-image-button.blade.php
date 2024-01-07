@@ -8,7 +8,7 @@
             class="position-absolute top-50 start-50 translate-middle" alt="">
         </label>
         <input type="file" class="form-control @error($name) is-invalid @enderror" id="{{ $name }}"
-               onchange="setImageThumbnail('{{$name}}-thumbnail')" name="{{ $name }}">
+               onchange="setImageThumbnail('{{$name}}-thumbnail')" name="{{ $name }}" accept="image/*">
     @error($name)
         <div class="invalid-feedback">
             {{ $message }}

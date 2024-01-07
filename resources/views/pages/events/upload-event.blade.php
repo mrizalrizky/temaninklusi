@@ -4,6 +4,7 @@
     <div class="container-md px-4 px-lg-3">
         <div class="my-5 text-center text-md-start">
             <h4 class="text-primary">Upload Event</h4>
+            <h5 class="text-left m-b-custom-2 fw-normal">buat pengguna lain kembangin diri!</h5>
         </div>
         <div class="d-md-flex justify-content-center">
             <div class="col col-xl-7 border border-1 rounded-4 align-items-center p-5">

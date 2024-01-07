@@ -176,7 +176,7 @@ class ArticleController extends Controller
             return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dihapus!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel gagal dihapus. Silahkan coba lagi!');
+            return redirect()->route('blog.index')->with('action-failed', 'Tips dan artikel gagal dihapus. Silahkan coba lagi!');
         }
     }
 }

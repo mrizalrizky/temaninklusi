@@ -109,9 +109,9 @@
                                 @enderror
                             </x-form.base-form-input>
 
-                            <x-form.base-form-input class="mb-4" title="Alamat Email Perusahaan atau Organisasi" type="text" value="{{ old('organizer_email') }}"
-                                placeholder="Alamat Email Perusahaan atau Organisasi" name="organizer_email" :label="true">
-                                @error('organizer_email')
+                            <x-form.base-form-input class="mb-4" title="Alamat Email Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_email') }}"
+                                placeholder="Alamat Email Perusahaan atau Organisasi" name="organizer_contact_email" :label="true">
+                                @error('organizer_contact_email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

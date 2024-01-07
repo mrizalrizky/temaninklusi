@@ -46,7 +46,7 @@ class EventController extends Controller
             });
         }
 
-        $events = $query->paginate(1);
+        $events = $query->paginate(3);
         $eventCategories = EventCategory::all();
         $disabilityCategories = DisabilityCategory::all();
 
@@ -72,6 +72,7 @@ class EventController extends Controller
                 ['organizer_id', $user->organizer->id],
             ])->paginate(3);
 
+            // $this->authorize('view', $events);
             return view('pages.profile.uploadedEvent', compact('events'));
         }
     }
@@ -85,9 +86,11 @@ class EventController extends Controller
 
     public function show($slug) {
         $event = Event::with(['eventCategory', 'eventDetail', 'organizer', 'comments.replies.users', 'status', 'eventBanner'])->whereHas('eventDetail', function($q) use ($slug) {
-            $q->where('slug', $slug)
-              ->where('show_flag', true);
+            $q->where('slug', $slug);
+            //   ->where('show_flag', false);
         })->firstOrFail ();
+
+        // $this->authorize('view', $event);
 
         return view('pages.events.event-detail', compact('event'));
     }
@@ -95,8 +98,8 @@ class EventController extends Controller
     public function eventAction($slug, $actionType) {
         $message = '';
         $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
-            $q->where('slug', $slug)
-              ->where('show_flag', true);
+            $q->where('slug', $slug);
+            //   ->where('show_flag', true);
         })->firstOrFail();
 
         switch($actionType) {
@@ -106,18 +109,22 @@ class EventController extends Controller
                         'show_flag' => true,
                         'status_id' => EventStatusConstant::APPROVED
                     ]);
-                    $message = "Event berhasil diapprove.";
-                } else {
-
+                    $message = "Event berhasil diapprove!";
+                // } else {
+                //     $message = "Event tidak dapat diapprove. Silahkan coba lagi!";
                 }
                 break;
 
             case 'REJECT_EVENT':
-                $event->update([
-                    'show_flag' => false,
-                    'status_id' => EventStatusConstant::REJECTED
-                ]);
-                $message = "Event berhasil direject.";
+                if($event->isWaitingApproval()) {
+                    $event->update([
+                        'show_flag' => false,
+                        'status_id' => EventStatusConstant::REJECTED
+                    ]);
+                    $message = "Event berhasil direject!";
+                // } else {
+                //     $message = "Event tidak dapat direject. Silahkan coba lagi!";
+                }
                 break;
 
             case 'USER_REGISTER_EVENT':
@@ -126,9 +133,9 @@ class EventController extends Controller
                         'user_id'  => Auth::user()->id,
                         'event_id' => $event->id,
                     ]);
-                    $message = "Berhasil daftar event.";
-                } else {
-                    $message = 'Anda sudah terdaftar kedalam event ini.';
+                    $message = "Anda berhasil terdaftar kedalam event ini. Silahkan menunggu informasi selanjutnya";
+                // } else {
+                //     $message = 'Anda sudah terdaftar kedalam event ini!';
                 }
 
                 break;
@@ -139,9 +146,9 @@ class EventController extends Controller
                         'user_id'  => Auth::user()->id,
                         'event_id' => $event->id,
                     ]);
-                    $message = "Berhasil cancel registrasi event.";
-                } else {
-                    $message = "Anda belum terdaftar kedalam event ini.";
+                    $message = "Anda berhasil melakukan cancel registrasi event ini.";
+                // } else {
+                //     $message = "Anda belum terdaftar kedalam event ini!";
                 }
 
                 break;
@@ -176,7 +183,7 @@ class EventController extends Controller
             $this->validateData($request);
 
             DB::commit();
-            return redirect()->route('event.details')->with('action-success', 'Event berhasil diedit!');
+            return redirect()->route('event.details', $slug)->with('action-success', 'Event berhasil diedit!');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('action-failed', 'Event gagal diedit. Silahkan coba lagi!');
@@ -193,42 +200,36 @@ class EventController extends Controller
     }
 
     protected function validateData(Request $request) {
+        // dd($request);
         $rules = [
-            'title'                 => 'required',
-            'organizer_name'        => 'required',
+            'title'                 => 'sometimes|required',
+            'organizer_name'        => 'sometimes|required',
             'event_category'        => 'required',
             'quota'                 => 'required',
-            'contact_email'         => 'required',
-            'contact_phone'         => 'required',
+            'contact_email'         => 'sometimes|required',
+            'contact_phone'         => 'sometimes|required',
             'event_banner'          => 'required',
             'description'           => 'required',
-            'event_license_flag'          => 'required',
-            'event_license_file'          => 'required_if:event_license_flag,==,1',
+            'event_license_flag'    => 'required',
+            'event_license_file'    => 'required_if:event_license_flag,==,1|mimes:pdf',
+            'event_proposal_file'   => 'required|mimes:pdf',
             'disability_categories' => 'required|array|min:1',
             'start_date'            => 'required',
             'end_date'              => 'required',
-            // 'event_banner'          => 'required',
             'location'              => 'required',
             'event_facilities'      => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
-                if (empty(array_filter($value, fn ($item) => $item !== null))) {
-                    $fail("Field fasilitas event tidak boleh kosong");
-                }
-            }
-        ],
-        'event_benefits'        => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
-                    if(empty(array_filter($value, fn ($item) => $item !== null))) {
-                        $fail("Field benefit event tidak boleh kosong");
+                        if (empty(array_filter($value, fn ($item) => $item !== null))) {
+                            $fail("Field fasilitas event tidak boleh kosong");
+                        }
                     }
-                },
-            ],
+                ],
+            'event_benefits'        => ['required','array','min:1','max:3', function ($attribute, $value, $fail) {
+                        if(empty(array_filter($value, fn ($item) => $item !== null))) {
+                            $fail("Field benefit event tidak boleh kosong");
+                        }
+                    },
+                ],
             'social_media_link' => 'required',
-        ];
-
-        $errorMessages = [
-            'required'    => 'Field :attribute tidak boleh kosong.',
-            'required_if' => 'Field :attribute tidak boleh kosong.',
-            'min'         => 'Field :attribute harus diisi minimal :min item.',
-            'max'         => 'Field :attribute tidak bisa lebih dari :max item.',
         ];
 
         if($request->slug) { // Edit
@@ -243,8 +244,16 @@ class EventController extends Controller
             }
         } else { // Upload Event
             $rules['title'] = 'required|unique:event_details';
-            $rules['event_banner'] = 'required';
+            $rules['event_banner'] = 'required|mimes:jpg,jpeg,png,pneg,svg';
         }
+
+        $errorMessages = [
+            'required'    => 'Field :attribute tidak boleh kosong.',
+            'required_if' => 'Field :attribute tidak boleh kosong.',
+            'min'         => 'Field :attribute harus diisi minimal :min item.',
+            'max'         => 'Field :attribute tidak bisa lebih dari :max item.',
+            'mimes'       => 'Tipe file harus dalam format :values'
+        ];
 
         $request->validate($rules, $errorMessages);
 
@@ -254,6 +263,11 @@ class EventController extends Controller
         $eventBannerFile = $request->file(FileTypeConstant::EVENT_BANNER);
         if($eventBannerFile) {
             $data = $this->storeFile($data, $eventBannerFile, FileTypeConstant::EVENT_BANNER );
+        }
+
+        $eventProposalFile = $request->file(FileTypeConstant::EVENT_PROPOSAL_FILE);
+        if($eventProposalFile) {
+            $data = $this->storeFile($data, $eventProposalFile, FileTypeConstant::EVENT_PROPOSAL_FILE);
         }
 
         if($request->event_license_flag == 1 && $request->file(FileTypeConstant::EVENT_LICENSE_FILE)) {
@@ -288,8 +302,8 @@ class EventController extends Controller
                 'slug'              => $titleSlug,
                 'description'       => $request->description,
                 'quota'             => $request->quota,
-                'contact_email'     => $request->contact_email,
-                'contact_phone'     => $request->contact_phone,
+                'contact_email'     => $request->input('contact_email', Auth::user()->organizer->contact_email),
+                'contact_phone'     => $request->input('contact_phone', Auth::user()->organizer->contact_phone),
                 'start_date'        => $request->start_date,
                 'end_date'          => $request->end_date,
                 'location'          => $request->location,
@@ -308,12 +322,12 @@ class EventController extends Controller
                 'event_license_file_id'   => $licenseFileData->id ?? null,
                 'show_flag'         => false,
                 'created_by'        => Auth::user()->username,
-                'updated_by'        => Auth::user()->username,
+                // 'updated_by'        => Auth::user()->username,
             ]);
 
             if($request->disability_categories) {
                 foreach($request->disability_categories as $disabilityCategory) {
-                    $test[$disabilityCategory] = EventDisabilityCategory::create([
+                    EventDisabilityCategory::create([
                         'event_id' => $createdEvent->id,
                         'disability_category_id' => $disabilityCategory
                     ]);
@@ -324,6 +338,7 @@ class EventController extends Controller
             return redirect()->route('event.index')->with('action-success', 'Event berhasil dibuat. Silahkan menunggu approval admin!');
         } catch (\Throwable $th) {
             DB::rollback();
+            // dd($th);
             return redirect()->back()->with('action-failed', 'Event gagal dibuat. Silahkan coba lagi!');
         }
     }

@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        // 'App\Models\Event' => 'App\Policies\EventPolicy',
     ];
 
     /**
@@ -28,12 +29,23 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // ADD, DELETE, EDIT ARTICLE
-        Gate::define('manage-article', function (User $user) {
-            return $user->isAdmin();
-        });
+        // Gate::define('manage-article', function (User $user) {
+        //     return $user->isAdmin();
+        // });
 
         // APPROVE, REJCT, EDIT, DELETE EVENT
-        Gate::define('manage-event', function (User $user) {
+        // Gate::define('manage-event', function (User $user) {
+        //     return $user->isAdmin();
+        // });
+
+        /*
+        * EVENT : Approve, Reject, Edit, Delete
+        * BLOG : Add, Edit, Delete
+        * USER : Ban, unban
+        * COMMENT: Delete
+        */
+
+        Gate::define('is-admin', function (User $user) {
             return $user->isAdmin();
         });
 
@@ -49,13 +61,13 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isMember() || ($user->isEO() && $user->id == $event->organizer->user_id);
         });
 
-        Gate::define('delete-comment', function (User $user) {
-            return $user->isAdmin();
-        });
+        // Gate::define('delete-comment', function (User $user) {
+        //     return $user->isAdmin();
+        // });
 
-        Gate::define('ban-user', function (User $user) {
-            return $user->isAdmin();
-        });
+        // Gate::define('ban-user', function (User $user) {
+        //     return $user->isAdmin();
+        // });
 
         Gate::define('upload-event', function (User $user) {
             return $user->isEO();

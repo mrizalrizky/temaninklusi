@@ -4,7 +4,7 @@
     <div class="container-lg px-4 px-lg-3">
         <div class="d-flex justify-content-end gap-2 my-4">
             @if (Auth::check())
-                @can('manage-event')
+                @can('is-admin')
                     @if ($event->isWaitingApproval())
                         <div class="d-flex gap-2">
                             <button type="submit" class="badge btn btn-primary" data-bs-toggle="modal"
@@ -81,8 +81,7 @@
                 </div>
             </div>
 
-            <div class="align-items-start d-flex">
-
+            <div class="d-flex align-items-start justify-content-center">
                 <div class="d-flex justify-content-center">
                 @include('pages.events.includes.event-detail-container', $event)
             </div>

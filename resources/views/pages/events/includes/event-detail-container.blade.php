@@ -9,16 +9,21 @@
     </div>
 
     <ul class="d-grid gap-3 p-0 justify-content-center justify-content-md-start">
+        <x-listitem.event-list-item icon="iconamoon:category-fill">
+            {{ $event->eventCategory->label ?? '-' }}
+        </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bytesize:location">
-            {{ $event->eventDetail->location }}
+            {{ $event->eventDetail->location ??'-' }}
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="fontisto:date">
-            {{ $event->eventDetail->start_date->format('d M Y') }} -
-            {{ $event->eventDetail->end_date->format('d M Y') }}
+            {{ $event->eventDetail->start_date->format('d M Y') ?? '-' }} -
+            {{ $event->eventDetail->end_date->format('d M Y') ?? '-'}}
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="ph:clock-fill">
-            {{ $event->eventDetail->start_date->format('H.i') }} - {{ $event->eventDetail->end_date->format('H.i') }}
-            WIB
+            {{ $event->eventDetail->start_date->format('H.i') ?? '-'}} - {{ $event->eventDetail->end_date->format('H.i') ?? '-' }} WIB
+        </x-listitem.event-list-item>
+        <x-listitem.event-list-item icon="bi:people-fill">
+            {{ $event->eventDetail->quota ?? '-'}} Peserta
         </x-listitem.event-list-item>
     </ul>
 

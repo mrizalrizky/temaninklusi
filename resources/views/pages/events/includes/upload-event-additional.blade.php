@@ -42,15 +42,27 @@
         @enderror
 </div>
 
-<div class="form-group" id="license"
-    style="{{ $data ? ($data['event_event_license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('event_event_license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
-    <label for="event_license_file" class="text-primary form-label fw-bold">Upload lisensi atau izin</label>
-    <x-button.upload-image-button name="event_license_file" />
+<div class="form-group overflow-hidden" id="license"
+    style="{{ $data ? ($data['event_license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('event_license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
+    <label for="event_license_file" class="text-primary form-label fw-bold @error('event_license_file') is-invalid @enderror">Upload lisensi atau izin</label>
+    <br/>
+    <input type="file" name="event_license_file" id="event_license_file" accept="application/pdf">
+    @error('event_license_file')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
 
-<div class="form-group">
-    <label for="event_proposal_file" class="text-primary form-label fw-bold mandatory">Upload event proposal</label>
-    <x-button.upload-image-button name="event_proposal_file" />
+<div class="form-group overflow-hidden">
+    <label for="event_proposal_file" class="text-primary form-label fw-bold mandatory @error('event_proposal_file') is-invalid @enderror">Upload event proposal</label>
+    <br/>
+    <input type="file" name="event_proposal_file" id="event_proposal_file" accept="application/pdf">
+    @error('event_proposal_file')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
 
 <div class="row gap-4 gap-sm-3">

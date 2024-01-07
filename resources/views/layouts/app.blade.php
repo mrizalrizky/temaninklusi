@@ -19,7 +19,7 @@
 <body>
     <div class="screen">
         @include('includes.header')
-        <div class="container-lg px-3 px-lg-4">
+        {{-- <div class="container-lg px-3 px-lg-4">
         @if (session()->has('success'))
             <div class="alert alert-success d-flex alert-dismissible fade show">
                 <p class="m-0">{{ session()->get('success') }}</p>
@@ -35,7 +35,7 @@
                         data-bs-dismiss="alert" aria-label="close"></button>
             </div>
         @endif
-        </div>
+        </div> --}}
         <main class="mb-5" style="max-width: 1920px;">
             @yield('content')
         </main>
@@ -46,7 +46,9 @@
         @include('includes.script')
         @stack('after-script')
     </div>
-    @if (session()->has('action-success'))
+    <x-toast sessionName="action-success" bgColor="rgb(110 231 183)"/>
+    <x-toast sessionName="action-failed" bgColor="rgb(253 164 175)"/>
+    {{-- @if (session()->has('action-success'))
             <div class="container-sm alert-save active alert alert-success mw-md-75 mw-xl-50 d-flex align-items-center gap-3"
                 style="width: 80%; background-color: rgb(110 231 183);" role="alert" id="alert-save">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -62,6 +64,7 @@
 
 
     @if (session()->has('action-failed'))
+            <x-toast sessionName="action-failed" bgColor="rgb(253 164 175)"/>
             <div class="container-sm alert-delete active alert alert-danger mw-md-75 mw-xl-50 d-flex align-items-center gap-3"
                 style="width: 80%; background-color: rgb(253 164 175);" role="alert" id="alert-delete">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -73,7 +76,7 @@
                     {{ session()->get('action-failed') }}
                 </div>
             </div>
-    @endif
+    @endif --}}
 </body>
 
 <script>

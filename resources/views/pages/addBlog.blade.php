@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-md px-4 px-lg-3">
         <div class="my-5 text-center text-md-start">
-            <h4 class="text-primary">Add Blog</h4>
+            <h4 class="text-primary">Tambah Tips dan Artikel</h4>
             <h5 class="text-left m-b-custom-2 fw-normal">buat pengguna lain terinspirasi!</h5>
         </div>
         <div class="d-md-flex justify-content-center">

@@ -1,6 +1,6 @@
 <div class="d-grid gap-3 mb-2">
     @can('create-comment', $event)
-        <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment...">
+        <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment..." :disabled="true">
             <input type="hidden" name="event_id" value="{{ $event->id }}"/>
         </x-form.text-area-input>
     @endcan
