@@ -27,25 +27,25 @@
                             @if ($user->ban_flag)
                             <td class="text-center">
                                 <button type="button" class="badge btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#unbannedUser-{{$user->id}}">Unbanned</button>
+                                    data-bs-target="#unbanUserModal-{{$user->id}}">Unban</button>
 
                             </td>
                             @else
                             <td class="text-center">
                                 <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#bannedUser-{{$user->id}}">Banned</button>
+                                    data-bs-target="#banUserModal-{{$user->id}}">Ban</button>
 
                             </td>
                             @endif
                         </tr>
 
-                        <x-dialog.base-dialog id="bannedUser-{{$user->id}}" action="{{ route('admin.banned-user', $user->id) }}"
-                            title="Yakin akan banned user?">
-                            {{ method_field('DELETE') }}
+                        <x-dialog.base-dialog id="banUserModal-{{$user->id}}" action="{{ route('admin.banned-user', $user->id) }}"
+                            title="Yakin akan ban user?">
+                            {{ method_field('PUT') }}
                         </x-dialog.base-dialog>
 
-                        <x-dialog.base-dialog id="unbannedUser-{{$user->id}}" action="{{ route('admin.unbanned-user', $user->id) }}"
-                            title="Yakin akan unbanned user?">
+                        <x-dialog.base-dialog id="unbanUserModal-{{$user->id}}" action="{{ route('admin.unbanned-user', $user->id) }}"
+                            title="Yakin akan unban user?">
                             {{ method_field('PUT') }}
                         </x-dialog.base-dialog>
                     @endforeach

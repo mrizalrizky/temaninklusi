@@ -5,7 +5,7 @@
             <div class="card-body d-grid gap-2">
                 <h5 class="mb-0 card-title text-primary elipsis-title">{{ $event->eventDetail->title }}</h5>
                 <caption-detail>{{ $event->eventDetail->start_date->format('d M Y') }}</caption-detail>
-                <x-tag.organizer-tag :organizer="$event->organizer"/>
+                <x-tag.organizer-tag class="custom-tag" :organizer="$event->organizer"/>
             </div>
         </div>
     </a>

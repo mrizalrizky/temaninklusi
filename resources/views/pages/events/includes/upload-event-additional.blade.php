@@ -42,46 +42,37 @@
         @enderror
 </div>
 
-<div class="form-group overflow-hidden" id="license"
-    style="{{ $data ? ($data['event_license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('event_license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
+<div class="form-group overflow-hidden" id="license" style="{{ $data ? ($data['event_license_flag'] != 1 ? 'display: none' : 'display: inline-block') : (old('event_license_flag') != 1 ? 'display: none' : 'display: inline-block') }}">
     <label for="event_license_file" class="text-primary form-label fw-bold @error('event_license_file') is-invalid @enderror">Upload Lisensi atau Izin</label>
-    <br/>
-    <input type="file" name="event_license_file" id="event_license_file" accept="application/pdf">
-    @error('event_license_file')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
+    <x-button.upload-button name="event_license_file" accept="application/pdf"/>
 </div>
 
 <div class="form-group overflow-hidden">
     <label for="event_proposal_file" class="text-primary form-label fw-bold mandatory @error('event_proposal_file') is-invalid @enderror">Upload Event Proposal</label>
-    <br/>
-    <input type="file" name="event_proposal_file" id="event_proposal_file" accept="application/pdf">
-    @error('event_proposal_file')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-    @enderror
+    <x-button.upload-button name="event_proposal_file" accept="application/pdf"/>
 </div>
 
 <div class="row gap-4 gap-sm-3">
     <div class="col-12 col-md" id="event_facility">
-        <label class="form-label text-primary fw-bold mandatory @error('event_facilities') is-invalid @enderror"
+        <label class="d-block form-label text-primary fw-bold mandatory @error('event_facilities') is-invalid @enderror"
             for="event_facility">Fasilitas Event</label>
-        <br />
-        <button type="button" class="btn btn-primary rounded-5" onclick="addField('event_facility')">+ Add</button>
+
+        <button type="button" class="position-relative btn btn-primary rounded-5 me-auto" style="width: 2.3rem; height: 2.3rem" onclick="removeField('event_facility')">
+            <iconify-icon icon="ic:round-minus" height="1rem" class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
+        </button>
+
+        <button type="button" class="position-relative btn btn-primary rounded-5 me-auto" style="width: 2.3rem; height: 2.3rem" onclick="addField('event_facility')">
+            <iconify-icon icon="ic:round-plus" height="1rem" class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
+        </button>
+
         <div class="d-flex flex-column gap-3 mt-3">
-            <input class="form-control py-2"
-                style="{{ $data['event_facilities'][0] ?? (old('event_facilities')[0] ?? 'display: none') }}"
+            <input class="form-control py-2 {{ (!empty($data['event_facilities'][0]) || !empty(old('event_facilities')[0])) ? 'd-inline-block' : 'd-none' }}"
                 type="text" name="event_facilities[]" id="event_facilities[]"
                 value="{{ $data['event_facilities'][0] ?? (old('event_facilities')[0] ?? null) }}">
-            <input class="form-control py-2"
-                style="{{ $data['event_facilities'][1] ?? (old('event_facilities')[1] ?? 'display: none') }}"
+            <input class="form-control py-2 {{ (!empty($data['event_facilities'][1]) || !empty(old('event_facilities')[1])) ? 'd-inline-block' : 'd-none' }}"
                 type="text" name="event_facilities[]" id="event_facilities[]"
                 value="{{ $data['event_facilities'][1] ?? (old('event_facilities')[1] ?? null) }}">
-            <input class="form-control py-2"
-                style="{{ $data['event_facilities'][2] ?? (old('event_facilities')[2] ?? 'display: none') }}"
+            <input class="form-control py-2 {{ (!empty($data['event_facilities'][2]) || !empty(old('event_facilities')[2])) ? 'd-inline-block' : 'd-none' }}"
                 type="text" name="event_facilities[]" id="event_facilities[]"
                 value="{{ $data['event_facilities'][2] ?? (old('event_facilities')[2] ?? null) }}">
         </div>
@@ -95,23 +86,26 @@
 
 <div class="row gap-4 gap-sm-3">
     <div class="col-12 col-md" id="event_benefit">
-        <label class="form-label text-primary fw-bold mandatory @error('event_benefits') is-invalid @enderror"
+        <label class="d-block form-label text-primary fw-bold mandatory @error('event_benefits') is-invalid @enderror"
             for="event_benefit">Benefit</label>
-        <br />
-        <button type="button" class="btn btn-primary rounded-5" onclick="addField('event_benefit')">+ Add</button>
+
+        <button type="button" class="position-relative btn btn-primary rounded-5 me-auto" style="width: 2.3rem; height: 2.3rem" onclick="removeField('event_benefit')">
+            <iconify-icon icon="ic:round-minus" height="1rem" class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
+        </button>
+        <button type="button" class="position-relative btn btn-primary rounded-5 me-auto" style="width: 2.3rem; height: 2.3rem" onclick="addField('event_benefit')">
+            <iconify-icon icon="ic:round-plus" height="1rem" class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
+        </button>
+
         <div class="d-flex flex-column gap-3 mt-3">
-            <input class="form-control py-2"
-                style="{{ $data['event_benefits'][0] ?? (old('event_benefits')[0] ?? 'display: none') }}"type="text"
-                name="event_benefits[]" id="event_benefits[]"
-                value="{{ $data['event_benefits'][0] ?? (old('event_benefits')[0] ?? null) }}">
-            <input class="form-control py-2"
-                style="{{ $data['event_benefits'][1] ?? (old('event_benefits')[1] ?? 'display: none') }}"type="text"
-                name="event_benefits[]" id="event_benefits[]"
-                value="{{ $data['event_benefits'][1] ?? (old('event_benefits')[1] ?? null) }}">
-            <input class="form-control py-2"
-                style="{{ $data['event_benefits'][2] ?? (old('event_benefits')[2] ?? 'display: none') }}"type="text"
-                name="event_benefits[]" id="event_benefits[]"
-                value="{{ $data['event_benefits'][2] ?? (old('event_benefits')[2] ?? null) }}">
+            <input class="form-control py-2 {{ (!empty($data['event_benefits'][0]) || !empty(old('event_benefits')[0])) ? 'd-inline-block' : 'd-none' }}"
+                type="text" name="event_benefits[]" id="event_benefits[]"
+                value="{{ $data['event_benefits'][0] ?? old('event_benefits')[0] ?? null }}">
+            <input class="form-control py-2 {{ (!empty($data['event_benefits'][1]) || !empty(old('event_benefits')[1])) ? 'd-inline-block' : 'd-none' }}"
+                type="text" name="event_benefits[]" id="event_benefits[]"
+                value="{{ $data['event_benefits'][1] ?? old('event_benefits')[1] ?? null }}">
+            <input class="form-control py-2 {{ (!empty($data['event_benefits'][2]) || !empty(old('event_benefits')[2])) ? 'd-inline-block' : 'd-none' }}"
+                type="text" name="event_benefits[]" id="event_benefits[]"
+                value="{{ $data['event_benefits'][2] ?? old('event_benefits')[2] ?? null }}">
         </div>
         @error('event_benefits')
             <div class="invalid-feedback">
@@ -147,8 +141,18 @@
 
     const addField = (id) => {
         const divEl = document.getElementById(id)
-        const inputEl = divEl.querySelector('input[type="text"][style="display: none"]')
-        inputEl.style.display = 'inline-block'
+        const inputEl = divEl.querySelector('input[type="text"][class="form-control py-2 d-none"]')
+        if(!inputEl) return
+        inputEl.classList.add('d-inline-block')
+        inputEl.classList.remove('d-none')
+    }
+
+    const removeField = (id) => {
+        const divEl = document.getElementById(id)
+        const inputEl = divEl.querySelector('input[type="text"][class="form-control py-2 d-inline-block"]')
+        if(!inputEl) return
+        inputEl.classList.add('d-none')
+        inputEl.classList.remove('d-inline-block')
     }
 </script>
 @endpush

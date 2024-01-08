@@ -7,9 +7,9 @@
                 @can('is-admin')
                     @if ($event->isWaitingApproval())
                         <div class="d-flex gap-2 my-2">
-                            <button type="submit" class="badge btn btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="badge btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#approveEventModal">Approve</button>
-                            <button type="submit" class="badge btn btn-danger" data-bs-toggle="modal"
+                            <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#rejectEventModal">Reject</button>
                         </div>
                     @else

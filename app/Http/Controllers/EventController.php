@@ -117,69 +117,82 @@ class EventController extends Controller
 
     public function eventAction($slug, $actionType)
     {
-        $message = '';
-        $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
-            $q->where('slug', $slug);
-            //   ->where('show_flag', true);
-        })->firstOrFail();
+        DB::beginTransaction();
+        try {
+            $message = '';
+            $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+                //   ->where('show_flag', true);
+            })->firstOrFail();
 
-        switch ($actionType) {
-            case "APPROVE_EVENT":
-                if ($event->isWaitingApproval()) {
-                    $event->update([
-                        'show_flag' => true,
-                        'status_id' => EventStatusConstant::APPROVED
-                    ]);
-                    $message = "Event berhasil diapprove!";
-                    // } else {
-                    //     $message = "Event tidak dapat diapprove. Silahkan coba lagi!";
-                }
-                break;
+            switch ($actionType) {
+                case "APPROVE_EVENT":
+                    if ($event->isWaitingApproval()) {
+                        $event->update([
+                            'show_flag' => true,
+                            'status_id' => EventStatusConstant::APPROVED
+                        ]);
+                        $message = "Event berhasil diapprove!";
+                        // } else {
+                        //     $message = "Event tidak dapat diapprove. Silahkan coba lagi!";
+                    }
+                    break;
 
-            case 'REJECT_EVENT':
-                if ($event->isWaitingApproval()) {
-                    $event->update([
-                        'show_flag' => false,
-                        'status_id' => EventStatusConstant::REJECTED
-                    ]);
-                    $message = "Event berhasil direject!";
-                    // } else {
-                    //     $message = "Event tidak dapat direject. Silahkan coba lagi!";
-                }
-                break;
+                case 'REJECT_EVENT':
+                    if ($event->isWaitingApproval()) {
+                        $event->update([
+                            'show_flag' => false,
+                            'status_id' => EventStatusConstant::REJECTED
+                        ]);
+                        $message = "Event berhasil direject!";
+                        // } else {
+                        //     $message = "Event tidak dapat direject. Silahkan coba lagi!";
+                    }
+                    break;
 
-            case 'USER_REGISTER_EVENT':
-                if (!Auth::user()->registeredEvents->contains($event)) {
-                    RegisteredEvent::create([
-                        'user_id'  => Auth::user()->id,
-                        'event_id' => $event->id,
-                    ]);
-                    $message = "Anda berhasil terdaftar kedalam event ini. Silahkan menunggu informasi selanjutnya";
-                    // } else {
-                    //     $message = 'Anda sudah terdaftar kedalam event ini!';
-                }
+                    case 'USER_REGISTER_EVENT':
+                        if (!Auth::user()->registeredEvents->contains($event)) {
+                        $event->eventDetail->update([
+                            'quota' => $event->eventDetail - 1
+                        ]);
+                        RegisteredEvent::create([
+                            'user_id'  => Auth::user()->id,
+                            'event_id' => $event->id,
+                        ]);
+                        $message = "Anda berhasil terdaftar kedalam event ini. Silahkan menunggu informasi selanjutnya";
+                        // } else {
+                        //     $message = 'Anda sudah terdaftar kedalam event ini!';
+                    }
 
-                break;
+                    break;
 
-            case 'USER_CANCEL_REGISTER_EVENT':
-                if (Auth::user()->registeredEvents->contains($event)) {
-                    RegisteredEvent::destroy([
-                        'user_id'  => Auth::user()->id,
-                        'event_id' => $event->id,
-                    ]);
-                    $message = "Anda berhasil melakukan cancel registrasi event ini.";
-                    // } else {
-                    //     $message = "Anda belum terdaftar kedalam event ini!";
-                }
+                case 'USER_CANCEL_REGISTER_EVENT':
+                    if (Auth::user()->registeredEvents->contains($event)) {
+                        $event->eventDetail->update([
+                            'quota' => $event->eventDetail + 1
+                        ]);
+                        RegisteredEvent::destroy([
+                            'user_id'  => Auth::user()->id,
+                            'event_id' => $event->id,
+                        ]);
+                        $message = "Anda berhasil melakukan cancel registrasi event ini.";
+                        // } else {
+                        //     $message = "Anda belum terdaftar kedalam event ini!";
+                    }
 
-                break;
+                    break;
 
-            default:
-                $message = "Action yang anda lakukan tidak valid!";
-                break;
+                default:
+                    $message = "Action yang anda lakukan tidak valid!";
+                    break;
+            }
+            DB::commit();
+            return redirect()->back()->with('action-success', $message);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('action-failed', 'Terdapat gangguan pada sistem. Silahkan coba lagi!');
         }
 
-        return redirect()->back()->with('action-success', $message);
     }
 
     public function edit($slug)
@@ -249,6 +262,7 @@ class EventController extends Controller
 
     protected function validateData(Request $request)
     {
+        // dd($request);
         $rules = [
             'organizer_name'        => 'sometimes|required',
             'event_category'        => 'sometimes|required',
@@ -256,7 +270,6 @@ class EventController extends Controller
             'contact_email'         => 'sometimes|required',
             'contact_phone'         => 'sometimes|required',
             'description'           => 'required',
-            'event_license_flag'    => 'required',
             // 'event_license_file'    => 'required_if:event_license_flag,==,1|mimes:pdf',
             // 'event_proposal_file'   => 'required|mimes:pdf',
             'disability_categories' => 'required|array|min:1',
@@ -292,6 +305,7 @@ class EventController extends Controller
             }
         } else { // Upload Event
             $rules['title'] = 'required|unique:event_details';
+            $rules['event_license_flag'] = 'required';
             $rules['event_banner'] = 'required|mimes:jpg,jpeg,png,pneg,svg';
             $rules['event_proposal_file'] = 'required|mimes:pdf';
             $rules['event_license_file'] = 'required_if:event_license_flag,==,1|mimes:pdf';
@@ -324,7 +338,6 @@ class EventController extends Controller
             $licenseFile = $request->file(FileTypeConstant::EVENT_LICENSE_FILE);
             $data = $this->storeFile($data, $licenseFile, FileTypeConstant::EVENT_LICENSE_FILE);
         }
-
 
         return redirect()->back()->with('eventModal', $data);
     }

@@ -84,8 +84,17 @@ Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordControll
 
 Route::group(['prefix' => 'admin', 'middleware' => 'can:is-admin'], function () {
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/manage-user', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
-    Route::get('/manage-event', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
-    Route::delete('/manage-user/{id}', [\App\Http\Controllers\UserController::class, 'bannedUser'])->name('admin.banned-user');
-    Route::put('/unbanned-user/{id}', [\App\Http\Controllers\UserController::class, 'unbannedUser'])->name('admin.unbanned-user');
+
+    Route::group(['prefix' => 'manage', 'middleware' => 'can:is-admin'], function () {
+        Route::prefix('user')->group(function() {
+            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
+            Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'banUser'])->name('admin.banned-user');
+            Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.unbanned-user');
+        });
+
+        Route::prefix('event')->group(function () {
+            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
+        });
+
+    });
 });

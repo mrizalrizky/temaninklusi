@@ -50,11 +50,41 @@
                     </button>
                 </div>
             </form>
-        </div>
 
+            <x-dialog.base-dialog id="eventModal" action="{{ route('event.update', $event->eventDetail->slug) }}" title="Yakin akan edit event?">
+                @if (session()->has('eventModal'))
+                    @foreach (session()->get('eventModal') as $key => $value)
+                        @if (is_array($value))
+                            @foreach ($value as $arrayValue)
+                                <input name="{{ $key }}[]" value="{{ $arrayValue }}" type="hidden" />
+                            @endforeach
+                        @else
+                            <input name="{{ $key }}" value="{{ $value }}" type="hidden" />
+                        @endif
+                    @endforeach
+                @endif
+            </x-dialog.base-dialog>
+
+            @if (session()->has('eventModal'))
+                @push('after-script')
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const popupModal = document.getElementById('eventModal')
+                            popupModal.style.display = 'block'
+                            popupModal.classList.add('show')
+                            const modalBackdrop = document.createElement('div')
+                            modalBackdrop.setAttribute('id', 'modal_backdrop')
+                            modalBackdrop.className = 'modal-backdrop fade show'
+                            document.body.appendChild(modalBackdrop)
+                        });
+                    </script>
+                @endpush
+            @endif
+        </div>
     </div>
-    </div>
-    {{-- @dd($errors) --}}
+</div>
+
+{{-- @dd($errors) --}}
 @endsection
 
 @push('after-script')

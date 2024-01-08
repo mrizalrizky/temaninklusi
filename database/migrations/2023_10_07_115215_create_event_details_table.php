@@ -23,6 +23,7 @@ class CreateEventDetailsTable extends Migration
             $table->string('contact_phone', 20);
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->dateTime('max_register_date');
             $table->string('location', 64);
             $table->json('event_facilities')->nullable();
             $table->jsonb('event_benefits')->nullable();

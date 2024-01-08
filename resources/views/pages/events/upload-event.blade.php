@@ -131,7 +131,7 @@
 
             const prevButton = document.getElementById('prevBtn');
             const nextButton = document.getElementById('nextBtn');
-            console.log('STEP', step);
+
             switch (step) {
                 case 1:
                     prevBtn.classList.add('d-none')
