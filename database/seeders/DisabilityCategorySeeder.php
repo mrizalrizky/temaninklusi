@@ -16,13 +16,13 @@ class DisabilityCategorySeeder extends Seeder
     {
         DB::table('disability_categories')->insert([
             [
-                'name' => 'Tunarungu',
+                'label' => 'Tunarungu',
             ],
             [
-                'name' => 'Tunanetra',
+                'label' => 'Tunanetra',
             ],
             [
-                'name' => 'Daksa'
+                'label' => 'Daksa'
             ]
         ]);
     }

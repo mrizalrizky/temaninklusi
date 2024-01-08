@@ -19,11 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->string('phone_number', 16);
             $table->string('password');
             $table->string('reset_token')->nullable();
             $table->dateTime('expired_token')->nullable();
-            $table->boolean('is_banned')->default(false);
-            $table->boolean('is_active')->default(true);
+            $table->boolean('ban_flag')->default(false);
+            $table->boolean('active_flag')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -18,7 +18,8 @@ class BaseFormInput extends Component
     public $type;
     public $label;
     public $value;
-    public function __construct($title = '', $name = '', $id = '', $placeholder = '', $type = 'text', $value = '', $label = false)
+    public $mandatory;
+    public function __construct($title = '', $name = '', $id = '', $placeholder = '', $type = 'text', $value = '', $label = false, $mandatory = '')
     {
         $this->title = $title;
         $this->name = $name;
@@ -27,6 +28,7 @@ class BaseFormInput extends Component
         $this->type = $type;
         $this->label = $label;
         $this->value = $value;
+        $this->mandatory = $mandatory;
     }
 
     /**

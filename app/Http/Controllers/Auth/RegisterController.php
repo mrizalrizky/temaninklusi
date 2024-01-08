@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Constants\RoleConstant;
 use App\Http\Controllers\Controller;
+use App\Models\MasterOrganizer;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -51,15 +52,25 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min: 5', 'max:20', 'unique:users'],
-            // 'user_type' => ['required', Rule::in(RoleConstant::class)],
+            'user_type' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirmation' => ['same:password'],
-            // 'organizer_name' => 'min: 3',
-        ]);
+            'phone_number' => ['required', 'unique:users', 'max:16'],
+        ];
+
+        if($data['user_type'] == RoleConstant::EVENT_ORGANIZER) {
+            $rules['organizer_name'] = 'required|string|min:3';
+            $rules['organizer_address'] = 'required|string|min:3';
+            $rules['organizer_contact_name'] = 'required|string|min:3';
+            $rules['organizer_contact_phone'] = 'required';
+            $rules['organizer_contact_email'] = 'required|email|unique:master_organizers,contact_email|email:dns';
+        }
+
+        return Validator::make($data, $rules);
     }
 
     /**
@@ -70,18 +81,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // if($data['user_type'] === RoleConstant::EVENT_ORGANIZER) {
-        //     MasterOrganizer::create([
-        //         'name' => $data['organizer_name'],
-        //     ]);
-        // };
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'role_id' => RoleConstant::MEMBER,
-            // 'role_id' => $data['user_type'],
+            'role_id' => $data['user_type'],
             'password' => Hash::make($data['password']),
         ]);
+        if($data['user_type'] == RoleConstant::EVENT_ORGANIZER) {
+            MasterOrganizer::create([
+                'initial' => array_reduce(explode(' ', $data['name']), function ($initials, $word) {
+                    return sprintf('%s%s', $initials, substr($word, 0, 1));
+                }, ''),
+                'user_id' => $user->id,
+                'name' => $data['organizer_name'],
+                'address' => $data['organizer_address'],
+                'contact_name' => $data['organizer_contact_name'],
+                'contact_email' => $data['organizer_contact_email'],
+                'contact_phone' => $data['organizer_contact_phone'],
+            ]);
+        };
+
+        return $user;
     }
 }

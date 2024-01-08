@@ -15,14 +15,15 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('article_category_id')->references('id')->on('article_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('title');
             $table->longText('content');
             $table->string('slug');
-            $table->tinyInteger('show_flag')->default(1);
-            $table->string('created_by');
-            $table->string('updated_by');
+            $table->string('source', 16);
+            $table->boolean('show_flag')->default(true);
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
 
             $table->timestamps();
         });

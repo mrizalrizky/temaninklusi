@@ -15,14 +15,16 @@ class BaseFormSelect extends Component
     public $id;
     public $options;
     public $placeholder;
-    public $onChange;
-    public function __construct($name, $id, $placeholder = '', $options = null, $onChange = null)
+    public $onclick;
+    public $selectedValue;
+    public function __construct($name, $id, $placeholder = '', $options = null, $onclick = null, $selectedValue = '')
     {
         $this->name = $name;
         $this->id = $id;
         $this->placeholder = $placeholder;
         $this->options = $options;
-        $this->onChange = $onChange;
+        $this->onclick = $onclick;
+        $this->selectedValue = $selectedValue;
     }
 
     /**

@@ -8,11 +8,31 @@
             </div>
             <div class="row g-7 justify-content-center justify-content-md-between">
                 <div class="col-12 col-sm-10 col-md-7">
-                    <form enctype="multipart/form-data" action="{{ route('register') }}" method="POST"
+                    <form id="form_container" enctype="multipart/form-data" action="{{ route('register') }}" method="POST"
                         class="border rounded-4 p-4 p-x-custom-2">
                         @csrf
+                        <div id="roles" class="form-group mb-4">
+                            <label for="user_type" class="text-primary fw-bold mb-2">Bagaimana Anda mengidentifikasi diri Anda?</label>
+                            <div class="d-block">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input py-2" type="radio" name="user_type" value="2" id="regular_user" onchange="displayNewField()" {!! old('user_type') ? old('user_type') == 2 ? 'checked': '' : 'checked' !!}/>
+                                <label for="regular_user" class="form-check-label text-primary fw-bold mb-2 @error('user_type') is-invalid @enderror">Pengguna Reguler</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input py-2" type="radio" name="user_type" value="3" id="event_organizer" onchange="displayNewField()" {!! old('user_type') == 3 ? 'checked': '' !!}/>
+                                <label for="event_organizer" class="form-check-label text-primary fw-bold mb-2 @error('user_type') is-invalid @enderror">
+                                    Event Organizer
+                                </label>
+                            </div>
+                            </div>
+                            @if($errors->has('user_type'))
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
 
-                        <x-form.base-form-input title="Nama" type="text" value="{{ old('name') }}" placeholder="Jane Doe" name="name" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Nama" type="text" value="{{ old('name') }}" placeholder="Jane Doe" name="name" :label="true">
                             @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -20,7 +40,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Username" type="text" value="{{ old('username') }}"  placeholder="Janedoe" name="username" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Username" type="text" value="{{ old('username') }}"  placeholder="Janedoe" name="username" :label="true">
                             @error('username')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -28,7 +48,15 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Alamat email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Nomor Telepon Pribadi" type="text" value="{{ old('phone_number') }}"  placeholder="0123456789" name="phone_number" :label="true">
+                            @error('phone_number')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </x-form.base-form-input>
+
+                        <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -36,7 +64,8 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Password" type="password" name="password" :label="true" placeholder="●●●●●●●●">
+
+                        <x-form.base-form-input class="mb-4" title="Password" type="password" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -44,7 +73,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input title="Konfirmasi Password" type="password" name="password_confirmation" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Konfirmasi Password" type="password" name="password_confirmation" :label="true" placeholder="●●●●●●●●">
                             @if ($errors->has('password_confirmation'))
                             <div class="invalid-feedback">
                                 Konfirmasi password tidak cocok.
@@ -52,36 +81,55 @@
                             @endif
                         </x-form.base-form-input>
 
-                        <div class="form-group mb-4">
-                            <label for="user_type" class="text-primary fw-bold mb-2">Bagaimana Anda mengidentifikasi diri Anda?</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input py-2" type="radio" name="user_type" value="4" id="regular_user" onchange="getUserType()" checked/>
-                                <label for="regular_user" class="form-check-label text-primary fw-bold mb-2 @error('user_type') is-invalid @enderror">Pengguna Reguler</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input py-2" type="radio" name="user_type" value="{{ App\Constants\RoleConstant::EVENT_ORGANIZER }}" id="event_organizer" onchange="getUserType()"/>
-                                <label for="event_organizer" class="form-check-label text-primary fw-bold mb-2 @error('user_type') is-invalid @enderror">
-                                    Event Organizer
-                                </label>
-                            </div>
-                            @error('user_type')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                        <div id="organizer" style="{{ old('user_type') != 3 ? 'display: none': '' }}">
+                            <x-form.base-form-input class="mb-4" title="Nama Perusahaan atau Organisasi" type="text" value="{{ old('organizer_name') }}"
+                                placeholder="Nama Perusahaan atau Organisasi" name="organizer_name" :label="true">
+                                @error('organizer_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
+
+                            <x-form.base-form-input class="mb-4" title="Nama Kontak Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_name') }}"
+                                placeholder="Nama Kontak Perusahaan atau Organisasi" name="organizer_contact_name" :label="true">
+                                @error('organizer_contact_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
+
+                            <x-form.base-form-input class="mb-4" title="Alamat Perusahaan atau Organisasi" type="text" value="{{ old('organizer_address') }}"
+                                placeholder="Alamat Perusahaan atau Organisasi" name="organizer_address" :label="true">
+                                @error('organizer_address')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
+
+                            <x-form.base-form-input class="mb-4" title="Alamat Email Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_email') }}"
+                                placeholder="Alamat Email Perusahaan atau Organisasi" name="organizer_contact_email" :label="true">
+                                @error('organizer_contact_email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
+
+
+                            <x-form.base-form-input class="mb-4" title="No. Telp Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_phone') }}"
+                                placeholder="No. Telp Perusahaan atau Organisasi" name="organizer_contact_phone" :label="true">
+                                @error('organizer_contact_phone')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
                         </div>
 
-                        <x-form.base-form-input title="Nama Perusahaan" class="d-none" type="text" name="organizer_name" id="organizer_name" :label="true">
-                        {{-- <x-form.base-form-input title="Nama Perusahaan" type="text" name="organizer_name" id="organizer_name" :label="true" :hidden="true"> --}}
-                            @error('organizer_name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </x-form.base-form-input>
-
-                        <div class="px-4">
+                        <div class="px-4" id="">
                             <button type="submit" class="btn btn-primary w-100 rounded-4">Daftar</button>
                         </div>
                     </form>
@@ -94,15 +142,14 @@
             </div>
         </div>
     </div>
-@endsection
+    @endsection
 
 @push('after-script')
-<script>
-    const getUserType = () => {
-        const getClickedRadio = event.target.id === 'event_organizer';
-        const organizerNameEl = document.getElementById('organizer_name');
-        getClickedRadio ? organizerNameEl.classList.remove('d-none') : organizerNameEl.classList.add('d-none')
-    }
-</script>
-
+    <script>
+        const displayNewField = () => {
+            const getClickedRadio = event.target.id === 'event_organizer';
+            const divStyle = document.getElementById('organizer')
+            getClickedRadio ? divStyle.style.display = 'inline-block' : divStyle.style.display = 'none'
+        }
+    </script>
 @endpush

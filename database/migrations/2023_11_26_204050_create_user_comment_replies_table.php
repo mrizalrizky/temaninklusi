@@ -14,7 +14,7 @@ class CreateUserCommentRepliesTable extends Migration
     public function up()
     {
         Schema::create('user_comment_replies', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('content');
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('user_comment_id')->references('id')->on('user_comments')->onUpdate('CASCADE')->onDelete('CASCADE');

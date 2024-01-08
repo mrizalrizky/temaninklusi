@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-primary">
+    <div class="bg-primary-2">
         <div class="container-lg text-center pt-4 pb-4">
             <h3 class="text-primary mb-2">
                 Cari event yang ramah untuk <strong>Disabilitas?</strong> Temukan
@@ -13,14 +13,12 @@
         </div>
     </div>
 
-    {{-- Benefit Card Section --}}
     <div class="container-lg px-4 px-lg-3">
         <section>
             <h3 class="text-primary text-center my-4 py-3">
                 Kenapa {{ config('app.name') }}?
             </h3>
 
-            {{-- Benefit Card --}}
             <div class="row g-3 g-md-4 justify-content-center">
                 <x-card.benefit-card title="Aksesibilitas"
                     description="Discover sustainable options effortlessly. Our platform offers convenient access to sustainable options all in one place." />
@@ -31,19 +29,17 @@
             </div>
         </section>
 
-        {{-- Event Card Section --}}
         <section class="mb-5">
             <h3 class="text-primary text-center my-4 py-3">
-                Event Pilihan
+                Event Terbaru
             </h3>
 
-            {{-- Event Card --}}
-            @if($events)
-            <div class="row px-md-0 justify-content-center g-3 g-md-4">
-                @foreach ($events as $event)
-                    <x-card.event-card :event="$event"/>
-                @endforeach
-            </div>
+            @if(count($newestEvents) > 0)
+                <div class="row px-md-0 justify-content-center g-3 g-md-4">
+                    @foreach ($newestEvents as $event)
+                        <x-card.event-card :event="$event"/>
+                    @endforeach
+                </div>
             @endif
         </section>
 

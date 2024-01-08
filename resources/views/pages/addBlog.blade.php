@@ -1,48 +1,118 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-md px-4 px-lg-3">
-        <h4 class="my-4">Add Blog</h4>
-        <div class="col-8">
-            <form enctype="multipart/form-data" action="{{ route('blog.add') }}" class="ms-2" method="POST">
+        <div class="my-5 text-center text-md-start">
+            <h4 class="text-primary">Tambah Tips dan Artikel</h4>
+            <h5 class="text-left m-b-custom-2 fw-normal">buat pengguna lain terinspirasi!</h5>
+        </div>
+        <div class="d-md-flex justify-content-center">
+            <div class="col col-xl-7 border border-1 rounded-4 align-items-center p-5">
+                <form enctype="multipart/form-data" action="{{ route('blog.validate') }}" class="d-flex flex-column gap-4"
+                      method="POST">
                 @csrf
-                <div class="mb-4">
-                    <label class="form-label text-primary label-add-blog">Choose Image</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="floatingInput"
-                        name="image">
-                    @error('image')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                @if (Session::get('articleModal'))
+                    @php
+                        $data = Session::get('articleModal');
+                    @endphp
+                @else
+                    @php
+                        $data = null;
+                    @endphp
+                @endif
+                <div class="row gap-4 gap-sm-3">
+                    <div class="col-12 col-sm">
+                        <x-form.base-form-input title="Judul Artikel" name="title" type="text"
+                            value="{{ $data ? $data['title'] : old('title') }}" :label="true" mandatory>
+                            @error('title')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </x-form.base-form-input>
+                    </div>
+                    <div class="col-12 col-sm">
+                        <label for="article_category" class="text-primary fw-bold mb-2 mandatory">Kategori Artikel</label>
+                        <x-form.base-form-select name="article_category" id="article_category" placeholder="Pilih Kategori"
+                            :options="$articleCategories" selectedValue="{{ $data ? $data['article_category'] : old('article_category') }}" />
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label class="form-label text-primary label-add-blog">Title</label>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="floatingInput"
-                        name="title">
-                    @error('title')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+
+                <div class="row gap-4 gap-sm-3">
+                    <div class="col-12 col-sm">
+                        <x-form.base-form-input title="Sumber" name="source" type="text"
+                            value="{{ $data ? $data['source'] : old('source') }}" :label="true" mandatory>
+                            @error('source')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </x-form.base-form-input>
+                    </div>
+                    <div class="col-12 col-sm">
+                        <x-form.base-form-input title="Penulis" name="created_by" type="text"
+                            value="{{ Auth::user()->name }}" :label="true" disabled>
+                            @error('created_by')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </x-form.base-form-input>
+                    </div>
                 </div>
-                <div class="mb-4">
-                    <label for="description" class="form-label text-primary label-add-blog">Description</label>
-                    <textarea class="form-control" id="description" rows="3"></textarea>
+
+                <div>
+                    <label class="form-label text-primary label-add-blog fw-bold mandatory">Banner Artikel</label>
+                    <x-button.upload-image-button name="article_banner" />
                 </div>
-                <div class="mb-4">
-                    <label class="form-label text-primary label-add-blog">Source</label>
-                    <input type="text" class="form-control @error('source') is-invalid @enderror" id="floatingInput"
-                        name="source">
-                    @error('source')
+                @if ($data)
+                    <input type="hidden" name="article_banner" value="{{ $data['article_banner'] }}">
+                {{-- @else
+                    <div>
+                        <label class="form-label text-primary label-add-blog">Thumbnail</label>
+                        <x-button.upload-image-button name="article_banner" />
+                    </div> --}}
+                @endif
+
+                <div>
+                    <label for="content" class="form-label text-primary label-add-blog fw-bold mandatory">Konten</label>
+                    <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="4">{{ $data ? $data['content'] : old('content') }}</textarea>
+                    @error('content')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
                 <div class="d-flex justify-content-end mt-5">
-                    <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4" type="submit">Add</button>
+                    <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4" type="submit">Upload</button>
                 </div>
-            </form>
+                </form>
+
+                <x-dialog.base-dialog id="articleModal" action="{{ route('blog.create') }}"
+                                      title="Yakin akan tambah artikel?">
+                    @if (session()->has('articleModal'))
+                        @foreach (session()->get('articleModal') as $key => $value)
+                            <input name="{{ $key }}" value="{{ $value }}" type="hidden"/>
+                        @endforeach
+                    @endif
+                    </x-dialog.base-dialog>
+
+                @if (session()->has('articleModal'))
+                    @push('after-script')
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const popupModal = document.getElementById('articleModal')
+                                popupModal.style.display = 'block'
+                                popupModal.classList.add('show')
+                                const modalBackdrop = document.createElement('div')
+                                modalBackdrop.setAttribute('id', 'modal_backdrop')
+                                modalBackdrop.className = 'modal-backdrop fade show'
+                                document.body.appendChild(modalBackdrop)
+
+                            });
+                        </script>
+                    @endpush
+                @endif
+            </div>
         </div>
     </div>
 @endsection

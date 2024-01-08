@@ -24,8 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
-        'is_banned',
-        'is_active',
+        'ban_flag',
+        'active_flag',
     ];
 
     /**
@@ -49,6 +49,14 @@ class User extends Authenticatable
 
     public function role() {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function organizer() {
+        return $this->hasOne(MasterOrganizer::class, 'user_id');
+    }
+
+    public function registeredEvents() {
+        return $this->belongsToMany(Event::class, 'registered_events', 'user_id', 'event_id');
     }
 
     public function isAdmin() {

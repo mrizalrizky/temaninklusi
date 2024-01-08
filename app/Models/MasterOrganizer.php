@@ -11,6 +11,20 @@ class MasterOrganizer extends Model
 
     protected $fillable = [
         'name',
-        'initial'
+        'initial',
+        'address',
+        'contact_name',
+        'contact_phone',
+        'contact_email',
+        'user_id',
     ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

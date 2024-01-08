@@ -11,4 +11,8 @@ class RegisteredEvent extends Model
         'user_id',
         'event_id'
     ];
+
+    // public function events() {
+    //     return $this->belongsTo(Event::class, 'event_id', 'id');
+    // }
 }

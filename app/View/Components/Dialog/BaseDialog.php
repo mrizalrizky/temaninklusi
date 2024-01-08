@@ -18,13 +18,15 @@ class BaseDialog extends Component
     public $title;
     public $submitTitle;
     public $rejectTitle;
-    public function __construct($id, $action, $title = '', $submitTitle = 'Ya', $rejectTitle = 'Tidak')
+    public $method;
+    public function __construct($id, $action, $title = '', $submitTitle = 'Ya', $rejectTitle = 'Tidak', $method = 'POST')
     {
         $this->id = $id;
         $this->action = $action;
         $this->title = $title;
         $this->submitTitle = $submitTitle;
         $this->rejectTitle = $rejectTitle;
+        $this->method = $method;
     }
 
     /**

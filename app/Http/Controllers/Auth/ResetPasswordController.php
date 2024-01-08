@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
         $resetToken = $request->query('resetToken', null);
 
         if(!$email || !$resetToken) abort(404);
-        return view('pages.validate-password', [
+        return view('pages.reset-password', [
             'email' => $email,
             'resetToken' => $resetToken,
         ]);
@@ -33,7 +33,7 @@ class ResetPasswordController extends Controller
 
         $user = $user = User::where('email', $request->email);
 
-        if ($user->get()->count() < 1) return redirect()->back()->with('failed','Email tidak valid');
+        if ($user->get()->count() < 1) return redirect()->back()->with('action-failed','Email tidak valid');
 
         $resetToken = Str::random(30);
         $expiredResetToken = Carbon::now()->addMinute(15);
@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
 
         $data = Mail::to($request->email)->send(new Email($request->email, $resetToken));
 
-        return redirect()->route('login')->with('success', 'Email reset berhasil dikirim!');
+        return redirect()->route('login')->with('action-success', 'Email reset berhasil dikirim!');
     }
 
     public function validatePassword(String $email, String $resetToken)

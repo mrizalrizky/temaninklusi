@@ -1,30 +1,11 @@
 <div class="col-12 col-md-4">
-    <a href="{{ route('event.index') }}/{{ $event->eventDetails->slug }}">
-        <div class="card p-0">
-            <img src="{{ asset('assets/img/cardimg.png') }}" class="card-img-top img-fluid" alt="Event Banner">
-            <div class="card-body px-3">
-                <h4 class="card-title text-primary">{{ $event->eventDetails->title }}</h4>
-                {{-- <caption-detail>{{ $event->eventDetails->start_date->format('d M Y') }}</caption-detail> ini ga ada componentnya? --}}
-                <p>{{ $event->eventDetails->start_date->format('d M Y') }}</p>
-
-                <div class="">
-                    <div style="width: fit-content" class="p-2 bg-dark rounded-3 align-self-center align-items-center align-content-center">
-                        <p class="text-white" >{{ $event->organizer->initial }}</p>
-                    </div>
-                    {{-- <div>
-                        <p>{{ $event->organizer->name }}</p>
-                    </div> --}}
-                </div>
-
-                {{-- <div class="d-flex gap-2">
-                    <div class="p-2 rounded-3 bg-dark">
-                        <h5 class="text-white mb-0">{{ $event->organizer->initial }}</h5>
-                    </div>
-                    <div class="bg-warning d-flex justify-content-center">
-                        <p class="text-dark fw-bold">{{ $event->organizer->name }}</p>
-                    </div>
-                </div> --}}
-
+    <a href="{{ route('event.index') }}/{{ $event->eventDetail->slug }}">
+        <div class="card">
+            <img src="{{ Storage::disk('public')->exists($event->eventBanner->file_path) ? Storage::disk('public')->url($event->eventBanner->file_path . $event->eventBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}" class="card-img-top img-fluid object-fit-cover" style="height: 12rem" alt="Event Banner">
+            <div class="card-body d-grid gap-2">
+                <h5 class="mb-0 card-title text-primary elipsis-title">{{ $event->eventDetail->title }}</h5>
+                <caption-detail>{{ $event->eventDetail->start_date->format('d M Y') }}</caption-detail>
+                <x-tag.organizer-tag class="custom-tag" :organizer="$event->organizer"/>
             </div>
         </div>
     </a>
