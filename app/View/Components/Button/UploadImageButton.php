@@ -11,10 +11,11 @@ class UploadImageButton extends Component
      *
      * @return void
      */
+    public $name;
     public $src;
-    public function __construct($src = '')
+    public function __construct($name, $src = '')
     {
-        //
+        $this->name = $name;
         $this->src = $src;
     }
 

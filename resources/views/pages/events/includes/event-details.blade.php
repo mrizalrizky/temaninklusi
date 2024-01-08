@@ -1,45 +1,41 @@
 <div class="d-grid gap-5">
-    <div class="row">
-        <div class="col">
-            <h4>Event Details</h4>
-            <ul class="d-grid gap-4 p-0 justify-content-center justify-content-md-start">
-                <x-listitem.event-list-item icon="bytesize:location">
-                    {{ $event->eventDetail['location'] }}
-                </x-listitem.event-list-item>
-                <x-listitem.event-list-item icon="fontisto:date">
-                    {{ $event->eventDetail['start_date']->format('d M Y') }} - {{ $event->eventDetail['end_date']->format('d M Y') }}
-                </x-listitem.event-list-item>
-                <x-listitem.event-list-item icon="ph:clock-fill">
-                    {{ $event->eventDetail['start_date']->format('H.i') }} - {{ $event->eventDetail['end_date']->format('H.i') }} WIB
-                </x-listitem.event-list-item>
-            </ul>
+    <div class="d-flex flex-column gap-3">
+        <div class="d-flex flex-column flex-md-row gap-3 gap-md-5">
+            <div class="d-flex flex-column align-items-center align-items-md-start gap-2">
+                <h5>Organizer Details</h5>
+                <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
+                    <x-tag.organizer-tag class="p-1" :organizer="$event->organizer"/>
+                    <x-listitem.event-list-item icon="mdi:email-open">
+                        {{ $event->organizer->contact_email }}
+                    </x-listitem.event-list-item>
+                    <x-listitem.event-list-item icon="mingcute:phone-call-fill">
+                        {{ $event->organizer->contact_phone }}
+                    </x-listitem.event-list-item>
+                </ul>
+            </div>
+            <div class="d-flex flex-column align-items-center align-items-md-start gap-2">
+                <div>
+                    <h5 class="text-center text-md-start">Fasilitas</h5>
+                    <ul>
+                        @foreach ($event->eventDetail->event_facilities as $eventFacility)
+                            @if ($eventFacility !== null)
+                                <li>{{ $eventFacility }}</li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h4>Fasilitas</h4>
+        <div class="d-flex flex-column align-items-center align-items-md-start gap-2">
+            <h5 class="text-center text-md-start">Benefit</h5>
             <ul>
-                <li>Memberdayakan Komunikasi</li>
-                <li>Menginspirasi Pemikiran Kritis</li>
-                <li>Meningkatkan Kesadaran Emosional</li>
+                @foreach ($event->eventDetail->event_benefits as $eventBenefit)
+                    @if ($eventBenefit !== null)
+                        <li>{{ $eventBenefit }}</li>
+                    @endif
+                @endforeach
             </ul>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <h4>Benefit</h4>
-            <ul>
-                <li>Memberdayakan Komunikasi</li>
-                <li>Menginspirasi Pemikiran Kritis</li>
-                <li>Meningkatkan Kesadaran Emosional</li>
-            </ul>
-        </div>
-        <div class="col">
-            <h4>Goals</h4>
-            <ul>
-                <li>Memberdayakan Komunikasi</li>
-                <li>Menginspirasi Pemikiran Kritis</li>
-                <li>Meningkatkan Kesadaran Emosional</li>
-            </ul>
-        </div>
-    </div>
 </div>

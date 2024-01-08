@@ -19,10 +19,12 @@ class CreateEventsTable extends Migration
             $table->foreignId('event_detail_id')->references('id')->on('event_details')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('status_id')->references('id')->on('master_statuses')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('event_category_id')->references('id')->on('event_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->tinyInteger('license_flag')->default(1);
-            $table->tinyInteger('show_flag')->default(1);
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
+            $table->foreignId('event_banner_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE')->nullable();
+            $table->foreignId('event_license_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE')->nullable();
+            $table->boolean('event_license_flag');
+            $table->boolean('show_flag')->default(true);
+            $table->string('created_by', 64)->nullable();
+            $table->string('updated_by', 64)->nullable();
 
             $table->timestamps();
         });

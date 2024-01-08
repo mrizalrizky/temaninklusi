@@ -29,11 +29,22 @@
         @include('includes.script')
         @stack('after-script')
     </div>
-
+    <x-toast id="alert-save" sessionName="action-success" bgColor="rgb(110 231 183)" class="alert-save alert-success"/>
+    <x-toast id="alert-delete" sessionName="action-failed" bgColor="rgb(253 164 175)" class="alert-delete alert-danger"/>
 </body>
 
 <script>
     feather.replace()
+
+    if (document.getElementById('alert-save'))
+        setTimeout(() => {
+            document.getElementById('alert-save').classList.remove('active')
+        }, 4000);
+
+    if (document.getElementById('alert-delete'))
+        setTimeout(() => {
+            document.getElementById('alert-delete').classList.remove('active')
+        }, 4000);
 </script>
 
 </html>

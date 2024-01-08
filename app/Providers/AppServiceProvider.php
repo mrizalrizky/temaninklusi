@@ -28,43 +28,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::defaultView('vendor.pagination.bootstrap-4');
-
-        Gate::define('edit-event', function (User $user, Event $event) {
-            return $user->isAdmin() || ($user->isEO() && $user->id == $event->organizer->user_id);
-        });
-
-        // ADD, DELETE, EDIT ARTICLE
-        Gate::define('manage-article', function (User $user) {
-            return $user->isAdmin();
-        });
-
-        // APPROVE, REJCT, DELETE EVENT
-        Gate::define('manage-event', function (User $user) {
-            return $user->isAdmin();
-        });
-
-        Gate::define('register-event', function (User $user) {
-            return $user->isMember();
-        });
-
-        Gate::define('cancel-register-event', function (User $user) {
-            return $user->isMember();
-        });
-
-        Gate::define('create-comment', function (User $user, Event $event) {
-            return $user->isMember() || ($user->isEO() && $user->id == $event->organizer->user_id);
-        });
-
-        Gate::define('delete-comment', function (User $user) {
-            return $user->isAdmin();
-        });
-
-        Gate::define('ban-user', function (User $user) {
-            return $user->isAdmin();
-        });
-
-        Gate::define('upload-event', function (User $user) {
-            return $user->isEO();
-        });
     }
 }

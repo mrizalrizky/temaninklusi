@@ -18,9 +18,7 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 |
 */
 
-// Route::get('/', [HomeController::class, 'index'])->name('index');
-
-Route::get('/', [\App\Http\Controllers\EventController::class, 'showPopularEvents'])->name('index');
+Route::get('/', [\App\Http\Controllers\EventController::class, 'showNewestEvents'])->name('index');
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -28,31 +26,48 @@ Route::get('/about', function () {
 
 Route::prefix('blogs')->group(function () {
     Route::get('/', [App\Http\Controllers\ArticleController::class, 'index'])->name('blog.index');
-    Route::get('/add', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
-    Route::post('/add/validate', [App\Http\Controllers\ArticleController::class, 'validateData'])->name('blog.validate');
-    Route::post('/add', [App\Http\Controllers\ArticleController::class, 'create'])->name('blog.create');
+    Route::get('/upload', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
+    Route::post('/upload/validate', [App\Http\Controllers\ArticleController::class, 'validateData'])->name('blog.validate');
+    Route::post('/upload', [App\Http\Controllers\ArticleController::class, 'create'])->name('blog.create');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
-    Route::get('/edit/{slug}', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
-    Route::put('/edit/{slug}', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
+    Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('blog.delete');
+    Route::get('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
+    Route::put('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
+
 });
 
 Route::prefix('events')->group(function () {
-    Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
-    Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
     Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
-    Route::get('/upload', [App\Http\Controllers\EventController::class, 'showUploadEventPage'])->name('event.upload');
-    Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
-    Route::post('/upload', [App\Http\Controllers\EventController::class, 'create'])->name('event.create');
+
+    Route::group(['middleware' => 'auth'],function () {
+        Route::group(['middleware' => 'can:upload-event'], function () {
+            Route::get('/upload', [App\Http\Controllers\EventController::class, 'showUploadEventPage'])->name('event.upload');
+            Route::post('/upload', [App\Http\Controllers\EventController::class, 'create'])->name('event.create');
+            Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
+        });
+
+        Route::group(['middleware' => 'can:is-admin'], function () {
+            Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
+            Route::put('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
+            Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('event.delete');
+            Route::post('/edit/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.edit.validate');
+
+            Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'deleteComment'])->name('comment.delete');
+            Route::delete('/comments/reply/{id}', [App\Http\Controllers\CommentController::class, 'deleteCommentReply'])->name('comment.reply.delete');
+        });
+
+        Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
+        Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
+
+    });
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
-    Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
-    Route::post('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
-    Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::get('/events', [App\Http\Controllers\EventController::class, 'showEventsByRole'])->name('profile.events'); //harusnya di event
+    Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 });
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
@@ -62,15 +77,24 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');
 })->name('forgot-password');
-
-
 Route::post('/forgot-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'generateMail'])->name('generate.forgot-password');
 
 Route::get('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'index'])->name('reset.password');
 Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword'])->name('update.password');
 
-Route::get('/test', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'resetPassword']);
+Route::group(['prefix' => 'admin', 'middleware' => 'can:is-admin'], function () {
+    Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
 
-Route::get('/x', function () {
-    return view('pages.reset-password');
+    Route::group(['prefix' => 'manage', 'middleware' => 'can:is-admin'], function () {
+        Route::prefix('user')->group(function() {
+            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
+            Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'banUser'])->name('admin.banned-user');
+            Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.unbanned-user');
+        });
+
+        Route::prefix('event')->group(function () {
+            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
+        });
+
+    });
 });

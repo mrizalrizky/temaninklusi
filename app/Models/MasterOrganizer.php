@@ -15,6 +15,7 @@ class MasterOrganizer extends Model
         'address',
         'contact_name',
         'contact_phone',
+        'contact_email',
         'user_id',
     ];
 

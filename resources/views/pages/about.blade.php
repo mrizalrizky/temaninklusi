@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container-md px-4 px-lg-3">
+    <div class="container-lg px-4 px-lg-3">
         <div class="d-flex justify-content-center">
             <img src="assets/about/aboutBanner.png" class="img-fluid col-10" style="max-width: 30rem" alt="">
         </div>

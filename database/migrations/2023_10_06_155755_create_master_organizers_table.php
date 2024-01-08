@@ -21,6 +21,7 @@ class CreateMasterOrganizersTable extends Migration
             $table->string('address');
             $table->string('contact_name');
             $table->string('contact_phone');
+            $table->string('contact_email');
 
             $table->timestamps();
         });

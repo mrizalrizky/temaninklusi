@@ -28,8 +28,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-2" title="Password" type="password"
-                            value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Password" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
                                 <div class="invalid-feedback">
                                     {{ $message }}

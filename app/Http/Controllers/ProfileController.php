@@ -16,7 +16,7 @@ class ProfileController extends Controller
 
     protected function validator(Request $request)
     {
-        if ($request->email != Auth::user()->email) {
+        if ($request->name != Auth::user()->name) {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'username' => ['required', 'min: 5', 'max:20', 'unique:users'],
@@ -53,7 +53,7 @@ class ProfileController extends Controller
             ]);
         } else {
             throw ValidationException::withMessages([
-                'failed' => 'Failed to Change Password!'
+                'action-failed' => 'Failed to Change Password!'
             ]);
         }
 

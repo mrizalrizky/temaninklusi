@@ -52,18 +52,25 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'min: 5', 'max:20', 'unique:users'],
             'user_type' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirmation' => ['same:password'],
-            'organizer_name' => ['required', 'string', 'min: 3'],
-            'organizer_address' => ['required', 'string', 'min:3'],
-            'organizer_contact_name' => ['required', 'string', 'min:3'],
-            'organizer_contact_phone' => ['required']
-        ]);
+            'phone_number' => ['required', 'unique:users', 'max:16'],
+        ];
+
+        if($data['user_type'] == RoleConstant::EVENT_ORGANIZER) {
+            $rules['organizer_name'] = 'required|string|min:3';
+            $rules['organizer_address'] = 'required|string|min:3';
+            $rules['organizer_contact_name'] = 'required|string|min:3';
+            $rules['organizer_contact_phone'] = 'required';
+            $rules['organizer_contact_email'] = 'required|email|unique:master_organizers,contact_email|email:dns';
+        }
+
+        return Validator::make($data, $rules);
     }
 
     /**
@@ -90,6 +97,7 @@ class RegisterController extends Controller
                 'name' => $data['organizer_name'],
                 'address' => $data['organizer_address'],
                 'contact_name' => $data['organizer_contact_name'],
+                'contact_email' => $data['organizer_contact_email'],
                 'contact_phone' => $data['organizer_contact_phone'],
             ]);
         };

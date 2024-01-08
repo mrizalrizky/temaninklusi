@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-primary">
+    <div class="bg-primary-2">
         <div class="container-lg text-center pt-4 pb-4">
             <h3 class="text-primary mb-2">
                 Cari event yang ramah untuk <strong>Disabilitas?</strong> Temukan
@@ -31,12 +31,12 @@
 
         <section class="mb-5">
             <h3 class="text-primary text-center my-4 py-3">
-                Event Pilihan
+                Event Terbaru
             </h3>
 
-            @if(count($popularEvents) > 0)
+            @if(count($newestEvents) > 0)
                 <div class="row px-md-0 justify-content-center g-3 g-md-4">
-                    @foreach ($popularEvents as $event)
+                    @foreach ($newestEvents as $event)
                         <x-card.event-card :event="$event"/>
                     @endforeach
                 </div>

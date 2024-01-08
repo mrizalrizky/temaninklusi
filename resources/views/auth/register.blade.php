@@ -48,7 +48,15 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="Alamat email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Nomor Telepon Pribadi" type="text" value="{{ old('phone_number') }}"  placeholder="0123456789" name="phone_number" :label="true">
+                            @error('phone_number')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </x-form.base-form-input>
+
+                        <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" placeholder="Janedoe@gmail.com" name="email" :label="true">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -74,41 +82,51 @@
                         </x-form.base-form-input>
 
                         <div id="organizer" style="{{ old('user_type') != 3 ? 'display: none': '' }}">
-                        <x-form.base-form-input class="mb-4" title="Nama Perusahaan atau Organisasi" type="text" value="{{ old('organizer_name') }}"
-                            placeholder="Nama Perusahaan atau Organisasi" name="organizer_name" :label="true">
-                            @error('organizer_name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </x-form.base-form-input>
+                            <x-form.base-form-input class="mb-4" title="Nama Perusahaan atau Organisasi" type="text" value="{{ old('organizer_name') }}"
+                                placeholder="Nama Perusahaan atau Organisasi" name="organizer_name" :label="true">
+                                @error('organizer_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="Alamat Perusahaan atau Organisasi" type="text" value="{{ old('organizer_address') }}"
-                            placeholder="Alamat Perusahaan atau Organisasi" name="organizer_address" :label="true">
-                            @error('organizer_address')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </x-form.base-form-input>
+                            <x-form.base-form-input class="mb-4" title="Nama Kontak Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_name') }}"
+                                placeholder="Nama Kontak Perusahaan atau Organisasi" name="organizer_contact_name" :label="true">
+                                @error('organizer_contact_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="Nama Kontak Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_name') }}"
-                            placeholder="Nama Kontak Perusahaan atau Organisasi" name="organizer_contact_name" :label="true">
-                            @error('organizer_contact_name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </x-form.base-form-input>
+                            <x-form.base-form-input class="mb-4" title="Alamat Perusahaan atau Organisasi" type="text" value="{{ old('organizer_address') }}"
+                                placeholder="Alamat Perusahaan atau Organisasi" name="organizer_address" :label="true">
+                                @error('organizer_address')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="No. Telp Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_phone') }}"
-                            placeholder="No. Telp Perusahaan atau Organisasi" name="organizer_contact_phone" :label="true">
-                            @error('organizer_contact_phone')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </x-form.base-form-input>
+                            <x-form.base-form-input class="mb-4" title="Alamat Email Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_email') }}"
+                                placeholder="Alamat Email Perusahaan atau Organisasi" name="organizer_contact_email" :label="true">
+                                @error('organizer_contact_email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
+
+
+                            <x-form.base-form-input class="mb-4" title="No. Telp Perusahaan atau Organisasi" type="text" value="{{ old('organizer_contact_phone') }}"
+                                placeholder="No. Telp Perusahaan atau Organisasi" name="organizer_contact_phone" :label="true">
+                                @error('organizer_contact_phone')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </x-form.base-form-input>
                         </div>
 
                         <div class="px-4" id="">
@@ -132,69 +150,6 @@
             const getClickedRadio = event.target.id === 'event_organizer';
             const divStyle = document.getElementById('organizer')
             getClickedRadio ? divStyle.style.display = 'inline-block' : divStyle.style.display = 'none'
-            // console.log('Test')
-            // const formEl = document.getElementById('form_container')
-            // const fieldsToAdd = [
-            //     {
-            //         title: 'Nama Perusahaan atau Organisasi',
-            //         type: 'text',
-            //         name: 'organizer_name',
-            //         id: 'organizer_name',
-            //     },
-            //     {
-            //         title: 'Alamat Perusahaan atau Organisasi',
-            //         type: 'text',
-            //         name: 'organizer_address',
-            //         id: 'organizer_address'
-            //     },
-            //     {
-            //         title: 'Nama Kontak Perusahaan atau Organisasi',
-            //         type: 'text',
-            //         name: 'organizer_contact_name',
-            //         id: 'organizer_contact_name'
-            //     },
-            //     {
-            //         title: 'No. Telp Perusahaan atau Organisasi',
-            //         type: 'text',
-            //         name: 'organizer_contact_phone',
-            //         id: 'organizer_contact_phone'
-            //     },
-            // ]
-
-            // for (const field of fieldsToAdd) {
-            //     const existEl = document.getElementById(field.id)
-            //     if(existEl) {
-            //         formEl.removeChild(existEl)
-            //     }
-            // console.log(field.id)
-            // }
-
-            // const getClickedRadio = event.target.id === 'event_organizer';
-            // if (getClickedRadio) {
-            //     console.log(100)
-            //     const fragment = document.createDocumentFragment()
-
-            //     const newFields = fieldsToAdd.map(item => {
-            //         let newEl = document.createElement('div');
-            //         newEl.className = 'form-group mb-4'
-            //         newEl.setAttribute('id', `${item.id}`)
-            //         newEl.innerHTML = `
-            //             <label for="${item.name}" class="text-primary fw-bold mb-2">${item.title}</label>
-            //             <input type="${item.type}" class="form-control py-2 @error('${item.name}') is-invalid @enderror"
-            //                    id="${item.id}" name="${item.name}" value="{{ old('${item.name}') }}" placeholder="${item.title}">
-
-            //             @error('${item.name}')
-            //                 <div class="invalid-feedback">
-            //                     {{ $message }}
-            //                 </div>
-            //             @enderror
-            //         `
-
-            //         fragment.appendChild(newEl)
-            //     })
-            //     formEl.insertBefore(fragment, formEl.children[7]);
-            // }
         }
-        // window.onload = displayNewField();
     </script>
 @endpush

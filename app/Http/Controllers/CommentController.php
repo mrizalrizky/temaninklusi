@@ -17,7 +17,7 @@ class CommentController extends Controller
             'user_id'  => Auth::user()->id,
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('section', 'comment');
     }
 
     public function replyComment(Request $request) {
@@ -27,6 +27,31 @@ class CommentController extends Controller
             'user_id'         => Auth::user()->id
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('section', 'comment');
+    }
+
+    public function deleteComment($id) {
+        // $userComment = UserComment::with('replies')->findOrFail($id);
+        $userComment = UserComment::findOrFail($id);
+
+        if($userComment->replies) {
+            foreach($userComment->replies as $reply) {
+                $reply->delete();
+            }
+        }
+
+        $userComment->delete();
+        return redirect()->back()->with(
+            'action-success', 'Komentar berhasil dihapus!'
+        )->with('section', 'comment');
+    }
+
+    public function deleteCommentReply ($id) {
+        $userCommentReply = UserCommentReplies::findOrFail($id);
+        $userCommentReply->delete();
+
+        return redirect()->back()->with(
+            'action-success', 'Komentar berhasil dihapus!'
+        )->with('section', 'comment');
     }
 }

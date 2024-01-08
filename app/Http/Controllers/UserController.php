@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -16,9 +15,35 @@ class UserController extends Controller
     //     $user->update(request()->all());
     // }
 
-    // public function banUser() {
-    //     $user->update([
-    //         'ban_flag' => 1
-    //     ]);
-    // }
+    public function banUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->update([
+                'ban_flag' => true
+            ]);
+
+            return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil diban!');
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diban. Silahkan coba lagi!');
+        };
+    }
+
+    public function unbanUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->update([
+                'ban_flag' => false
+            ]);
+            // User::where([
+            //     ['id', $id],
+            // ])->first()->update([
+            //     'ban_flag' => false
+            // ]);
+            return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil diunban!');
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diunban. Silahkan coba lagi!');
+        };
+    }
 }

@@ -24,11 +24,11 @@ class Article extends Model
         'updated_at',
     ];
 
-    public function file() {
+    public function articleBanner() {
         return $this->belongsTo(File::class, 'file_id', 'id');
     }
 
-    public function ArticleCategory() {
+    public function articleCategory() {
         return $this->belongsTo(ArticleCategory::class, 'article_category_id', 'id');
     }
 }
