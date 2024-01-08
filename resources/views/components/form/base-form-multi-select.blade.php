@@ -4,7 +4,7 @@
     {{ $placeholder }}
     </button>
     <ul class="dropdown-menu w-100 mt-2" aria-labelledby="dropdownMenuButton">
-        @foreach ($options as $option)
+    @foreach ($options as $option)
         <li>
             <a class="dropdown-item">
                 <div class="form-check">
@@ -13,7 +13,8 @@
                 </div>
             </a>
         </li>
-        @endforeach
+    @endforeach
     </ul>
 </div>
+
 

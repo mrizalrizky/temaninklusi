@@ -16,13 +16,19 @@ class BaseFormMultiSelect extends Component
     public $options;
     public $placeholder;
     public $selectedValues;
-    public function __construct($name, $id, $placeholder = '', $options = null, $selectedValues = null)
+    public $existingValues;
+    public function __construct($name, $id, $placeholder = '', $options = null, $selectedValues = null, $existingValues = null)
     {
         $this->name = $name;
         $this->id = $id;
         $this->placeholder = $placeholder;
         $this->options = $options;
         $this->selectedValues = $selectedValues;
+        if($existingValues) {
+            foreach($existingValues->toArray() as $val) {
+                $this->selectedValues[] = $val['id'];
+            }
+        }
     }
 
     /**

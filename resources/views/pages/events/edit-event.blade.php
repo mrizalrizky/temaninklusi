@@ -4,13 +4,15 @@
 <div class="container-md px-4 px-lg-3">
     <div class="my-5 text-center text-md-start">
         <h4 class="text-primary">Edit Event</h4>
+        <h5 class="text-left m-b-custom-2 fw-normal">buat pengguna lain kembangin diri!</h5>
     </div>
-        <div class="col-lg-6 border border-1 rounded-4 align-items-center p-5">
-            <form action="{{ route('event.create') }}" method="POST" id="eventForm">
+    <div class="d-md-flex justify-content-center">
+        <div class="col col-xl-7 border border-1 rounded-4 align-items-center p-5">
+            <form action="{{ route('event.edit.validate') }}" method="POST" id="eventForm">
                 @csrf
-                @if (Session::get('articleModal'))
+                @if (Session::get('eventModal'))
                     @php
-                        $data = Session::get('articleModal');
+                        $data = Session::get('eventModal');
                     @endphp
                 @else
                     @php
@@ -30,19 +32,59 @@
                     </div>
                 </div>
                 <div class="d-flex">
-                    <button id="prevBtn" type="button" class="btn btn-primary rounded-5 me-auto d-none" style="width: fit-content" onclick="navigatePage('prev')">
-                        <iconify-icon icon="ep:arrow-left-bold" height="1rem" class="text-white"></iconify-icon>
+                    <button id="prevBtn" type="button"
+                        class="position-relative btn btn-primary rounded-5 me-auto mt-5 d-none"
+                        style="width: 2.3rem; height: 2.3rem" onclick="navigatePage('prev')">
+                        <iconify-icon icon="ep:arrow-left-bold" height="1rem"
+                            class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
                     </button>
-                    <button id="nextBtn" type="button" class="btn btn-primary rounded-5 ms-auto" style="width: fit-content" onclick="navigatePage('next')">
-                        <iconify-icon icon="ep:arrow-right-bold" height="1rem" class="text-white"></iconify-icon>
+                    <button id="nextBtn" type="button"
+                        class="position-relative btn btn-primary rounded-5 ms-auto mt-5"
+                        style="width: 2.3rem; height: 2.3rem" onclick="navigatePage('next')">
+                        <iconify-icon icon="ep:arrow-right-bold" height="1rem"
+                            class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
                     </button>
-                    <button id="submitBtn" type="submit" data-bs-toggle="modal" data-bs-target="#uploadEventModal" class="btn btn-primary rounded-5 ms-auto d-none" style="width: fit-content">
+                    <button id="submitBtn" type="submit" class="btn btn-primary rounded-5 ms-auto mt-5 d-none"
+                        style="width: fit-content">
                         Edit
                     </button>
                 </div>
             </form>
+
+            <x-dialog.base-dialog id="eventModal" action="{{ route('event.update', $event->eventDetail->slug) }}" title="Yakin akan edit event?">
+                @if (session()->has('eventModal'))
+                    @foreach (session()->get('eventModal') as $key => $value)
+                        @if (is_array($value))
+                            @foreach ($value as $arrayValue)
+                                <input name="{{ $key }}[]" value="{{ $arrayValue }}" type="hidden" />
+                            @endforeach
+                        @else
+                            <input name="{{ $key }}" value="{{ $value }}" type="hidden" />
+                        @endif
+                    @endforeach
+                @endif
+            </x-dialog.base-dialog>
+
+            @if (session()->has('eventModal'))
+                @push('after-script')
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const popupModal = document.getElementById('eventModal')
+                            popupModal.style.display = 'block'
+                            popupModal.classList.add('show')
+                            const modalBackdrop = document.createElement('div')
+                            modalBackdrop.setAttribute('id', 'modal_backdrop')
+                            modalBackdrop.className = 'modal-backdrop fade show'
+                            document.body.appendChild(modalBackdrop)
+                        });
+                    </script>
+                @endpush
+            @endif
         </div>
     </div>
+</div>
+
+{{-- @dd($errors) --}}
 @endsection
 
 @push('after-script')

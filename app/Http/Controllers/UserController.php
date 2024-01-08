@@ -15,31 +15,35 @@ class UserController extends Controller
     //     $user->update(request()->all());
     // }
 
-    public function bannedUser($id)
+    public function banUser($id)
     {
         try {
-            User::where([
-                ['id', $id],
-            ])->first()->update([
-                'is_banned' => true
+            $user = User::findOrFail($id);
+            $user->update([
+                'ban_flag' => true
             ]);
-            return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil di banned!');
+
+            return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil diban!');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal dibanned, silahkan coba lagi!');
+            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diban. Silahkan coba lagi!');
         };
     }
 
-    public function unbannedUser($id)
+    public function unbanUser($id)
     {
         try {
-            User::where([
-                ['id', $id],
-            ])->first()->update([
-                'is_banned' => false
+            $user = User::findOrFail($id);
+            $user->update([
+                'ban_flag' => false
             ]);
-            return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil di unbanned!');
+            // User::where([
+            //     ['id', $id],
+            // ])->first()->update([
+            //     'ban_flag' => false
+            // ]);
+            return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil diunban!');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diunbanned, silahkan coba lagi!');
+            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diunban. Silahkan coba lagi!');
         };
     }
 }

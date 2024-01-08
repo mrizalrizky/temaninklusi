@@ -59,6 +59,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirmation' => ['same:password'],
+            'phone_number' => ['required', 'unique:users', 'max:16'],
         ];
 
         if($data['user_type'] == RoleConstant::EVENT_ORGANIZER) {

@@ -1,24 +1,22 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Button;
 
 use Illuminate\View\Component;
 
-class Toast extends Component
+class UploadButton extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $id;
-    public $bgColor;
-    public $sessionName;
-    public function __construct($id, $bgColor, $sessionName)
+    public $name;
+    public $accept;
+    public function __construct($name = '', $accept = '')
     {
-        $this->id = $id;
-        $this->bgColor = $bgColor;
-        $this->sessionName = $sessionName;
+        $this->name = $name;
+        $this->accept = $accept;
     }
 
     /**
@@ -28,6 +26,6 @@ class Toast extends Component
      */
     public function render()
     {
-        return view('components.toast');
+        return view('components.button.upload-button');
     }
 }

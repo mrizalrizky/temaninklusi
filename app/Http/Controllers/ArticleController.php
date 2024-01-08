@@ -48,7 +48,7 @@ class ArticleController extends Controller
             }
         } else {
             $validation['title'] = 'required|unique:articles';
-            $validation['article_banner'] = 'required';
+            $validation['article_banner'] = 'required|mimes:jpg,jpeg,png,pneg,svg';
         }
 
         $request->validate($validation);

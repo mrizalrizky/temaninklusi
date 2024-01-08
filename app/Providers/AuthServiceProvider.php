@@ -57,10 +57,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isMember() && $user->registeredEvents->contains($event);
         });
 
-        Gate::define('create-comment', function (User $user, Event $event) {
-            return $user->isMember() || ($user->isEO() && $user->id == $event->organizer->user_id);
-        });
-
         // Gate::define('delete-comment', function (User $user) {
         //     return $user->isAdmin();
         // });

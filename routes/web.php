@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\EventController::class, 'showPopularEvents'])->name('index');
+Route::get('/', [\App\Http\Controllers\EventController::class, 'showNewestEvents'])->name('index');
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -46,16 +46,19 @@ Route::prefix('events')->group(function () {
             Route::post('/upload/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.validate');
         });
 
-        Route::group(['middleware' => 'can:manage-event'], function () {
+        Route::group(['middleware' => 'can:is-admin'], function () {
             Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
             Route::put('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
             Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('event.delete');
+            Route::post('/edit/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.edit.validate');
+
+            Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'deleteComment'])->name('comment.delete');
+            Route::delete('/comments/reply/{id}', [App\Http\Controllers\CommentController::class, 'deleteCommentReply'])->name('comment.reply.delete');
         });
 
-        Route::group(['middleware' => 'can:create-comment'], function() {
-            Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
-            Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
-        });
+        Route::post('/comments', [App\Http\Controllers\CommentController::class, 'create'])->name('comment.create');
+        Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
+
     });
     Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
@@ -81,8 +84,17 @@ Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordControll
 
 Route::group(['prefix' => 'admin', 'middleware' => 'can:is-admin'], function () {
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/manage-user', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
-    Route::get('/manage-event', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
-    Route::delete('/manage-user/{id}', [\App\Http\Controllers\UserController::class, 'bannedUser'])->name('admin.banned-user');
-    Route::put('/unbanned-user/{id}', [\App\Http\Controllers\UserController::class, 'unbannedUser'])->name('admin.unbanned-user');
+
+    Route::group(['prefix' => 'manage', 'middleware' => 'can:is-admin'], function () {
+        Route::prefix('user')->group(function() {
+            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
+            Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'banUser'])->name('admin.banned-user');
+            Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.unbanned-user');
+        });
+
+        Route::prefix('event')->group(function () {
+            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
+        });
+
+    });
 });

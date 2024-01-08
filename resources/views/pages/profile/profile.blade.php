@@ -3,16 +3,16 @@
     <div class="container-md px-4 px-lg-3">
         <div class="row mt-5 gx-4 gx-lg-5 align-items-end">
             <div class="col-5 col-lg-4 col-xl-3">
-                <h4 class="text-center m-b-custom-2">Dashboard</h4>
+                <h4 class="text-md-center m-b-custom-2">Dashboard</h4>
             </div>
-            <div class="col-7">
+            <div class="col-7 d-none d-md-block">
                 <h4 class="text-left">Edit Profile</h4>
                 <h5 class="text-left m-b-custom-2 fw-normal">Masukan informasi yang valid</h5>
             </div>
         </div>
-        <div class="row gx-4 gx-lg-5">
+        <div class="row gx-4 gx-lg-5 gap-4 gap-md-0">
             @include('pages.profile.includes.profile-sidebar')
-            <div class="col-7">
+            <div class="col-12 col-md">
                 <div class="d-flex gap-2 flex-column align-items-start justify-content-center border border-1 rounded-4 p-4">
                     <div class="mb-3 d-flex gap-3 align-items-center ms-4">
                         <img class="rounded-4 img-fluid mb-2" src="assets/profile/profile-picture.png" alt=""
@@ -22,7 +22,7 @@
                             <small style="font-size: .8rem" class="text-primary">{{ Auth::user()->role->type }}</small>
                         </div>
                     </div>
-                    <h5 class="mb-0">Infomasi Pribadi</h5>
+                    <h5 class="mb-0">Informasi Pribadi</h5>
                     <div class="px-4 pt-1 pb-1 mb-4 d-flex w-100">
                         <form action="{{ route('profile.update') }}" class="w-100" method="POST">
                             @csrf
@@ -50,11 +50,12 @@
                                     </div>
                                 @enderror
                             </div>
+
                             <div class="form-group mb-2">
-                                <label for="email" class="text-primary mb-2 profile-label">Email Address</label>
+                                <label for="email" class="text-primary mb-2 profile-label">Alamat Email</label>
                                 <input type="email" class="form-control py-2 @error('email') is-invalid @enderror"
                                     id="email" aria-describedby="email" name="email"
-                                    value="{{ old('email') ?? Auth::user()->email }}" placeholder="Jane Doe" disabled>
+                                    value="{{ old('email') ?? Auth::user()->email }}" placeholder="{{ Auth::user()->email }}" disabled>
 
                                 @error('email')
                                     <div class="invalid-feedback">
@@ -62,6 +63,83 @@
                                     </div>
                                 @enderror
                             </div>
+
+                            <div class="form-group mb-2">
+                                <label for="phone_number" class="text-primary mb-2 profile-label">Nomor Telepon Pribadi</label>
+                                <input type="text" class="form-control py-2 @error('phone_number') is-invalid @enderror"
+                                    id="phone_number" aria-describedby="phone_number" name="phone_number"
+                                    value="{{ old('phone_number') ?? Auth::user()->phone_number }}" placeholder="{{ Auth::user()->phone_number }}" disabled>
+
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            @if (Auth::user()->isEO())
+                            <div class="form-group mb-2">
+                                <label for="organizer_name" class="text-primary mb-2 profile-label">Nama Perusahaan atau Organisasi</label>
+                                <input type="text" class="form-control py-2 @error('organizer_name') is-invalid @enderror"
+                                    id="organizer_name" aria-describedby="organizer_name" name="organizer_name"
+                                    value="{{ old('organizer_name') ?? Auth::user()->organizer->name }}" placeholder="{{ Auth::user()->organizer->name }}" disabled>
+                                @error('organizer_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="organizer_contact_name" class="text-primary mb-2 profile-label">Nama Kontak Perusahaan atau Organisasi</label>
+                                <input type="text" class="form-control py-2 @error('organizer_contact_name') is-invalid @enderror"
+                                    id="organizer_contact_name" aria-describedby="organizer_contact_name" name="organizer_contact_name"
+                                    value="{{ old('organizer_contact_name') ?? Auth::user()->organizer->contact_name }}" placeholder="{{ Auth::user()->organizer->contact_name }}" disabled>
+                                @error('organizer_contact_name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="organizer_address" class="text-primary mb-2 profile-label">Alamat Perusahaan atau Organisasi</label>
+                                <input type="text" class="form-control py-2 @error('organizer_address') is-invalid @enderror"
+                                    id="organizer_address" aria-describedby="organizer_address" name="organizer_address"
+                                    value="{{ old('organizer_address') ?? Auth::user()->organizer->address }}" placeholder="{{ Auth::user()->organizer->address }}" disabled>
+
+                                @error('organizer_address')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="organizer_contact_email" class="text-primary mb-2 profile-label">Alamat Email Perusahaan atau Organisasi</label>
+                                <input type="text" class="form-control py-2 @error('organizer_contact_email') is-invalid @enderror"
+                                    id="organizer_contact_email" aria-describedby="organizer_contact_email" name="organizer_contact_email"
+                                    value="{{ old('organizer_contact_email') ?? Auth::user()->organizer->contact_email }}" placeholder="{{ Auth::user()->organizer->contact_email }}" disabled>
+
+                                @error('organizer_contact_email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="organizer_contact_phone" class="text-primary mb-2 profile-label">No. Telp Perusahaan atau Organisasi</label>
+                                <input type="text" class="form-control py-2 @error('organizer_contact_phone') is-invalid @enderror"
+                                    id="organizer_contact_phone" aria-describedby="organizer_contact_phone" name="organizer_contact_phone"
+                                    value="{{ old('organizer_contact_phone') ?? Auth::user()->organizer->contact_phone }}" placeholder="{{ Auth::user()->organizer->contact_phone }}" disabled>
+
+                                @error('organizer_contact_phone')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            @endif
+
                             <div class="form-group mb-2">
                                 <label for="oldPassword" class="text-primary mb-2 profile-label">Old Password</label>
                                 <input type="password"

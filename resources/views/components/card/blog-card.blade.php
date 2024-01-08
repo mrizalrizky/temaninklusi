@@ -1,6 +1,6 @@
 <div class="row align-items-center justify-content-center gap-4 mb-3">
     <div class="col-md-3" style="height: 12rem;">
-        <img src="{{ Storage::disk('public')->exists($article->articleBanner->file_path) ? Storage::disk('public')->url($article->articleBanner->file_path . $article->articleBanner->file_name) : $article->articleBanner->file_path }}" class="w-100 h-100 object-fit-cover border-0 rounded-4" alt="Article banner">
+        <img src="{{ Storage::disk('public')->exists($article->articleBanner->file_path) ? Storage::disk('public')->url($article->articleBanner->file_path . $article->articleBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}" class="w-100 h-100 object-fit-cover border-0 rounded-4" alt="Article banner">
     </div>
 
     <div class="col-md-5">

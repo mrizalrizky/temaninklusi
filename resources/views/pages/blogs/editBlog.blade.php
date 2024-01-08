@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-md px-4 px-lg-3">
         <div class="my-5 text-center text-md-start">
-            <h4 class="text-primary">Edit Blog</h4>
+            <h4 class="text-primary">Edit Tips dan Artikel</h4>
             <h5 class="text-left m-b-custom-2 fw-normal">buat pengguna lain terinspirasi!</h5>
         </div>
         <div class="d-md-flex justify-content-center">
@@ -22,7 +22,7 @@
                     <div class="row gap-4 gap-sm-3">
                         <div class="col-12 col-sm">
                             <x-form.base-form-input title="Judul Artikel" name="title" type="text"
-                                value="{{ $data ? $data['title'] : $article->title }}" :label="true">
+                                value="{{ $data ? $data['title'] : $article->title }}" :label="true" mandatory>
                                 @error('title')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -41,7 +41,7 @@
                     <div class="row gap-4 gap-sm-3">
                         <div class="col-12 col-sm">
                             <x-form.base-form-input title="Sumber" name="source" type="text"
-                                value="{{ $data ? $data['source'] : $article->source }}" :label="true">
+                                value="{{ $data ? $data['source'] : $article->source }}" :label="true" mandatory>
                                 @error('source')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -61,52 +61,16 @@
                         </div>
                     </div>
 
-                    @if ($data)
-                        <div>
-                            <label class="form-label text-primary label-add-blog fw-bold mandatory">Thumbnail</label>
-                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->file->file_path) }}" name="article_banner" />
-                        </div>
-                        <input type="hidden" name="article_banner" value="{{ $data['article_baner'] ?? '' }}">
-                    @else
-                        <div>
-                            <label class="form-label text-primary label-add-blog fw-bold">Thumbnail</label>
-                            <x-button.upload-image-button src="{{ asset('/storage/' . $article->articleBanner->file_path) }}" name="article_banner" />
-                        </div>
-                    @endif
-                    {{-- <div class="mb-4">
-                        <label class="form-label text-primary label-add-blog">Thumbnail</label>
-                        <div class="image-thumbnail">
-                            <label for="image" style="width: 11rem; height: 11rem; background-color: #f4f4f4"
-                                class="d-block rounded-3 position-relative z-10" id="label-image">
-                                <img src="{{ asset('/storage/' . $article->file->file_path) }}"
-                                    style="max-width: 11rem; max-height: 11rem;"
-                                    class="object-fit-contain position-absolute top-50 start-50 translate-middle"
-                                    id="thumbnail" alt="">
-                                <img style="max-width: 2.5rem" src="{{ asset('assets/icons/addImage.png') }}"
-                                    class="position-absolute top-50 start-50 translate-middle" alt="">
-                            </label>
-                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image"
-                                onchange="imageThumbnail()" name="image">
-                            @error('image')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div> --}}
-
-                    {{-- <div class="mb-4">
-                    <label class="form-label text-primary label-add-blog">Title</label>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="floatingInput"
-                        name="title">
-                    @error('title')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div> --}}
                     <div>
-                        <label for="content" class="form-label text-primary label-add-blog fw-bold mandatory">Content</label>
+                        <label class="form-label text-primary label-add-blog fw-bold">Banner Artikel</label>
+                        <x-button.upload-image-button src="{{ Storage::disk('public')->exists($article->articleBanner->file_path . $article->articleBanner->file_name) ? Storage::disk('public')->url($article->articleBanner->file_path . $article->articleBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}" name="article_banner" />
+                    </div>
+                    @if ($data)
+                    <input type="hidden" name="article_banner" value="{{ $data['article_banner'] ?? '' }}">
+                    @endif
+
+                    <div>
+                        <label for="content" class="form-label text-primary label-add-blog fw-bold mandatory">Konten</label>
                         <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="4">{{ $data ? $data['content'] : $article->content }}</textarea>
                         @error('content')
                             <div class="invalid-feedback">

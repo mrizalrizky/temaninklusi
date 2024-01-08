@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function manageUser() {
         $users = User::where([
-            ['is_active', true],
+            ['active_flag', true],
             ['email', '<>', Auth::user()->email]]
         )->get();
         return view('pages.admin.manageUser', compact('users'));
