@@ -15,8 +15,7 @@
             <div class="col-12 col-md">
                 <div class="d-flex gap-2 flex-column align-items-start justify-content-center border border-1 rounded-4 p-4">
                     <div class="mb-3 d-flex gap-3 align-items-center ms-4">
-                        <img class="rounded-4 img-fluid mb-2" src="assets/profile/profile-picture.png" alt=""
-                             style="max-width: 3rem">
+                        <x-icon.profile-icon height="3rem"/>
                         <div class="d-flex flex-column gap-1">
                             <h6 class="m-0">{{ Auth::user()->name }}</h6>
                             <small style="font-size: .8rem" class="text-primary">{{ Auth::user()->role->type }}</small>

@@ -16,10 +16,10 @@ class EventCategorySeeder extends Seeder
     {
         DB::table('event_categories')->insert([
             [
-                'label' => 'Olahraga',
+                'label' => 'Pengembangan Diri',
             ],
             [
-                'label' => 'Teknologi',
+                'label' => 'Sains',
             ],
         ]);
     }

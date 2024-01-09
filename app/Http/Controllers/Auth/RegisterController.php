@@ -87,6 +87,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'role_id' => $data['user_type'],
             'password' => Hash::make($data['password']),
+            'phone_number' => $data['phone_number'],
         ]);
         if($data['user_type'] == RoleConstant::EVENT_ORGANIZER) {
             MasterOrganizer::create([

@@ -1,8 +1,7 @@
 <div>
     <div class="d-flex">
         <div class="pe-3">
-            <img src="{{ asset('assets/img/ctabanner1.png') }}" style="width: 3rem; height: 3rem" alt="Avatar"
-                class="align-middle rounded-circle">
+            <x-icon.profile-icon height="2.5rem"/>
         </div>
         <div class="w-100">
             <div class="d-flex justify-content-between">
@@ -34,8 +33,7 @@
         @foreach ($commentData->replies as $reply)
             <div class="d-flex">
                 <div class="pe-3">
-                    <img src="{{ asset('assets/img/ctabanner1.png') }}" style="width: 3rem; height: 3rem" alt="Avatar"
-                        class="align-middle rounded-circle">
+                    <x-icon.profile-icon height="2.5rem"/>
                 </div>
                 <div class="w-100">
                     <div class="d-flex justify-content-between">
@@ -50,8 +48,6 @@
                                     data-bs-target="#deleteCommentReply-{{$reply->id}}">
                                     <iconify-icon icon="mdi:trash" height="1.5rem" class="text-danger" />
                                 </button>
-                                {{-- <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#bannedUser-{{$user->id}}">Banned</button> --}}
                             </form>
                         @endcan
                         </div>
