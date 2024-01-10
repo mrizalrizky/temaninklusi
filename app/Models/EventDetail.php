@@ -20,6 +20,7 @@ class EventDetail extends Model
         'contact_phone',
         'start_date',
         'end_date',
+        'max_register_date',
         'social_media_link',
         'event_facilities',
         'event_benefits',

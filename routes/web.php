@@ -65,9 +65,10 @@ Route::prefix('events')->group(function () {
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => 'auth'], function () {
-    Route::get('/', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('profile.index');
     Route::get('/events', [App\Http\Controllers\EventController::class, 'showEventsByRole'])->name('profile.events'); //harusnya di event
-    Route::post('/', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/', [App\Http\Controllers\UserController::class, 'update'])->name('profile.update');
+    Route::post('/validate', [App\Http\Controllers\UserController::class, 'validateData'])->name('profile.validate');
 });
 
 Auth::routes(['reset' => false, 'confirm' => false, 'verify' => false]);
@@ -85,16 +86,13 @@ Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordControll
 Route::group(['prefix' => 'admin', 'middleware' => 'can:is-admin'], function () {
     Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
 
-    Route::group(['prefix' => 'manage', 'middleware' => 'can:is-admin'], function () {
-        Route::prefix('user')->group(function() {
-            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageUser'])->name('admin.manage-user');
-            Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'banUser'])->name('admin.banned-user');
-            Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.unbanned-user');
-        });
+    Route::prefix('manage-user')->group(function () {
+        Route::get('/', [\App\Http\Controllers\AdminController::class, 'showManageUser'])->name('admin.manage-user');
+        Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'banUser'])->name('admin.ban');
+        Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.unban');
+    });
 
-        Route::prefix('event')->group(function () {
-            Route::get('/', [\App\Http\Controllers\AdminController::class, 'manageEvent'])->name('admin.manage-event');
-        });
-
+    Route::prefix('manage-event')->group(function () {
+        Route::get('/', [\App\Http\Controllers\AdminController::class, 'showManageEvent'])->name('admin.manage-event');
     });
 });

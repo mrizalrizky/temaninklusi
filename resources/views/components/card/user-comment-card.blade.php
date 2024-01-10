@@ -1,13 +1,14 @@
 <div>
     <div class="d-flex">
         <div class="pe-3">
-            <img src="{{ asset('assets/img/ctabanner1.png') }}" style="width: 3rem; height: 3rem" alt="Avatar"
-                class="align-middle rounded-circle">
+            <x-icon.profile-icon height="2.5rem"/>
         </div>
         <div class="w-100">
             <div class="d-flex justify-content-between">
-                <p><span class="fw-bold">{{ $commentData->users ? $commentData->users->name : '' }}</span> -
-                    {{ $commentData->created_at ? $commentData->created_at->diffForHumans() : '' }}</p>
+                <p>
+                    <span class="fw-bold">{{ $commentData->users ? $commentData->users->name : '-' }}</span> -
+                    {{ $commentData->created_at ? $commentData->created_at->diffForHumans() : '-' }}
+                </p>
                 @if (Auth::check())
                 <div class="d-flex gap-1">
                     <button class="p-0 bg-transparent border-0 d-flex" onclick="{{ $onClick }}">
@@ -34,13 +35,12 @@
         @foreach ($commentData->replies as $reply)
             <div class="d-flex">
                 <div class="pe-3">
-                    <img src="{{ asset('assets/img/ctabanner1.png') }}" style="width: 3rem; height: 3rem" alt="Avatar"
-                        class="align-middle rounded-circle">
+                    <x-icon.profile-icon height="2.5rem"/>
                 </div>
                 <div class="w-100">
                     <div class="d-flex justify-content-between">
-                        <p><span class="fw-bold">{{ $reply->users ? $reply->users->name : '' }}</span> -
-                            {{ $reply->created_at ? $reply->created_at->diffForHumans() : '' }}</p>
+                        <p><span class="fw-bold">{{ $reply->users ? $reply->users->name : '-' }}</span> -
+                            {{ $reply->created_at ? $reply->created_at->diffForHumans() : '-' }}</p>
                         <div class="d-flex gap-1">
                         @can('is-admin')
                             <form action="{{ route('comment.reply.delete', $reply->id) }}" method="POST">
@@ -50,8 +50,6 @@
                                     data-bs-target="#deleteCommentReply-{{$reply->id}}">
                                     <iconify-icon icon="mdi:trash" height="1.5rem" class="text-danger" />
                                 </button>
-                                {{-- <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#bannedUser-{{$user->id}}">Banned</button> --}}
                             </form>
                         @endcan
                         </div>
