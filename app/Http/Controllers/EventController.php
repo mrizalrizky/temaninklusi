@@ -26,9 +26,7 @@ use Session;
 
 class EventController extends Controller
 {
-    public function index(Request $request)
-    {
-        // dd($request->filled('title'));
+    public function index(Request $request) {
         $query = Event::whereHas('eventDetail', function ($query) use ($request) {
             $query->where('status_id', EventStatusConstant::APPROVED);
             if ($request->filled('title')) {
@@ -66,8 +64,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function showNewestEvents()
-    {
+    public function showNewestEvents() {
         $newestEvents = Event::where([
             ['status_id', EventStatusConstant::APPROVED],
             ['show_flag', true],
@@ -76,8 +73,7 @@ class EventController extends Controller
         return view('pages.index', compact('newestEvents'));
     }
 
-    public function showEventsByRole()
-    {
+    public function showEventsByRole() {
         $user = Auth::user();
         if ($user->role_id == RoleConstant::MEMBER) {
             $events = $user->registeredEvents()->paginate(3);
@@ -95,16 +91,22 @@ class EventController extends Controller
         }
     }
 
-    public function showUploadEventPage()
-    {
+    public function showUploadEventPage() {
         $eventCategories = EventCategory::all();
         $disabilityCategories = DisabilityCategory::all();
 
         return view('pages.events.upload-event', compact('eventCategories', 'disabilityCategories'));
     }
 
-    public function show($slug)
-    {
+    // public function showWaitingApprovalEvents() {
+    //     $events = Event::with(['eventDetail', 'organizer', 'eventProposalFile', 'eventLicenseFile'])->whereHas('eventDetail', function ($q) {
+    //         $q->where('status_id', EventStatusConstant::WAITING_APPROVAL);
+    //     })->get();
+
+    //     return view('pages.admin.manageEvent', compact('events'));
+    // }
+
+    public function show($slug) {
         $event = Event::with(['eventCategory', 'eventDetail', 'organizer', 'comments.replies.users', 'status', 'eventBanner'])->whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug);
             //   ->where('show_flag', false);
@@ -115,8 +117,7 @@ class EventController extends Controller
         return view('pages.events.event-detail', compact('event'));
     }
 
-    public function eventAction($slug, $actionType)
-    {
+    public function eventAction($slug, $actionType) {
         DB::beginTransaction();
         try {
             $message = '';
@@ -198,8 +199,7 @@ class EventController extends Controller
 
     }
 
-    public function edit($slug)
-    {
+    public function edit($slug) {
         $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug)
                 ->where('show_flag', true);
@@ -211,8 +211,7 @@ class EventController extends Controller
         return view('pages.events.edit-event', compact('event', 'eventCategories', 'disabilityCategories'));
     }
 
-    public function update(Request $request, $slug)
-    {
+    public function update(Request $request, $slug) {
         DB::beginTransaction();
         try {
             $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
@@ -225,13 +224,14 @@ class EventController extends Controller
                 $currentFile = File::find($event->file_id);
                 $currentFile->update([
                     'file_name' => $request->event_banner,
-                    'file_path' => `/events/`. $slug ,
+                    'file_path' => '/events/'. $slug ,
                 ]);
             }
 
             $data = [
                 'title'             => $request->title,
                 'description'       => $request->description,
+                'quota'             => $request->quota,
                 'start_date'        => $request->start_date,
                 'end_date'          => $request->end_date,
                 'location'          => $request->location,
@@ -253,8 +253,7 @@ class EventController extends Controller
         }
     }
 
-    private function storeFile($requestData, $requestFile, $fileType)
-    {
+    private function storeFile($requestData, $requestFile, $fileType) {
         $titleSlug = Str::slug($requestData['title'], '-');
         unset($requestData[$fileType]);
         $fileName = $fileType . '.' . $requestFile->getClientOriginalExtension();
@@ -263,14 +262,13 @@ class EventController extends Controller
         return $requestData;
     }
 
-    protected function validateData(Request $request)
-    {
+    protected function validateData(Request $request) {
         $rules = [
             'organizer_name'        => 'sometimes|required',
-            'event_category'        => 'sometimes|required',
             'quota'                 => 'sometimes|required',
             'contact_email'         => 'sometimes|required',
             'contact_phone'         => 'sometimes|required',
+            'event_category'        => 'required',
             'description'           => 'required',
             'disability_categories' => 'required|array|min:1',
             'max_register_date'     => 'required|date|after:today|before:start_date',
@@ -340,22 +338,22 @@ class EventController extends Controller
             $data = $this->storeFile($data, $licenseFile, FileTypeConstant::EVENT_LICENSE_FILE);
         }
 
+        // dd($data);
         return redirect()->back()->with('eventModal', $data);
     }
 
-    public function create(Request $request)
-    {
+    public function create(Request $request) {
         DB::beginTransaction();
         try {
             $titleSlug = Str::slug($request->title, '-');
-            $filePath  = `/events/`;
+            $filePath  = '/events/';
             $bannerFileData = File::create([
                 'file_name' => $request->event_banner,
                 'file_path' => $filePath . $titleSlug . '/',
                 'file_type' => FileTypeConstant::EVENT_BANNER,
             ]);
 
-            $eventProposalFileData = FIle::create([
+            $eventProposalFileData = File::create([
                 'file_name' => $request->event_proposal_file,
                 'file_path' => $filePath . $titleSlug . '/',
                 'file_type' => FileTypeConstant::EVENT_PROPOSAL_FILE,
@@ -418,8 +416,7 @@ class EventController extends Controller
         }
     }
 
-    public function delete($slug)
-    {
+    public function delete($slug) {
         DB::beginTransaction();
         try {
             $event = Event::whereHas('eventDetail', function ($q) use ($slug) {

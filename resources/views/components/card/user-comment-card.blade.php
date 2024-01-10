@@ -5,8 +5,10 @@
         </div>
         <div class="w-100">
             <div class="d-flex justify-content-between">
-                <p><span class="fw-bold">{{ $commentData->users ? $commentData->users->name : '' }}</span> -
-                    {{ $commentData->created_at ? $commentData->created_at->diffForHumans() : '' }}</p>
+                <p>
+                    <span class="fw-bold">{{ $commentData->users ? $commentData->users->name : '-' }}</span> -
+                    {{ $commentData->created_at ? $commentData->created_at->diffForHumans() : '-' }}
+                </p>
                 @if (Auth::check())
                 <div class="d-flex gap-1">
                     <button class="p-0 bg-transparent border-0 d-flex" onclick="{{ $onClick }}">
@@ -37,8 +39,8 @@
                 </div>
                 <div class="w-100">
                     <div class="d-flex justify-content-between">
-                        <p><span class="fw-bold">{{ $reply->users ? $reply->users->name : '' }}</span> -
-                            {{ $reply->created_at ? $reply->created_at->diffForHumans() : '' }}</p>
+                        <p><span class="fw-bold">{{ $reply->users ? $reply->users->name : '-' }}</span> -
+                            {{ $reply->created_at ? $reply->created_at->diffForHumans() : '-' }}</p>
                         <div class="d-flex gap-1">
                         @can('is-admin')
                             <form action="{{ route('comment.reply.delete', $reply->id) }}" method="POST">
