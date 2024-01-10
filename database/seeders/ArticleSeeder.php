@@ -17,7 +17,7 @@ class ArticleSeeder extends Seeder
         DB::table('articles')->insert([
             [
                 'article_category_id' => 1,
-                'file_id' => 3,
+                'banner_file_id' => 3,
                 'title'   => 'Kesuksesan Jakarta Marathon 2023, Aksi Nyata Penyelenggara',
                 'content' => 'Jakarta Marathon 2023 kembali diselenggarakan pada Minggu, 22 Oktober 2023 di kawasan Senayan hingga Kuningan Jakarta.',
                 'slug'    => 'jakarta-marathon-2023',
@@ -29,7 +29,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'article_category_id' => 2,
-                'file_id' => 2,
+                'banner_file_id' => 2,
                 'title'   => 'Kesuksesan Jakarta Marathon 2023, Aksi Nyata Penyelenggara',
                 'content' => 'Jakarta Marathon 2023 kembali diselenggarakan pada Minggu, 22 Oktober 2023 di kawasan Senayan hingga Kuningan Jakarta.',
                 'slug'    => 'jakarta-marathon-2023',
@@ -43,7 +43,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'article_category_id' => 3,
-                'file_id' => 2,
+                'banner_file_id' => 2,
                 'title'   => 'Kesuksesan Jakarta Marathon 2023, Aksi Nyata Penyelenggara',
                 'content' => 'Jakarta Marathon 2023 kembali diselenggarakan pada Minggu, 22 Oktober 2023 di kawasan Senayan hingga Kuningan Jakarta.',
                 'slug'    => 'jakarta-marathon-2023',

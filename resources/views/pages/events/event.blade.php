@@ -7,8 +7,8 @@
             <p class="text-primary">buat bantu kamu kembangin diri!</p>
         </div>
         <section class="mb-5">
-            <div class="d-flex gap-3 flex-column flex-md-row justify-center justify-content-md-between rounded-4 p-4 m-auto "
-                style="background-color: #01676c; max-width: 920px;">
+            <div class="d-flex gap-3 flex-column flex-md-row justify-center justify-content-md-between rounded-4 p-4 m-auto bg-primary"
+                style="max-width: 920px;">
                 <form action="{{ route('event.index') }}" class="d-flex gap-3 w-100" style="max-width: 700px" method="GET">
                     <x-form.base-form-input name="title" class="w-100" type="text" placeholder="Cari event"
                         value="{{ Session::get('searchKeyword') }}" />
@@ -17,7 +17,7 @@
                     </button>
                 </form>
                 <div class="d-flex gap-3 col-12 col-md">
-                    <button type="button" style="min-width: 10rem" class="col-11 col-md btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    <button type="button" style="min-width: 10rem" class="col-11 col-md btn btn-secondary" data-bs-toggle="modal" data-bs-target="#advSearchModal"
                         data-bs-whatever="@mdo">Advanced Search</button>
                     @can('upload-event')
                         <div class="col d-flex align-items-center">
@@ -46,11 +46,11 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="advSearchModal" tabindex="-1" aria-labelledby="advSearchModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Advanced Search</h5>
+                    <h5 class="modal-title" id="advSearchModalLabel">Advanced Search</h5>
                     <button t
                     ype="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

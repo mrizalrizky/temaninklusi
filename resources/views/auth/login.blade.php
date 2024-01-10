@@ -20,7 +20,7 @@
                             </div>
                         @enderror
 
-                        <x-form.base-form-input class="mb-4" title="Email address" type="email" value="{{ old('email') }}" name="email" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Email Address" type="email" value="{{ old('email') }}" name="email" :label="true">
                             @error('email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
