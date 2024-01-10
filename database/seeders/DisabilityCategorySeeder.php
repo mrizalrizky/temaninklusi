@@ -16,14 +16,8 @@ class DisabilityCategorySeeder extends Seeder
     {
         DB::table('disability_categories')->insert([
             [
-                'label' => 'Tunarungu',
+                'label' => 'Fisik',
             ],
-            [
-                'label' => 'Tunanetra',
-            ],
-            [
-                'label' => 'Daksa'
-            ]
         ]);
     }
 }

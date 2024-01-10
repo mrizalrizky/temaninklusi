@@ -53,8 +53,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'min: 5', 'max:20', 'unique:users'],
+            'name' => ['required', 'string', 'max:128'],
+            'username' => ['required', 'min: 5', 'max:32', 'unique:users'],
             'user_type' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'email:dns'],
             'password' => ['required', 'string', 'min:8'],
@@ -87,6 +87,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'role_id' => $data['user_type'],
             'password' => Hash::make($data['password']),
+            'phone_number' => $data['phone_number'],
         ]);
         if($data['user_type'] == RoleConstant::EVENT_ORGANIZER) {
             MasterOrganizer::create([

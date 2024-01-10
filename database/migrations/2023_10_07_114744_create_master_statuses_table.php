@@ -15,7 +15,7 @@ class CreateMasterStatusesTable extends Migration
     {
         Schema::create('master_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('label');
+            $table->string('label', 64);
 
             $table->timestamps();
         });

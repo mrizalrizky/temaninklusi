@@ -14,7 +14,7 @@ class AdminController extends Controller
         return view('pages.admin.dashboard');
     }
 
-    public function manageUser() {
+    public function showManageUser() {
         $users = User::where([
             ['active_flag', true],
             ['email', '<>', Auth::user()->email]]
@@ -22,15 +22,10 @@ class AdminController extends Controller
         return view('pages.admin.manageUser', compact('users'));
     }
 
-    public function manageEvent() {
+    public function showManageEvent() {
         $events = Event::with(['eventDetail', 'organizer', 'eventProposalFile', 'eventLicenseFile'])->whereHas('eventDetail', function ($q) {
             $q->where('status_id', EventStatusConstant::WAITING_APPROVAL);
         })->get();
-        // $events = Event::join('master_statuses', 'events.id', '=', 'master_statuses.id')->where([
-        //     ['show_flag', true],
-        //     ['master_statuses.label', 'Waiting Approval']]
-        // )->get();
-
 
         return view('pages.admin.manageEvent', compact('events'));
     }

@@ -4,7 +4,7 @@
             <div class="d-flex flex-column align-items-center align-items-md-start gap-2">
                 <h5>Organizer Details</h5>
                 <ul class="d-grid gap-3 p-0 ps-2 justify-content-center justify-content-md-start">
-                    <x-tag.organizer-tag class="p-1" :organizer="$event->organizer"/>
+                    <x-tag.organizer-tag class="py-1 px-2" :organizer="$event->organizer"/>
                     <x-listitem.event-list-item icon="mdi:email-open">
                         {{ $event->organizer->contact_email }}
                     </x-listitem.event-list-item>

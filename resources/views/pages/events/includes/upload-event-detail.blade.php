@@ -70,5 +70,16 @@
         @if ($data)
             <input type="hidden" name="event_banner" value="{{ $data['event_banner'] }}">
         @endif
+
+        <div class="col-12 col-md form-group">
+            <x-form.base-form-input title="Tanggal Maksimal Pendaftaran" type="date" name="max_register_date"
+                value="{{ $data ? $data['max_register_date'] : old('max_register_date') }}" :label="true" mandatory>
+                @error('max_register_date')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </x-form.base-form-input>
+        </div>
     </div>
 </section>

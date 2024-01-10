@@ -9,7 +9,7 @@ class Article extends Model
 {
     protected $fillable = [
         'article_category_id',
-        'file_id',
+        'banner_file_id',
         'title',
         'content',
         'slug',
@@ -25,7 +25,7 @@ class Article extends Model
     ];
 
     public function articleBanner() {
-        return $this->belongsTo(File::class, 'file_id', 'id');
+        return $this->belongsTo(File::class, 'banner_file_id', 'id');
     }
 
     public function articleCategory() {

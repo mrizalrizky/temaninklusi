@@ -15,7 +15,7 @@
         <x-listitem.event-list-item icon="mdi:location">
             {{ $event->eventDetail->location ?? '-' }}
         </x-listitem.event-list-item>
-        <x-listitem.event-list-item icon="ph:calendar-fill">
+        <x-listitem.event-list-item icon="bi:calendar-date-fill">
             {{ $event->eventDetail->start_date->format('d M Y') ?? '-' }} -
             {{ $event->eventDetail->end_date->format('d M Y') ?? '-' }}
         </x-listitem.event-list-item>
@@ -23,7 +23,7 @@
             {{ $event->eventDetail->start_date->format('H.i') ?? '-' }} -
             {{ $event->eventDetail->end_date->format('H.i') ?? '-' }} WIB
         </x-listitem.event-list-item>
-        <x-listitem.event-list-item icon="ph:calendar-x-fill">
+        <x-listitem.event-list-item icon="bi:calendar-x-fill">
             {{ $event->eventDetail->max_register_date->format('d M Y') ?? '-' }}
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bi:people-fill">
@@ -40,6 +40,7 @@
         @if (!Auth::check())
             <a class="btn btn-sm btn-primary rounded-pill w-full py-2" href="{{ route('login') }}">Daftar Sekarang</a>
         @endif
+
         @can('register-event', $event)
             @if (count($event->registeredByUsers) < $event->eventDetail->quota &&
                     date('Y-m-d') <= $event->eventDetail->max_register_date->format('Y-m-d'))

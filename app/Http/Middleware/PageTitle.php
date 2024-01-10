@@ -24,7 +24,10 @@ class PageTitle
             'about'    => 'About',
             'profile'  => 'Profile',
             'login'    => 'Login',
-            'register' => 'Register'
+            'register' => 'Register',
+            'forgot'   => 'Forgot Password',
+            'reset'    => 'Reset Password',
+            'admin'    => 'Admin',
         ];
 
         $matches = array_filter(array_keys($pageTitles), function ($path) use ($reqPath) {

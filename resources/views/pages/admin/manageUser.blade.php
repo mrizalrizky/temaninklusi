@@ -39,12 +39,12 @@
                             @endif
                         </tr>
 
-                        <x-dialog.base-dialog id="banUserModal-{{$user->id}}" action="{{ route('admin.banned-user', $user->id) }}"
+                        <x-dialog.base-dialog id="banUserModal-{{$user->id}}" action="{{ route('admin.ban', $user->id) }}"
                             title="Yakin akan ban user?">
                             {{ method_field('PUT') }}
                         </x-dialog.base-dialog>
 
-                        <x-dialog.base-dialog id="unbanUserModal-{{$user->id}}" action="{{ route('admin.unbanned-user', $user->id) }}"
+                        <x-dialog.base-dialog id="unbanUserModal-{{$user->id}}" action="{{ route('admin.unban', $user->id) }}"
                             title="Yakin akan unban user?">
                             {{ method_field('PUT') }}
                         </x-dialog.base-dialog>

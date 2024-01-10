@@ -16,11 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')->references('id')->on('roles')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
+            $table->string('name', 64);
+            $table->string('username', 32)->unique();
+            $table->string('email', 64)->unique();
             $table->string('phone_number', 16);
-            $table->string('password');
+            $table->string('password', 255);
             $table->string('reset_token')->nullable();
             $table->dateTime('expired_token')->nullable();
             $table->boolean('ban_flag')->default(false);
