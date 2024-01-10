@@ -479,6 +479,16 @@ label.mandatory::after {
     font-size: 0.8em;
 }
 
+.badge-cancel {
+    border-color: #dc3545;
+}
+
+.badge-cancel:hover {
+    color: white !important;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
 .custom-tag {
     width: 2rem;
     height: 2rem;

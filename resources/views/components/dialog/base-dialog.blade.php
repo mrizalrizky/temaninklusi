@@ -9,7 +9,7 @@
                 {{ $title }}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closePopupModal('{{$id}}')">{{ $rejectTitle }}</button>
+                <button type="button" class="badge btn btn-outline-primary text-danger badge-cancel" onclick="closePopupModal('{{$id}}')">{{ $rejectTitle }}</button>
 
                 <form action="{{ $action }}" method="POST">
                     @csrf
