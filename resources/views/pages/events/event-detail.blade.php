@@ -99,19 +99,18 @@
                 <div class="d-flex justify-content-center">
                     @include('pages.events.includes.event-detail-container', $event)
                 </div>
-
-                @can('register-event', $event)
-                    <x-dialog.base-dialog id="registerEventModal"
-                        action="{{ route('event.action', ['actionType' => 'USER_REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
-                        title="Yakin akan mendaftar event?" />
-                @endcan
-
-                @can('cancel-register-event', $event)
-                    <x-dialog.base-dialog id="cancelRegisterModal"
-                        action="{{ route('event.action', ['actionType' => 'USER_CANCEL_REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
-                        title="Yakin akan batal registrasi event?" />
-                @endcan
             </div>
+            @can('register-event', $event)
+            <x-dialog.base-dialog id="registerEventModal"
+                action="{{ route('event.action', ['actionType' => 'USER_REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
+                title="Yakin akan mendaftar event?" />
+        @endcan
+
+        @can('cancel-register-event', $event)
+            <x-dialog.base-dialog id="cancelRegisterModal"
+                action="{{ route('event.action', ['actionType' => 'USER_CANCEL_REGISTER_EVENT', 'slug' => $event->eventDetail->slug]) }}"
+                title="Yakin akan batal registrasi event?" />
+        @endcan
         </section>
     </div>
 
