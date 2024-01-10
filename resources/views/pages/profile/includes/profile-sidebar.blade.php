@@ -14,11 +14,12 @@
             </div>
         </div>
 
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="border-0 bg-transparent fw-bold text-danger">
+            <button type="button" class="border-0 bg-transparent fw-bold text-danger" data-bs-toggle="modal"
+                    data-bs-target="#logoutModal">
                 Log out
             </button>
-        </form>
+
+        <x-dialog.base-dialog id="logoutModal" action="{{ route('logout') }}" title="Yakin akan logout akun?" />
+
     </div>
 </div>
