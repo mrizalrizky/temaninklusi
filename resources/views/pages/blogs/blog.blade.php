@@ -9,7 +9,7 @@
     </div>
     @endcan
     <div class="text-center my-4">
-        <h3 class="text-primary">Inklusi dalam Setiap Kata</h3>
+        <h3 class="text-primary">Inklusi dalam setiap kata</h3>
         <p class="text-primary">buat bantu kamu terinspirasi!</p>
     </div>
 

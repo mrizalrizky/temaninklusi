@@ -107,7 +107,7 @@ class EventController extends Controller
     // }
 
     public function show($slug) {
-        $event = Event::with(['eventCategory', 'eventDetail', 'organizer', 'comments.replies.users', 'status', 'eventBanner'])->whereHas('eventDetail', function ($q) use ($slug) {
+        $event = Event::with(['eventCategory', 'eventDetail', 'organizer', 'comments.replies.users', 'status', 'eventBanner', 'eventProposalFile'])->whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug);
             //   ->where('show_flag', false);
         })->firstOrFail();
