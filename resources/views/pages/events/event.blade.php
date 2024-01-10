@@ -17,10 +17,10 @@
                     </button>
                 </form>
                 <div class="d-flex gap-3 col-12 col-md">
-                    <button type="button" style="min-width: 10rem" class="col-11 col-md btn btn-secondary" data-bs-toggle="modal" data-bs-target="#advSearchModal"
+                    <button type="button" style="min-width: 10rem" class="flex-grow-1 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#advSearchModal"
                         data-bs-whatever="@mdo">Advanced Search</button>
                     @can('upload-event')
-                        <div class="col d-flex align-items-center">
+                        <div class="d-flex align-items-center">
                             <a class="d-flex align-self-center bg-transparent border-0" href="{{ route('event.upload') }}">
                                 <iconify-icon icon="carbon:add-alt" height="1.5rem" width="1.5rem" class="text-white"></iconify-icon>
                             </a>
