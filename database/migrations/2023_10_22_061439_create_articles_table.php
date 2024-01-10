@@ -15,9 +15,9 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreignId('banner_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('article_category_id')->references('id')->on('article_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->string('title');
+            $table->string('title', 64);
             $table->longText('content');
             $table->string('slug');
             $table->string('source', 16);

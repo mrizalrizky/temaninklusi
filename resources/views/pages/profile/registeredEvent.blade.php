@@ -18,7 +18,7 @@
                         @foreach ($events as $event)
                         <div class="row align-items-center rounded-4 px-2 pb-5">
                             <div class="col gx-4 gt-0" style="max-width: 10rem; max-height: 10rem">
-                                <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721"
+                                <img src="{{ Storage::disk('public')->exists($event->eventBanner->file_path . $event->eventBanner->file_name) ? Storage::disk('public')->url($event->eventBanner->file_path . $event->eventBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}"
                                     class="w-100 h-100 object-fit-cover border-0 rounded-4" alt="Blog banner">
                             </div>
                             <div class="col">

@@ -150,18 +150,18 @@ class EventController extends Controller
                     }
                     break;
 
-                    case 'USER_REGISTER_EVENT':
-                        if (!Auth::user()->registeredEvents->contains($event)) {
+                case 'USER_REGISTER_EVENT':
+                    if (!Auth::user()->registeredEvents->contains($event)) {
                         $event->eventDetail->update([
-                            'quota' => $event->eventDetail - 1
+                            'quota' => $event->eventDetail->quota - 1
                         ]);
                         RegisteredEvent::create([
                             'user_id'  => Auth::user()->id,
                             'event_id' => $event->id,
                         ]);
                         $message = "Anda berhasil terdaftar kedalam event ini. Silahkan menunggu informasi selanjutnya";
-                        // } else {
-                        //     $message = 'Anda sudah terdaftar kedalam event ini!';
+                    } else {
+                        $message = 'Anda sudah terdaftar ke dalam event ini!';
                     }
 
                     break;
@@ -169,12 +169,15 @@ class EventController extends Controller
                 case 'USER_CANCEL_REGISTER_EVENT':
                     if (Auth::user()->registeredEvents->contains($event)) {
                         $event->eventDetail->update([
-                            'quota' => $event->eventDetail + 1
+                            'quota' => $event->eventDetail->quota + 1
                         ]);
-                        RegisteredEvent::destroy([
+
+                        $registeredEvent = RegisteredEvent::where([
                             'user_id'  => Auth::user()->id,
                             'event_id' => $event->id,
-                        ]);
+                        ])->firstOrFail();
+                        $registeredEvent->delete();
+
                         $message = "Anda berhasil melakukan cancel registrasi event ini.";
                         // } else {
                         //     $message = "Anda belum terdaftar kedalam event ini!";
@@ -222,7 +225,7 @@ class EventController extends Controller
                 $currentFile = File::find($event->file_id);
                 $currentFile->update([
                     'file_name' => $request->event_banner,
-                    'file_path' => '/images/events/' . $slug ,
+                    'file_path' => `/events/`. $slug ,
                 ]);
             }
 
@@ -255,14 +258,13 @@ class EventController extends Controller
         $titleSlug = Str::slug($requestData['title'], '-');
         unset($requestData[$fileType]);
         $fileName = $fileType . '.' . $requestFile->getClientOriginalExtension();
-        Storage::putFileAs('public/images/events/' . $titleSlug, $requestFile, $fileName);
+        Storage::putFileAs('public/events/' . $titleSlug, $requestFile, $fileName);
         $requestData[$fileType] = $fileName;
         return $requestData;
     }
 
     protected function validateData(Request $request)
     {
-        // dd($request);
         $rules = [
             'organizer_name'        => 'sometimes|required',
             'event_category'        => 'sometimes|required',
@@ -270,11 +272,10 @@ class EventController extends Controller
             'contact_email'         => 'sometimes|required',
             'contact_phone'         => 'sometimes|required',
             'description'           => 'required',
-            // 'event_license_file'    => 'required_if:event_license_flag,==,1|mimes:pdf',
-            // 'event_proposal_file'   => 'required|mimes:pdf',
             'disability_categories' => 'required|array|min:1',
-            'start_date'            => 'required',
-            'end_date'              => 'required',
+            'max_register_date'     => 'required|date|after:today|before:start_date',
+            'start_date'            => 'required|date|after:max_register_date',
+            'end_date'              => 'required|date|after:start_date',
             'location'              => 'required',
             'event_facilities'      => [
                 'required', 'array', 'min:1', 'max:3', function ($attribute, $value, $fail) {
@@ -347,17 +348,24 @@ class EventController extends Controller
         DB::beginTransaction();
         try {
             $titleSlug = Str::slug($request->title, '-');
+            $filePath  = `/events/`;
             $bannerFileData = File::create([
                 'file_name' => $request->event_banner,
-                'file_path' => '/images/events/' . $titleSlug . '/',
+                'file_path' => $filePath . $titleSlug . '/',
                 'file_type' => FileTypeConstant::EVENT_BANNER,
             ]);
 
-            $licenseFileData = null;
+            $eventProposalFileData = FIle::create([
+                'file_name' => $request->event_proposal_file,
+                'file_path' => $filePath . $titleSlug . '/',
+                'file_type' => FileTypeConstant::EVENT_PROPOSAL_FILE,
+            ]);
+
+            $eventLicenseFileData = null;
             if ($request->event_license_flag == 1) {
-                $licenseFileData = File::create([
+                $eventLicenseFileData = File::create([
                     'file_name' => $request->event_license_file,
-                    'file_path' => '/images/events/' . $titleSlug . '/',
+                    'file_path' => $filePath . $titleSlug . '/',
                     'file_type' => FileTypeConstant::EVENT_LICENSE_FILE,
                 ]);
             }
@@ -371,6 +379,7 @@ class EventController extends Controller
                 'contact_phone'     => $request->input('contact_phone', Auth::user()->organizer->contact_phone),
                 'start_date'        => $request->start_date,
                 'end_date'          => $request->end_date,
+                'max_register_date' => $request->max_register_date,
                 'location'          => $request->location,
                 'event_facilities'  => $request->event_facilities,
                 'event_benefits'    => $request->event_benefits,
@@ -378,16 +387,16 @@ class EventController extends Controller
             ]);
 
             $createdEvent = $eventDetail->events()->create([
-                'organizer_id'      => Auth::user()->organizer->id,
-                'event_detail_id'   => $eventDetail->id,
-                'status_id'         => EventStatusConstant::WAITING_APPROVAL,
-                'event_category_id' => $request->event_category,
-                'event_license_flag'      => $request->event_license_flag,
-                'event_banner_file_id'    => $bannerFileData->id ?? null,
-                'event_license_file_id'   => $licenseFileData->id ?? null,
-                'show_flag'         => false,
-                'created_by'        => Auth::user()->username,
-                // 'updated_by'        => Auth::user()->username,
+                'organizer_id'           => Auth::user()->organizer->id,
+                'event_detail_id'        => $eventDetail->id,
+                'status_id'              => EventStatusConstant::WAITING_APPROVAL,
+                'event_category_id'      => $request->event_category,
+                'event_license_flag'     => $request->event_license_flag,
+                'event_banner_file_id'   => $bannerFileData->id ?? null,
+                'event_license_file_id'  => $eventLicenseFileData->id ?? null,
+                'event_proposal_file_id' => $eventProposalFileData->id ?? null,
+                'show_flag'              => false,
+                'created_by'             => Auth::user()->username,
             ]);
 
             if ($request->disability_categories) {
@@ -402,6 +411,7 @@ class EventController extends Controller
             DB::commit();
             return redirect()->route('event.index')->with('action-success', 'Event berhasil dibuat. Silahkan menunggu approval admin!');
         } catch (\Throwable $th) {
+            dd($th);
             DB::rollback();
             // dd($th);
             return redirect()->back()->with('action-failed', 'Event gagal dibuat. Silahkan coba lagi!');
