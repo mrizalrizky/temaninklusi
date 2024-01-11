@@ -29,7 +29,7 @@ Route::prefix('blogs')->group(function () {
     Route::get('/upload', [App\Http\Controllers\ArticleController::class, 'showAddBlog'])->name('blog.show-add');
     Route::post('/upload/validate', [App\Http\Controllers\ArticleController::class, 'validateData'])->name('blog.validate');
     Route::post('/upload', [App\Http\Controllers\ArticleController::class, 'create'])->name('blog.create');
-    Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details');
+    Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details')->middleware('check.article.access');
     Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('blog.delete');
     Route::get('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
     Route::put('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
@@ -60,7 +60,7 @@ Route::prefix('events')->group(function () {
         Route::post('/comments/reply', [App\Http\Controllers\CommentController::class, 'replyComment'])->name('comment.reply');
 
     });
-    Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details');
+    Route::get('/{slug}', [App\Http\Controllers\EventController::class, 'show'])->name('event.details')->middleware('check.event.access');
     Route::post('/{slug}/{actionType}', [App\Http\Controllers\EventController::class, 'eventAction'])->name('event.action');
 });
 
