@@ -3,7 +3,7 @@
         <div class="col-12 col-md form-group">
             <label class="form-label text-primary fw-bold mandatory" for="description">Deskripsi Event</label>
             <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30"
-                rows="5" placeholder="Deskripsikan event kamu...">{{ $data ? $data['description'] : old('description') }}</textarea>
+                rows="5" placeholder="Deskripsikan event kamu...">{{ $data['description'] ?? old('description') }}</textarea>
             @error('description')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -17,7 +17,7 @@
             <label for="disability_categories"
                 class="text-primary fw-bold mandatory mb-2 @error('disability_categories') is-invalid @enderror">Eligibility</label>
             <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories"
-                placeholder="Ramah untuk disabilitas apa?" :selectedValues="$data ? $data['disability_categories'] : old('disability_categories') ?? null" />
+                placeholder="Ramah untuk disabilitas apa?" :selectedValues="$data['disability_categories'] ?? old('disability_categories') ?? null" />
             @error('disability_categories')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -29,7 +29,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
             <x-form.base-form-input title="Lokasi Event" type="text" name="location"
-                value="{{ $data ? $data['location'] : old('location') }}" :label="true" mandatory>
+                value="{{ $data['location'] ?? old('location') }}" :label="true" mandatory>
                 @error('location')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -42,7 +42,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
             <x-form.base-form-input title="Tanggal Event Dimulai" type="datetime-local" name="start_date"
-                value="{{ $data ? $data['start_date'] : old('start_date') }}" :label="true" mandatory>
+                value="{{ $data['start_date'] ?? old('start_date') }}" :label="true" mandatory>
                 @error('start_date')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -52,7 +52,7 @@
         </div>
         <div class="col-12 col-md form-group">
             <x-form.base-form-input title="Tanggal Event Selesai" type="datetime-local" name="end_date"
-                value="{{ $data ? $data['end_date'] : old('end_date') }}" :label="true" mandatory>
+                value="{{ $data['end_date'] ?? old('end_date') }}" :label="true" mandatory>
                 @error('end_date')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -73,7 +73,7 @@
 
         <div class="col-12 col-md form-group">
             <x-form.base-form-input title="Tanggal Maksimal Pendaftaran" type="date" name="max_register_date"
-                value="{{ $data ? $data['max_register_date'] : old('max_register_date') }}" :label="true" mandatory>
+                value="{{ $data['max_register_date'] ?? old('max_register_date') }}" :label="true" mandatory>
                 @error('max_register_date')
                     <div class="invalid-feedback">
                         {{ $message }}

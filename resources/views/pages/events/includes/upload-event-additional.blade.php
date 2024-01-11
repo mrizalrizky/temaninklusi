@@ -87,7 +87,7 @@
 <div class="row gap-4 gap-sm-3">
     <div class="col-12 col-md" id="event_benefit">
         <label class="d-block form-label text-primary fw-bold mandatory @error('event_benefits') is-invalid @enderror"
-            for="event_benefit">Benefit</label>
+            for="event_benefit">Benefit Event</label>
 
         <button type="button" class="position-relative btn btn-primary rounded-5 me-auto" style="width: 2.3rem; height: 2.3rem" onclick="removeField('event_benefit')">
             <iconify-icon icon="ic:round-minus" height="1rem" class="position-absolute top-50 start-50 translate-middle"></iconify-icon>
@@ -118,7 +118,7 @@
 <div class="row gap-4 gap-sm-3">
     <div class="col-12 col-md">
         <x-form.base-form-input class="mb-4" title="Link Media Sosial" name="social_media_link" type="text"
-            name="social_media_link" value="{{ $data ? $data['social_media_link'] : old('social_media_link') }}"
+            name="social_media_link" value="{{ $data['social_media_link'] ?? old('social_media_link') }}"
             :label="true" placeholder="Instagram" mandatory>
             @error('social_media_link')
                 <div class="invalid-feedback">

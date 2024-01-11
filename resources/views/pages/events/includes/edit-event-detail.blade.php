@@ -3,7 +3,7 @@
         <div class="col-12 col-md form-group">
             <label class="form-label text-primary fw-bold mandatory" for="description">Deskripsi Event</label>
             <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" cols="30"
-                rows="5" placeholder="Deskripsikan event kamu...">{{ $data ? $data['description'] : $event->eventDetail->description }}</textarea>
+                rows="5" placeholder="Deskripsikan event kamu...">{{ $data['description'] ?? old('description') ?? $event->eventDetail->description }}</textarea>
             @error('description')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -37,7 +37,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
             <x-form.base-form-input title="Lokasi Event" type="text" name="location"
-                value="{{ $data ? $data['location'] : $event->eventDetail->location }}" :label="true" mandatory>
+                value="{{ $data['location'] ?? old('location') ?? $event->eventDetail->location }}" :label="true" mandatory>
                 @error('location')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -50,7 +50,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
             <x-form.base-form-input title="Tanggal Event Dimulai" type="datetime-local" name="start_date"
-                value="{{ $data ? $data['start_date'] : $event->eventDetail->start_date }}" :label="true" mandatory>
+                value="{{ $data['start_date'] ?? old('start_date') ?? $event->eventDetail->start_date }}" :label="true" mandatory>
                 @error('start_date')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -60,7 +60,7 @@
         </div>
         <div class="col-12 col-md form-group">
             <x-form.base-form-input title="Tanggal Event Selesai" type="datetime-local" name="end_date"
-                value="{{ $data ? $data['end_date'] : $event->eventDetail->end_date }}" :label="true" mandatory>
+                value="{{ $data['end_date'] ?? old('end_date') ?? $event->eventDetail->end_date }}" :label="true" mandatory>
                 @error('end_date')
                     <div class="invalid-feedback">
                         {{ $message }}

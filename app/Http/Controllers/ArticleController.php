@@ -60,7 +60,7 @@ class ArticleController extends Controller
 
         if ($articleBannerFile) {
             $imageName = 'article_banner' . '.' . $articleBannerFile->getClientOriginalExtension();
-            Storage::putFileAs('public/images/blogs/' . $titleSlug, $articleBannerFile, $imageName);
+            Storage::putFileAs('public/blogs/' . $titleSlug, $articleBannerFile, $imageName);
             $data['article_banner'] = $imageName;
         }
         return redirect()->back()->with('articleModal', $data);
@@ -73,7 +73,7 @@ class ArticleController extends Controller
             $titleSlug = Str::slug($request->title, '-');
             $fileData = File::create([
                 'file_name' => $request->article_banner,
-                'file_path' => '/images/blogs/' . $titleSlug . '/',
+                'file_path' => '/blogs/' . $titleSlug . '/',
                 'file_type' => 'article_banner',
             ]);
 
@@ -137,7 +137,7 @@ class ArticleController extends Controller
                 $currentFile = File::find($article->file_id);
                 $currentFile->update([
                     'file_name' => $request->article_banner,
-                    'file_path' => '/images/blogs/' . $slug ,
+                    'file_path' => '/blogs/' . $slug ,
                 ]);
             }
 
@@ -147,7 +147,7 @@ class ArticleController extends Controller
                 'content' => $request->content,
                 'slug' => $slug,
                 'source' => $request->source,
-                'updated_by' => Auth::user()->name,
+                'updated_by' => Auth::user()->username,
                 'updated_at' => now()
             ];
 

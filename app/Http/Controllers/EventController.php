@@ -112,7 +112,7 @@ class EventController extends Controller
             //   ->where('show_flag', false);
         })->firstOrFail();
 
-        // $this->authorize('view', $event);
+        $this->authorize('view', $event);
 
         return view('pages.events.event-detail', compact('event'));
     }
@@ -239,7 +239,7 @@ class EventController extends Controller
                 'event_benefits'    => $request->event_benefits,
                 'social_media_link' => $request->social_media_link,
                 'event_category_id' => $request->event_category,
-                'updated_by'        => Auth::user()->name,
+                'updated_by'        => Auth::user()->username,
                 'updated_at'        => now()
             ];
 
