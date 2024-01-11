@@ -72,7 +72,7 @@ class UserController extends Controller
 
             return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil diban!');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diban. Silahkan coba lagi!');
+            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diban! Silahkan coba lagi');
         };
     }
 
@@ -85,7 +85,7 @@ class UserController extends Controller
 
             return redirect()->route('admin.manage-user')->with('action-success', 'User berhasil diunban!');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diunban. Silahkan coba lagi!');
+            return redirect()->route('admin.manage-user')->with('action-failed', 'User gagal diunban! Silahkan coba lagi');
         };
     }
 }

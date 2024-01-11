@@ -19,7 +19,7 @@
                 Log out
             </button>
 
-        <x-dialog.base-dialog id="logoutModal" action="{{ route('logout') }}" title="Yakin akan logout akun?" />
+        <x-dialog.base-dialog id="logoutModal" action="{{ route('logout') }}" title="Yakin akan keluar akun?" />
 
     </div>
 </div>
