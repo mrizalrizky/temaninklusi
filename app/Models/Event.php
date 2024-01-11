@@ -15,6 +15,7 @@ class Event extends Model
         'event_detail_id',
         'status_id',
         'event_category_id',
+        'event_proposal_file_id',
         'event_banner_file_id',
         'event_license_file_id',
         'event_license_flag',

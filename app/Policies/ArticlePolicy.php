@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Event;
+use App\Models\Article;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Models\User;
 
-class EventPolicy
+class ArticlePolicy
 {
     use HandlesAuthorization;
 
@@ -20,10 +20,10 @@ class EventPolicy
         //
     }
 
-    public function view(User $user, Event $event) {
-        if($user->isAdmin() && ($event->show_flag || !$event->show_flag)) {
+    public function view(User $user, Article $article) {
+        if($user->isAdmin() && ($article->show_flag || !$article->show_flag)) {
             return true;
-        } else if(($user->isEO() || $user->isMember()) && $event->show_flag) {
+        } else if(($user->isEO() || $user->isMember()) && $article->show_flag) {
             return true;
         }
 
