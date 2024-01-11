@@ -114,8 +114,6 @@ class EventController extends Controller
             //   ->where('show_flag', false);
         })->firstOrFail();
 
-        $this->authorize('view', $event);
-
         return view('pages.events.event-detail', compact('event'));
     }
 

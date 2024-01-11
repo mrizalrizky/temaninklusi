@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Providers;
-
-use App\Models\Article;
 use App\Models\Event;
 use App\Models\User;
-use App\Policies\ArticlePolicy;
-use App\Policies\EventPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -18,8 +14,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Event::class => EventPolicy::class,
-        Article::class => ArticlePolicy::class,
     ];
 
     /**
@@ -30,16 +24,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        // ADD, DELETE, EDIT ARTICLE
-        // Gate::define('manage-article', function (User $user) {
-        //     return $user->isAdmin();
-        // });
-
-        // APPROVE, REJCT, EDIT, DELETE EVENT
-        // Gate::define('manage-event', function (User $user) {
-        //     return $user->isAdmin();
-        // });
 
         /*
         * EVENT : Approve, Reject, Edit, Delete
@@ -59,14 +43,6 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('cancel-register-event', function (User $user, Event $event) {
             return $user->isMember() && $user->registeredEvents->contains($event);
         });
-
-        // Gate::define('delete-comment', function (User $user) {
-        //     return $user->isAdmin();
-        // });
-
-        // Gate::define('ban-user', function (User $user) {
-        //     return $user->isAdmin();
-        // });
 
         Gate::define('upload-event', function (User $user) {
             return $user->isEO();
