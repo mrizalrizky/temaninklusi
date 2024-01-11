@@ -41,7 +41,10 @@ class EventController extends Controller
                 $query->where('event_category_id', $request->event_category);
             }
 
-            $query->where('show_flag', true);
+            $query->where([
+                ['show_flag', true],
+                ['status_id', EventStatusConstant::APPROVED]
+            ]);
         });
 
         if ($request->filled('disability_categories')) {
@@ -86,7 +89,6 @@ class EventController extends Controller
                 ['organizer_id', $user->organizer->id],
             ])->paginate(3);
 
-            // $this->authorize('view', $events);
             return view('pages.profile.uploadedEvent', compact('events'));
         }
     }
@@ -123,7 +125,6 @@ class EventController extends Controller
             $message = '';
             $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
                 $q->where('slug', $slug);
-                //   ->where('show_flag', true);
             })->firstOrFail();
 
             switch ($actionType) {
@@ -160,7 +161,7 @@ class EventController extends Controller
                             'user_id'  => Auth::user()->id,
                             'event_id' => $event->id,
                         ]);
-                        $message = "Anda berhasil terdaftar kedalam event ini. Silahkan menunggu informasi selanjutnya";
+                        $message = "Anda berhasil terdaftar ke dalam event ini! Silahkan menunggu informasi selanjutnya";
                     } else {
                         $message = 'Anda sudah terdaftar ke dalam event ini!';
                     }
@@ -179,7 +180,7 @@ class EventController extends Controller
                         ])->firstOrFail();
                         $registeredEvent->delete();
 
-                        $message = "Anda berhasil melakukan cancel registrasi event ini.";
+                        $message = "Anda berhasil membatalkan registrasi event ini!";
                         // } else {
                         //     $message = "Anda belum terdaftar kedalam event ini!";
                     }
@@ -194,15 +195,14 @@ class EventController extends Controller
             return redirect()->back()->with('action-success', $message);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('action-failed', 'Terdapat gangguan pada sistem. Silahkan coba lagi!');
+            return redirect()->back()->with('action-failed', 'Terdapat gangguan pada sistem! Silahkan coba lagi');
         }
 
     }
 
     public function edit($slug) {
         $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
-            $q->where('slug', $slug)
-                ->where('show_flag', true);
+            $q->where('slug', $slug);
         })->firstOrFail();
 
         $eventCategories = EventCategory::all();
@@ -249,7 +249,7 @@ class EventController extends Controller
             return redirect()->route('event.details', $slug)->with('action-success', 'Event berhasil diedit!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('action-failed', 'Event gagal diedit. Silahkan coba lagi!');
+            return redirect()->back()->with('action-failed', 'Event gagal diedit! Silahkan coba lagi');
         }
     }
 
@@ -338,7 +338,6 @@ class EventController extends Controller
             $data = $this->storeFile($data, $licenseFile, FileTypeConstant::EVENT_LICENSE_FILE);
         }
 
-        // dd($data);
         return redirect()->back()->with('eventModal', $data);
     }
 
@@ -407,12 +406,10 @@ class EventController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('event.index')->with('action-success', 'Event berhasil dibuat. Silahkan menunggu approval admin!');
+            return redirect()->route('event.index')->with('action-success', 'Event berhasil dibuat! Silahkan menunggu approval admin');
         } catch (\Throwable $th) {
-            dd($th);
             DB::rollback();
-            // dd($th);
-            return redirect()->back()->with('action-failed', 'Event gagal dibuat. Silahkan coba lagi!');
+            return redirect()->back()->with('action-failed', 'Event gagal dibuat! Silahkan coba lagi');
         }
     }
 
@@ -431,7 +428,7 @@ class EventController extends Controller
             return redirect()->route('event.index')->with('action-success', 'Event berhasil dihapus!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('action-failed', 'Event gagal dihapus. Silahkan coba lagi!');
+            return redirect()->back()->with('action-failed', 'Event gagal dihapus! Silahkan coba lagi');
         }
     }
 }

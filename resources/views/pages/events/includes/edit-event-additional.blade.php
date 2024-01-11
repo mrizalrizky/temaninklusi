@@ -55,9 +55,14 @@
 <div class="form-group overflow-hidden">
     <label for="event_proposal_file" class="text-primary form-label fw-bold @error('event_proposal_file') is-invalid @enderror">Event Proposal</label>
     @if ($event->eventProposalFile)
-        <a href="{{ Storage::disk('public')->url($event->eventProposalFile->file_path . $event->eventProposalFile->file_name) }}" download>{{ $event->eventProposalFile->file_name }}</a>
-    @else
-    <small class="d-block">-</small>
+    <button class="d-flex h-100 btn btn-secondary text-dark">
+        <a class="d-flex gap-2 align-items-center text-primary" href="{{ Storage::disk('public')->url($event->eventProposalFile->file_path . $event->eventProposalFile->file_name) }}" download>
+            <iconify-icon icon="bi:download" height="1rem" class="text-primary"></iconify-icon>
+            <small>
+                Download file
+            </small>
+        </a>
+    </button>
     @endif
 
 </div>

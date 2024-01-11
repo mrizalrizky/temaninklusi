@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-lg px-4 px-lg-3 mt-4">
-        <h5 class="mb-4 text-dark">Manage Event</h5>
+        <h5 class="mb-4 text-dark">Manage Event - List Request Approval Events</h5>
         <section class="table-responsive mb-5">
             <table class="table align-middle mb-0 bg-white">
                 <thead class="bg-light">
