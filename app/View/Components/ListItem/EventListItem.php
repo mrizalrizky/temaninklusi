@@ -12,9 +12,11 @@ class EventListItem extends Component
      * @return void
      */
     public $icon;
-    public function __construct($icon)
+    public $label;
+    public function __construct($icon = null, $label = '')
     {
         $this->icon = $icon;
+        $this->label = $label;
     }
 
     /**

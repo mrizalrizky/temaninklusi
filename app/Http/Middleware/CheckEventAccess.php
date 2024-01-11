@@ -20,7 +20,7 @@ class CheckEventAccess
         $slug = $request->route('slug');
         $event = Event::whereHas('eventDetail', function ($q) use ($slug) {
             $q->where('slug', $slug);
-        })->first();
+        })->firstOrFail();
 
         $user = $request->user();
         if($event->show_flag) return $next($request);

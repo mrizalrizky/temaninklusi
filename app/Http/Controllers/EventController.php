@@ -268,7 +268,7 @@ class EventController extends Controller
             'contact_phone'         => 'sometimes|required',
             'event_category'        => 'required',
             'description'           => 'required',
-            'disability_categories' => 'required|array|min:1',
+            // 'disability_categories' => 'array',
             'max_register_date'     => 'required|date|after:today|before:start_date',
             'start_date'            => 'required|date|after:max_register_date',
             'end_date'              => 'required|date|after:start_date',

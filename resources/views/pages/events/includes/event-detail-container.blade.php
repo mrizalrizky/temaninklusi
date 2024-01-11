@@ -10,28 +10,46 @@
 
     <ul class="d-grid gap-3 p-0 justify-content-center justify-content-md-start">
         <x-listitem.event-list-item icon="iconamoon:category-fill">
-            {{ $event->eventCategory->label ?? '-' }}
+            <small class="m-0 fw-bold">
+                {{ $event->eventCategory->label ?? '-' }}
+            </small>
+        </x-listitem.event-list-item>
+        <x-listitem.event-list-item>
+            <img src="{{ asset('assets/icons/disabilitas-fisik.svg') }}" alt="">
+            <small class="m-0 fw-bold">
+                Ramah untuk Disabilitas {{ $event->disabilityCategories[0]->label ?? '-' }}
+            </small>
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="mdi:location">
-            {{ $event->eventDetail->location ?? '-' }}
+            <small class="m-9 fw-bold">
+                {{ $event->eventDetail->location ?? '-' }}
+            </small>
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bi:calendar-date-fill">
-            {{ $event->eventDetail->start_date->format('d M Y') ?? '-' }} -
-            {{ $event->eventDetail->end_date->format('d M Y') ?? '-' }}
+            <small class="m-0 fw-bold">
+                {{ $event->eventDetail->start_date->format('d M Y') ?? '-' }} -
+                {{ $event->eventDetail->end_date->format('d M Y') ?? '-' }}
+            </small>
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="ph:clock-fill">
-            {{ $event->eventDetail->start_date->format('H.i') ?? '-' }} -
-            {{ $event->eventDetail->end_date->format('H.i') ?? '-' }} WIB
+            <small class="m-0 fw-bold">
+                {{ $event->eventDetail->start_date->format('H.i') ?? '-' }} -
+                {{ $event->eventDetail->end_date->format('H.i') ?? '-' }} WIB
+            </small>
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bi:calendar-x-fill">
-            {{ $event->eventDetail->max_register_date->format('d M Y') ?? '-' }}
+            <small class="m-0 fw-bold">
+                {{ $event->eventDetail->max_register_date->format('d M Y') ?? '-' }}
+            </small>
         </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bi:people-fill">
             @if (count($event->registeredByUsers) < $event->eventDetail->quota)
+            <small class="m-0 fw-bold">
                 {{ count($event->registeredByUsers) ?? '-' }} /
                 {{ $event->eventDetail->quota + count($event->registeredByUsers) ?? '-' }} Peserta
+            </small>
             @else
-                <small>Kuota sudah penuh</small>
+            <small>Kuota sudah penuh</small>
             @endif
         </x-listitem.event-list-item>
     </ul>
