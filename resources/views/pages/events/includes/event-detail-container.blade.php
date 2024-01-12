@@ -14,17 +14,14 @@
                 {{ $event->eventCategory->label ?? '-' }}
             </small>
         </x-listitem.event-list-item>
+        @if (count($event->disabilityCategories) > 0)
         <x-listitem.event-list-item>
-            <img src="{{ asset('assets/icons/disabilitas-fisik.svg') }}" alt="">
+            <img src="{{ asset('assets/icons/disability_categories/disabilitas-fisik.svg') }}" alt="">
             <small class="m-0 fw-bold">
                 Ramah untuk Disabilitas {{ $event->disabilityCategories[0]->label ?? '-' }}
             </small>
         </x-listitem.event-list-item>
-        <x-listitem.event-list-item icon="mdi:location">
-            <small class="m-9 fw-bold">
-                {{ $event->eventDetail->location ?? '-' }}
-            </small>
-        </x-listitem.event-list-item>
+        @endif
         <x-listitem.event-list-item icon="bi:calendar-date-fill">
             <small class="m-0 fw-bold">
                 {{ $event->eventDetail->start_date->format('d M Y') ?? '-' }} -
@@ -42,6 +39,11 @@
                 {{ $event->eventDetail->max_register_date->format('d M Y') ?? '-' }}
             </small>
         </x-listitem.event-list-item>
+        <x-listitem.event-list-item icon="mdi:location">
+            <small class="m-9 fw-bold">
+                {{ $event->eventDetail->location ?? '-' }}
+            </small>
+        </x-listitem.event-list-item>
         <x-listitem.event-list-item icon="bi:people-fill">
             @if (count($event->registeredByUsers) < $event->eventDetail->quota)
             <small class="m-0 fw-bold">
@@ -56,20 +58,20 @@
 
     <span class="d-flex justify-content-center align-items-center flex-column gap-3 w-full">
         @if (!Auth::check())
-            <a class="btn btn-sm btn-primary rounded-pill w-full py-2" href="{{ route('login') }}">Daftar Sekarang</a>
+            <a class="btn btn-sm btn-primary rounded-custom w-full py-2" href="{{ route('login') }}">Daftar Sekarang</a>
         @endif
 
         @can('register-event', $event)
             @if (count($event->registeredByUsers) < $event->eventDetail->quota &&
                     date('Y-m-d') <= $event->eventDetail->max_register_date->format('Y-m-d'))
-                <button type="button" class="btn btn-sm rounded-pill py-2 btn-primary" style="max-width: 18rem"
+                <button type="button" class="btn btn-sm rounded-custom py-2 btn-primary" style="max-width: 18rem"
                     data-bs-toggle="modal" data-bs-target="#registerEventModal">
                     Daftar Sekarang
                 </button>
             @else
                 <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
                     data-bs-title="{{ count($event->registeredByUsers) >= $event->eventDetail->quota ? 'Kuota sudah penuh.' : 'Tanggal registrasi sudah lewat.' }} Silahkan pilih event lain!">
-                    <button type="button" class="btn btn-sm border-0 rounded-pill py-2 btn-disabled pe-none"
+                    <button type="button" class="btn btn-sm border-0 rounded-custom py-2 btn-disabled pe-none"
                         style="max-width: 18rem" disabled>
                         Daftar Sekarang
                     </button>
@@ -79,9 +81,9 @@
 
         @can('cancel-register-event', $event)
             @if (date('Y-m-d') <= $event->eventDetail->max_register_date->format('Y-m-d'))
-                <button type="button" class="btn btn-sm btn-danger rounded-pill py-2" style="max-width: 18rem"
+                <button type="button" class="btn btn-sm btn-danger rounded-custom py-2" style="max-width: 18rem"
                     data-bs-toggle="modal" data-bs-target="#cancelRegisterModal">
-                    Cancel
+                    Batal
                 </button>
             @else
                 <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"

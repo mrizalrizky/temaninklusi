@@ -9,7 +9,7 @@
             <div class="row g-7 justify-content-center justify-content-md-between">
                 <div class="col-12 col-sm-10 col-md-7">
                     <form enctype="multipart/form-data" action="{{ route('login') }}" method="POST"
-                        class="border rounded-4 p-4 p-x-custom-2">
+                        class="border rounded-custom p-4 p-x-custom-2">
                         @csrf
                         @if (session()->has('failed'))
                             <div class="alert alert-danger d-flex alert-dismissible fade show">
@@ -20,7 +20,7 @@
                             </div>
                         @enderror
 
-                        <x-form.base-form-input class="mb-4" title="Email Address" type="email" value="{{ old('email') }}" name="email" :label="true">
+                        <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" name="email" :label="true">
                             @error('email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -28,7 +28,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="Password" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Kata Sandi" type="password" value="{{ old('password') }}" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -37,12 +37,14 @@
                         </x-form.base-form-input>
 
                         <div class="text-end mb-5">
-                            <a href="{{ route('forgot-password') }}" class="text-decoration-none"><small
-                                    class="text-primary">Lupa
-                                    Password?</small></a>
+                            <a href="{{ route('forgot-password') }}" class="text-decoration-none">
+                                <small class="text-primary">
+                                    Lupa Kata Sandi?
+                                </small>
+                            </a>
                         </div>
                         <div class="px-4 m-b-custom-2">
-                            <button type="submit" class="btn btn-primary w-100 rounded-4">Login</button>
+                            <button type="submit" class="btn btn-primary w-100 rounded-custom">Login</button>
                         </div>
                         <div class="px-4 text-center">
                             <a href="{{ route('register') }}" class="text-decoration-none text-primary"><small>Belum

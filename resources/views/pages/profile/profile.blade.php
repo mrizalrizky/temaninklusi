@@ -7,7 +7,7 @@
                 <h4 class="text-md-center m-b-custom-2">Dashboard</h4>
             </div>
             <div class="col-7 d-none d-md-block">
-                <h4 class="text-left">Edit Profile</h4>
+                <h4 class="text-left">Edit Profil</h4>
                 <h5 class="text-left m-b-custom-2 fw-normal">Masukan informasi yang valid</h5>
             </div>
         </div>
@@ -27,7 +27,7 @@
                         <form action="{{ route('profile.validate') }}" class="w-100" method="POST">
                             @csrf
                             <div class="form-group mb-2">
-                                <label for="name" class="text-primary mb-2 profile-label">Name</label>
+                                <label for="name" class="text-primary mb-2 profile-label">Nama</label>
                                 <input type="text" class="form-control py-2 @error('name') is-invalid @enderror"
                                     id="name" aria-describedby="name" name="name"
                                     value="{{ session()->get('profileModal') ? session()->get('profileModal')['name'] : old('name') ?? $user->name }}" placeholder="Jane Doe">
@@ -65,8 +65,9 @@
                             </div>
 
                             <div class="form-group mb-2">
-                                <label for="phone_number" class="text-primary mb-2 profile-label">Nomor Telepon
-                                    Pribadi</label>
+                                <label for="phone_number" class="text-primary mb-2 profile-label">
+                                    Nomor TeleponPribadi
+                                </label>
                                 <input type="text" class="form-control py-2 @error('phone_number') is-invalid @enderror"
                                     id="phone_number" aria-describedby="phone_number" name="phone_number"
                                     value="{{ old('phone_number') ?? $user->phone_number }}"
@@ -161,7 +162,7 @@
                             @endif
 
                             <div class="form-group mb-2">
-                                <label for="oldPassword" class="text-primary mb-2 profile-label">Password Lama</label>
+                                <label for="oldPassword" class="text-primary mb-2 profile-label">Kata Sandi Lama</label>
                                 <input type="password"
                                     class="form-control py-2 @error('oldPassword') is-invalid @enderror" id="oldPassword"
                                     aria-describedby="oldPassword" name="oldPassword" placeholder="●●●●●●●●">
@@ -173,7 +174,7 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-2">
-                                <label for="newPassword" class="text-primary mb-2 profile-label">Password Baru</label>
+                                <label for="newPassword" class="text-primary mb-2 profile-label">Kata Sandi Baru</label>
                                 <input type="password"
                                     class="form-control py-2 @error('newPassword') is-invalid @enderror" id="newPassword"
                                     aria-describedby="newPassword" name="newPassword" placeholder="●●●●●●●●">
@@ -185,8 +186,9 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-2">
-                                <label for="password_confirmation" class="text-primary mb-2 profile-label">Konfirmasi
-                                    Password Baru</label>
+                                <label for="password_confirmation" class="text-primary mb-2 profile-label">
+                                    Konfirmasi Kata Sandi Baru
+                                </label>
                                 <input type="password"
                                     class="form-control py-2 @error('password_confirmation') is-invalid @enderror"
                                     id="password_confirmation" aria-describedby="password_confirmation"
@@ -200,7 +202,7 @@
                             </div>
 
                             <div class="d-flex justify-content-start mt-4">
-                                <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4"
+                                <button class="btn btn-primary text-bg-primary mt-1 rounded-custom ms-2 px-4"
                                     type="submit">Edit</button>
                             </div>
                         </form>

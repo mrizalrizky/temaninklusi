@@ -1,7 +1,7 @@
 <section class="d-flex flex-column gap-4">
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md">
-            <x-form.base-form-input title="Judul Event" name="title" type="text"
+            <x-form.base-form-input title="Nama Event" name="title" type="text"
                 value="{{ $data['title'] ?? old('title') ?? $event->eventDetail->title }}" :label="true" mandatory>
                 @error('title')
                     <div class="invalid-feedback">

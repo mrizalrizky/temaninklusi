@@ -24,7 +24,7 @@
 
                 {{-- Login desktop --}}
                 @if (!Auth::check())
-                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mt-3 rounded-pill">
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary d-flex justify-content-center d-md-none mt-3 rounded-custom">
                         Login
                     </a>
                 @else
@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
             <div class="ms-auto d-flex d-none d-md-flex">
                 @if (!Auth::check())
-                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary rounded-5 px-5 py-2"
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary rounded-custom px-5 py-2"
                         style="padding: 0 2.2rem">
                         Login
                     </a>

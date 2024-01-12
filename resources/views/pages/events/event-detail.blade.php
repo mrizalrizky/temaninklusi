@@ -22,7 +22,7 @@
                     @endif
 
                     @if ($event->eventProposalFile)
-                        <a class="badge btn d-flex gap-1 my-2 align-items-center border rounded-3 text-primary" href="{{ Storage::disk('public')->url($event->eventProposalFile->file_path . $event->eventProposalFile->file_name) }}"
+                        <a class="badge btn d-flex gap-1 my-2 align-items-center border rounded-custom text-primary" href="{{ Storage::disk('public')->url($event->eventProposalFile->file_path . $event->eventProposalFile->file_name) }}"
                             download>
                             <iconify-icon icon="bi:download" height="1rem"class="text-primary"></iconify-icon>
                             Download Proposal

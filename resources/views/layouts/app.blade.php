@@ -29,8 +29,8 @@
         @include('includes.script')
         @stack('after-script')
     </div>
-    <x-toast id="alert-save" sessionName="action-success" bgColor="rgb(110 231 183)" class="alert-save alert-success"/>
-    <x-toast id="alert-delete" sessionName="action-failed" bgColor="rgb(253 164 175)" class="alert-delete alert-danger"/>
+    <x-toast id="alert-save" sessionName="action-success" bgColor="rgb(110 231 183)" class="alert-save"/>
+    <x-toast id="alert-delete" sessionName="action-failed" bgColor="rgb(253 164 175)" class="alert-delete"/>
 </body>
 
 <script>

@@ -494,3 +494,7 @@ label.mandatory::after {
     height: 2rem;
     line-height: 2rem;
 }
+
+.rounded-custom {
+    border-radius: 0.9375rem !important;
+}

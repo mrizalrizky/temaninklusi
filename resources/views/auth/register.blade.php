@@ -9,7 +9,7 @@
             <div class="row g-7 justify-content-center justify-content-md-between">
                 <div class="col-12 col-sm-10 col-md-7">
                     <form id="form_container" enctype="multipart/form-data" action="{{ route('register') }}" method="POST"
-                        class="border rounded-4 p-4 p-x-custom-2">
+                        class="border rounded-custom p-4 p-x-custom-2">
                         @csrf
                         <div id="roles" class="form-group mb-4">
                             <label for="user_type" class="text-primary fw-bold mb-2">Bagaimana Anda mengidentifikasi diri Anda?</label>
@@ -65,7 +65,7 @@
                         </x-form.base-form-input>
 
 
-                        <x-form.base-form-input class="mb-4" title="Password" type="password" name="password" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Kata Sandi" type="password" name="password" :label="true" placeholder="●●●●●●●●">
                             @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -73,7 +73,7 @@
                             @enderror
                         </x-form.base-form-input>
 
-                        <x-form.base-form-input class="mb-4" title="Konfirmasi Password" type="password" name="password_confirmation" :label="true" placeholder="●●●●●●●●">
+                        <x-form.base-form-input class="mb-4" title="Konfirmasi Kata Sandi" type="password" name="password_confirmation" :label="true" placeholder="●●●●●●●●">
                             @if ($errors->has('password_confirmation'))
                             <div class="invalid-feedback">
                                 Konfirmasi password tidak cocok.
@@ -130,7 +130,7 @@
                         </div>
 
                         <div class="px-4" id="">
-                            <button type="submit" class="btn btn-primary w-100 rounded-4">Daftar</button>
+                            <button type="submit" class="btn btn-primary w-100 rounded-custom">Daftar</button>
                         </div>
                     </form>
                 </div>
