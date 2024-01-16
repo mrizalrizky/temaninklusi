@@ -123,6 +123,7 @@ class ArticleController extends Controller
 
     public function update(Request $request, $slug)
     {
+        dd($request);
         DB::beginTransaction();
         try {
 

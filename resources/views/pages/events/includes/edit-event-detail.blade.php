@@ -20,11 +20,11 @@
                 @if ($data)
                 <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories"
                             placeholder="Ramah untuk disabilitas apa?"
-                            :selectedValues="$data ? $data['disability_categories'] : $event->disabilityCategories ?? null"/>
+                            :selectedValues="$data ? $data['disability_categories'] : $event->disabilityCategories"/>
                 @else
                 <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories"
                             placeholder="Ramah untuk disabilitas apa?"
-                            :existingValues="$data ? $data['disability_categories'] : $event->disabilityCategories ?? null"/>
+                            :existingValues="$data ? $data['disability_categories'] : $event->disabilityCategories"/>
                 @endif
             @error('disability_categories')
                 <div class="invalid-feedback">
@@ -78,5 +78,16 @@
         @if ($data)
             <input type="hidden" name="event_banner" value="{{ $data['event_banner'] ?? '' }}">
         @endif
+
+        <div class="col-12 col-md form-group">
+            <x-form.base-form-input title="Tanggal Maksimal Pendaftaran" type="date" name="max_register_date"
+                value="{{ $data['max_register_date'] ?? old('max_register_date') ?? $event->eventDetail->max_register_date->format('Y-m-d') }}" :label="true" mandatory>
+                @error('max_register_date')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </x-form.base-form-input>
+        </div>
     </div>
 </section>

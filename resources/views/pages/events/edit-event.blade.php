@@ -52,6 +52,7 @@
             </form>
 
             <x-dialog.base-dialog id="eventModal" action="{{ route('event.update', $event->eventDetail->slug) }}" title="Yakin akan edit event?">
+                @method('PUT')
                 @if (session()->has('eventModal'))
                     @foreach (session()->get('eventModal') as $key => $value)
                         @if (is_array($value))
