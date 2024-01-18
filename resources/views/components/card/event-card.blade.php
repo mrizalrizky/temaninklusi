@@ -1,4 +1,7 @@
-<div class="col-12 col-md-4">
+<div class="col-12 col-md-4 position-relative">
+    @if ($event->disability_event_flag)
+        <img src="{{ $event->disabilityCategories[0]->icon_path ?? '' }}" class="disability-icon position-absolute" alt="">
+    @endif
     <a href="{{ route('event.index') }}/{{ $event->eventDetail->slug }}">
         <div class="card">
             <img src="{{ Storage::disk('public')->exists($event->eventBanner->file_path) ? Storage::disk('public')->url($event->eventBanner->file_path . $event->eventBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}" class="card-img-top img-fluid object-fit-cover" style="height: 12rem" alt="Event Banner">

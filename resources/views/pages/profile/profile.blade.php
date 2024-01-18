@@ -213,7 +213,7 @@
 
 
         <x-dialog.base-dialog id="profileModal" action="{{ route('profile.update') }}"
-            title="Yakin akan tambah artikel?">
+            title="Yakin akan edit profil?">
             @if (session()->has('profileModal'))
                 @foreach (session()->get('profileModal') as $key => $value)
                     <input name="{{ $key }}" value="{{ $value }}" type="hidden" />

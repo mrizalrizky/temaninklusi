@@ -1,6 +1,6 @@
 <div class="d-grid gap-3 mb-2">
     @if (Auth::check())
-    <x-form.text-area-input action="{{ route('comment.create') }}" name="content" rows="3" placeholder="Leave a comment..." :disabled="true">
+    <x-form.text-area-input action="{{ route('comment.create') }}" name="content" id="user_comment_input" rows="3" placeholder="Leave a comment...">
         <input type="hidden" name="event_id" value="{{ $event->id }}"/>
     </x-form.text-area-input>
     @endif
@@ -29,7 +29,7 @@
             const newEl = document.createElement('div')
             newEl.setAttribute("id", "comment_replies");
             newEl.innerHTML = `
-                <x-form.text-area-input action="{{ route('comment.reply') }}" name="content" rows="3" placeholder="Leave a comment...">
+                <x-form.text-area-input action="{{ route('comment.reply') }}" name="content" id="user_comment_reply_input" rows="3" placeholder="Leave a comment..." >
                     <input type="hidden" name="user_comment_id" value="${commentId}"/>
                 </x-form.text-area-input>
             `

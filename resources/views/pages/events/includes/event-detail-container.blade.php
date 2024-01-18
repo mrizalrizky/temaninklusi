@@ -14,9 +14,9 @@
                 {{ $event->eventCategory->label ?? '-' }}
             </small>
         </x-listitem.event-list-item>
-        @if (count($event->disabilityCategories) > 0)
+        @if ($event->disability_event_flag)
         <x-listitem.event-list-item>
-            <img src="{{ asset('assets/icons/disability_categories/disabilitas-fisik.svg') }}" alt="">
+            <img src="{{ $event->disabilityCategories[0]->icon_path ?? asset('assets/icons/disability_categories/disabilitas-fisik.svg')}}" alt="">
             <small class="m-0 fw-bold">
                 Ramah untuk Disabilitas {{ $event->disabilityCategories[0]->label ?? '-' }}
             </small>

@@ -3,7 +3,7 @@
     <div class="container-md px-4 mt-5 d-flex justify-content-center">
         <div class="w-100" style="max-width: 920px;">
             <div class="m-b-custom-2">
-                <h4 class="text-primary">Lupa password?</h4>
+                <h4 class="text-primary">Lupa Kata Sandi?</h4>
                 <p class="text-primary">Jangan khawatir, kami akan mengirimkan panduan reset</p>
             </div>
             <div class="row g-7 justify-content-center justify-content-md-between">
@@ -20,7 +20,7 @@
                             </div>
                         @enderror
 
-                        <x-form.base-form-input class="mb-4" title="Email Address" type="email" value="{{ old('email') }}" name="email" :label="true" placeholder="Janedoe@gmail.com">
+                        <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" name="email" :label="true" placeholder="Janedoe@gmail.com">
                             @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}

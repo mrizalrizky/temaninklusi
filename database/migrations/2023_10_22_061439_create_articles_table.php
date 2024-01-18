@@ -19,11 +19,11 @@ class CreateArticlesTable extends Migration
             $table->foreignId('article_category_id')->references('id')->on('article_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('title', 64);
             $table->longText('content');
-            $table->string('slug');
-            $table->string('source', 16);
+            $table->string('slug', 64);
+            $table->string('source', 32);
             $table->boolean('show_flag')->default(true);
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
+            $table->string('created_by', 32)->nullable();
+            $table->string('updated_by', 32)->nullable();
 
             $table->timestamps();
         });
