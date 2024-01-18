@@ -232,6 +232,7 @@ class EventController extends Controller
                 'quota'             => $request->quota,
                 'start_date'        => $request->start_date,
                 'end_date'          => $request->end_date,
+                'max_register_date' => $request->max_register_date,
                 'location'          => $request->location,
                 'event_facilities'  => $request->event_facilities,
                 'event_benefits'    => $request->event_benefits,
@@ -242,6 +243,7 @@ class EventController extends Controller
             ];
 
             $event->update($data);
+            $event->eventDetail->update($data);
 
             DB::commit();
             return redirect()->route('event.details', $slug)->with('action-success', 'Event berhasil diedit!');
@@ -268,7 +270,7 @@ class EventController extends Controller
             'contact_phone'         => 'sometimes|required',
             'event_category'        => 'required',
             'description'           => 'required',
-            // 'disability_categories' => 'array',
+            // 'disability_categories' => 'required|array|min:1',
             'max_register_date'     => 'required|date|after:today|before:start_date',
             'start_date'            => 'required|date|after:max_register_date',
             'end_date'              => 'required|date|after:start_date',

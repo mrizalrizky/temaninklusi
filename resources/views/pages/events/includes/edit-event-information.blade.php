@@ -31,7 +31,7 @@
         </div>
         <div class="col-12 col-md">
             <x-form.base-form-input title="Kuota Event" type="number" min="1" name="quota"
-                value="{{ $data['title'] ?? old('quota') ?? $event->eventDetail->quota }}" :label="true" mandatory>
+                value="{{ $data['quota'] ?? old('quota') ?? $event->eventDetail->quota }}" :label="true" mandatory>
                 @error('quota')
                     <div class="invalid-feedback">
                         {{ $message }}
