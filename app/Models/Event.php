@@ -19,6 +19,7 @@ class Event extends Model
         'event_banner_file_id',
         'event_license_file_id',
         'event_license_flag',
+        'disability_event_flag',
         'show_flag',
         'created_by',
         'updated_by',

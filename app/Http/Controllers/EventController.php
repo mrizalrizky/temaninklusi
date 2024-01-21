@@ -394,12 +394,14 @@ class EventController extends Controller
                 'event_banner_file_id'   => $bannerFileData->id ?? null,
                 'event_license_file_id'  => $eventLicenseFileData->id ?? null,
                 'event_proposal_file_id' => $eventProposalFileData->id ?? null,
-                'disability_event_flag'  => count($request->disability_categories) > 0 ? true : false,
+                'disability_event_flag'  => $request->disability_categories[0] !== null && count($request->disability_categories) > 0 ? true : false,
                 'show_flag'              => false,
                 'created_by'             => Auth::user()->username,
             ]);
 
-            if ($request->disability_categories) {
+
+            // dd($request);
+            if ($request->disability_categories[0]) {
                 foreach ($request->disability_categories as $disabilityCategory) {
                     EventDisabilityCategory::create([
                         'event_id' => $createdEvent->id,
@@ -408,10 +410,13 @@ class EventController extends Controller
                 }
             }
 
+            // dd($createdEvent);
+
             DB::commit();
             return redirect()->route('event.index')->with('action-success', 'Event berhasil dibuat! Silahkan menunggu approval admin');
         } catch (\Throwable $th) {
             DB::rollback();
+            dd($th);
             return redirect()->back()->with('action-failed', 'Event gagal dibuat! Silahkan coba lagi');
         }
     }

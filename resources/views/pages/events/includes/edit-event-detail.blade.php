@@ -15,7 +15,7 @@
     <div class="row gap-4 gap-sm-3">
         <div class="col-12 col-md form-group">
             <label for="disability_categories"
-                class="text-primary fw-bold mandatory mb-2 @error('disability_categories') is-invalid @enderror">Eligibility</label>
+                class="text-primary fw-bold mb-2 @error('disability_categories') is-invalid @enderror">Eligibility</label>
 
                 @if ($data)
                 <x-form.base-form-multi-select name="disability_categories" id="disability_categories" :options="$disabilityCategories"
