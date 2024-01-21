@@ -385,6 +385,12 @@ class EventController extends Controller
                 'social_media_link' => $request->social_media_link,
             ]);
 
+            $disabilitiesArray = $request->disability_categories;
+            if(count($disabilitiesArray) > 0) {
+                if(!$disabilitiesArray[0]) {
+                    unset($disabilitiesArray[0]);
+                }
+            }
             $createdEvent = $eventDetail->events()->create([
                 'organizer_id'           => Auth::user()->organizer->id,
                 'event_detail_id'        => $eventDetail->id,
@@ -394,29 +400,24 @@ class EventController extends Controller
                 'event_banner_file_id'   => $bannerFileData->id ?? null,
                 'event_license_file_id'  => $eventLicenseFileData->id ?? null,
                 'event_proposal_file_id' => $eventProposalFileData->id ?? null,
-                'disability_event_flag'  => $request->disability_categories[0] !== null && count($request->disability_categories) > 0 ? true : false,
+                'disability_event_flag'  => count($disabilitiesArray) > 0 ? true : false,
                 'show_flag'              => false,
                 'created_by'             => Auth::user()->username,
             ]);
 
-
-            // dd($request);
-            if ($request->disability_categories[0]) {
-                foreach ($request->disability_categories as $disabilityCategory) {
-                    EventDisabilityCategory::create([
+            if ($disabilitiesArray) {
+                foreach ($disabilitiesArray as $disabilityCategory) {
+                    $test[$disabilityCategory] = EventDisabilityCategory::create([
                         'event_id' => $createdEvent->id,
                         'disability_category_id' => $disabilityCategory
                     ]);
                 }
             }
 
-            // dd($createdEvent);
-
             DB::commit();
             return redirect()->route('event.index')->with('action-success', 'Event berhasil dibuat! Silahkan menunggu approval admin');
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
             return redirect()->back()->with('action-failed', 'Event gagal dibuat! Silahkan coba lagi');
         }
     }
