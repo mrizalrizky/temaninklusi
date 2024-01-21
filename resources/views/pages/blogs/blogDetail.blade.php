@@ -17,7 +17,7 @@
         @endcan
         <div class="d-flex flex-column align-items-center p-4 my-2">
             <h4 class="mb-2 text-center">{{ $article->title }}</h4>
-            <small style="color: #515B60;">Source: {{ $article->source ?? '-' }}</small>
+            <small style="color: #515B60;">Source : {{ $article->source ?? '-' }}</small>
         </div>
         <div class="d-flex justify-content-center mb-5">
             <img src={{ Storage::disk('public')->exists($article->articleBanner->file_path) ? Storage::disk('public')->url($article->articleBanner->file_path . $article->articleBanner->file_name) : asset('assets/img/temuinklusi-asset.png') }}

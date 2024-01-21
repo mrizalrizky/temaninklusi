@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EventDisabilityCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,8 +28,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DisabilityCategorySeeder::class);
         $this->call(MasterOrganizerSeeder::class);
         $this->call(EventSeeder::class);
-        $this->call(EventFileSeeder::class);
         $this->call(UserCommentSeeder::class);
+        $this->call(EventDisabilityCategorySeeder::class);
+
 
 
     }

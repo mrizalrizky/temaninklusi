@@ -47,10 +47,10 @@ Route::prefix('events')->group(function () {
         });
 
         Route::group(['middleware' => 'can:is-admin'], function () {
+            Route::post('/edit/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.edit.validate');
             Route::get('/{slug}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('event.edit');
             Route::put('/{slug}/edit', [App\Http\Controllers\EventController::class, 'update'])->name('event.update');
             Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('event.delete');
-            Route::post('/edit/validate', [App\Http\Controllers\EventController::class, 'validateData'])->name('event.edit.validate');
 
             Route::delete('/comments/{id}', [App\Http\Controllers\CommentController::class, 'deleteComment'])->name('comment.delete');
             Route::delete('/comments/reply/{id}', [App\Http\Controllers\CommentController::class, 'deleteCommentReply'])->name('comment.reply.delete');

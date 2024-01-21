@@ -18,9 +18,10 @@ class CheckArticleAccess
     public function handle(Request $request, Closure $next)
     {
         $slug = $request->route('slug');
-        $article = Article::whereHas('eventDetail', function ($q) use ($slug) {
-            $q->where('slug', $slug);
-        })->first();
+        $article = Article::where([
+            ['slug', $slug],
+            ['show_flag', true]
+        ])->firstOrFail();
 
         $user = $request->user();
         if($article->show_flag) return $next($request);

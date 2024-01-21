@@ -16,6 +16,7 @@ class CreateDisabilityCategoriesTable extends Migration
         Schema::create('disability_categories', function (Blueprint $table) {
             $table->id();
             $table->string('label', 32);
+            $table->string('icon_path', 255);
 
             $table->timestamps();
         });

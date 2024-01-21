@@ -164,6 +164,25 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        // gENERAL
+        'name' => 'nama',
+        'phone_number' => 'nomor telepon',
+        'email' => 'alamat email',
+
+        // Event
+        'organizer_name' => 'nama perusahaan atau organisasi',
+        'organizer_contact_name' => 'nama kontak perusahaan atau organisasi',
+        'organizer_address' => 'alamat perusahaan atau organisasi',
+        'organizer_contact_email' => 'alamat email perusahaan atau organisasi',
+        'organizer_contact_phone' => 'nomor telepon perusahaan atau organisasi',
+
+        // Blog
+        'title' => 'judul',
+        'source' => 'source',
+        'article_banner' => 'banner artikel',
+        'content' => 'konten',
+        'article_category' => 'kategori artikel'
+    ],
 
 ];

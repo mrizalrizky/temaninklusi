@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DisabilityCategorySeeder extends Seeder
+class EventDisabilityCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,10 @@ class DisabilityCategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('disability_categories')->insert([
+        DB::table('event_disability_categories')->insert([
             [
-                'label' => 'Fisik',
-                'icon_path' => asset('assets/icons/disability_categories/disabilitas-fisik.svg')
+                'event_id' => 1,
+                'disability_category_id' => 1,
             ],
         ]);
     }

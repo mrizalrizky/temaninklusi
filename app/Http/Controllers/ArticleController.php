@@ -14,21 +14,18 @@ use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         $articles = Article::latest()->paginate(3);
 
         return view('pages.blogs.blog', compact('articles'));
     }
 
-    public function showAddBlog()
-    {
+    public function showAddBlog() {
         $articleCategories = ArticleCategory::all();
         return view('pages.addBlog', compact('articleCategories'));
     }
 
-    protected function validateData(Request $request)
-    {
+    protected function validateData(Request $request) {
         $validation = [
             'content' => 'required',
             'source' => 'required',
@@ -66,8 +63,7 @@ class ArticleController extends Controller
         return redirect()->back()->with('articleModal', $data);
     }
 
-    public function create(Request $request)
-    {
+    public function create(Request $request) {
         DB::beginTransaction();
         try {
             $titleSlug = Str::slug($request->title, '-');
@@ -91,16 +87,15 @@ class ArticleController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dibuat!');
+            return redirect()->route('blog.index')->with('action-success', 'Artikel berhasil dibuat!');
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->back()->with('action-failed', 'Tips dan artikel gagal dibuat! Silahkan coba lagi');
+            return redirect()->back()->with('action-failed', 'Artikel gagal dibuat! Silahkan coba lagi');
         }
 
     }
 
-    public function show($slug)
-    {
+    public function show($slug) {
         $article = Article::where([
             ['slug', $slug],
             ['show_flag', True]
@@ -110,8 +105,7 @@ class ArticleController extends Controller
         return view('pages.blogs.blogDetail', compact('article'));
     }
 
-    public function edit($slug)
-    {
+    public function edit($slug) {
         $article = Article::where([
             ['slug', $slug],
             ['show_flag', True]
@@ -121,9 +115,7 @@ class ArticleController extends Controller
         return view('pages.blogs.editBlog', compact('article', 'articleCategories'));
     }
 
-    public function update(Request $request, $slug)
-    {
-        dd($request);
+    public function update(Request $request, $slug) {
         DB::beginTransaction();
         try {
 
@@ -155,10 +147,10 @@ class ArticleController extends Controller
             $article->update($data);
 
             DB::commit();
-            return redirect()->route('blog.details', $slug)->with('action-success', 'Tips dan artikel berhasil diedit!');
+            return redirect()->route('blog.details', $slug)->with('action-success', 'Artikel berhasil diedit!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('action-failed', 'Tips dan artikel gagal diedit! Silahkan coba lagi');
+            return redirect()->back()->with('action-failed', 'Artikel gagal diedit! Silahkan coba lagi');
         }
     }
 
@@ -174,10 +166,10 @@ class ArticleController extends Controller
                 'show_flag' => false
             ]);
             DB::commit();
-            return redirect()->route('blog.index')->with('action-success', 'Tips dan artikel berhasil dihapus!');
+            return redirect()->route('blog.index')->with('action-success', 'Artikel berhasil dihapus!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('blog.index')->with('action-failed', 'Tips dan artikel gagal dihapus! Silahkan coba lagi');
+            return redirect()->route('blog.index')->with('action-failed', 'Artikel gagal dihapus! Silahkan coba lagi');
         }
     }
 }

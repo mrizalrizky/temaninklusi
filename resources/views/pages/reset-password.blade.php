@@ -11,7 +11,7 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-10 col-md-7">
                             <form enctype="multipart/form-data" action="{{ route('update.password') }}" method="POST"
-                                class="border rounded-3 p-4 p-x-custom-2">
+                                class="border rounded-custom p-4 p-x-custom-2">
                                 @csrf
                                 <input type="hidden" name="email" value="{{ $email }}">
                                 <input type="hidden" name="resetToken" value="{{ $resetToken }}">

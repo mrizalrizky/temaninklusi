@@ -23,9 +23,10 @@ class CreateEventsTable extends Migration
             $table->foreignId('event_license_file_id')->nullable()->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreignId('event_proposal_file_id')->references('id')->on('files')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->boolean('event_license_flag');
+            $table->boolean('disability_event_flag');
             $table->boolean('show_flag')->default(true);
-            $table->string('created_by', 64)->nullable();
-            $table->string('updated_by', 64)->nullable();
+            $table->string('created_by', 32)->nullable();
+            $table->string('updated_by', 32)->nullable();
 
             $table->timestamps();
         });

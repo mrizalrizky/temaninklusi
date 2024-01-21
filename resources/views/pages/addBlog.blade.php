@@ -83,7 +83,7 @@
                     @enderror
                 </div>
                 <div class="d-flex justify-content-end mt-5">
-                    <button class="btn btn-primary text-bg-primary mt-1 rounded-3 ms-2 px-4" type="submit">Upload</button>
+                    <button class="btn btn-primary text-bg-primary mt-1 rounded-custom ms-2 px-4" type="submit">Upload</button>
                 </div>
                 </form>
 

@@ -36,10 +36,10 @@ class UserController extends Controller
             $rules['username'] = 'required|min:5|max:32';
         }
 
-        if ($request->password) {
+        if ($request->newPassword) {
             $rules['oldPassword'] = 'required';
-            $rules['password'] = 'required|string|min:8';
-            $rules['password_confirmation'] = 'same:password';
+            $rules['newPassword'] = 'required|string|min:8';
+            $rules['password_confirmation'] = 'same:newPassword';
         }
 
         $request->validate($rules);
