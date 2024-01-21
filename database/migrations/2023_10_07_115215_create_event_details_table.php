@@ -15,10 +15,10 @@ class CreateEventDetailsTable extends Migration
     {
         Schema::create('event_details', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 64);
+            $table->string('title', 255);
             $table->longText('description');
             $table->string('location', 64);
-            $table->string('slug', 64);
+            $table->string('slug', 255);
             $table->string('contact_email', 64);
             $table->string('contact_phone', 16);
             $table->string('social_media_link', 64);

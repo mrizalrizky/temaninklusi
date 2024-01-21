@@ -16,9 +16,9 @@ class FileSeeder extends Seeder
     {
         DB::table('files')->insert([
             [
-                'file_name' => 'Bulb',
-                'file_type' => 'banner',
-                'file_path' => 'https://images.unsplash.com/photo-1493612276216-ee3925520721'
+                'file_name' => 'event_banner.jpg',
+                'file_type' => 'event_banner',
+                'file_path' => 'public/events/workshop-keterampilan-untuk-petualangan-hidup/'
             ],
             [
                 'file_name' => 'Writing in a Book',
@@ -26,9 +26,14 @@ class FileSeeder extends Seeder
                 'file_path' => 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32'
             ],
             [
-                'file_name' => 'House',
-                'file_type' => 'banner',
-                'file_path' => 'https://images.unsplash.com/photo-1697462247834-7d55761daea3'
+                'file_name' => 'event_banner.jpg',
+                'file_type' => 'event_banner',
+                'file_path' => 'public/events/berkarya-tanpa-batas/'
+            ],
+            [
+                'file_name' => 'article_banner.jpg',
+                'file_type' => 'article_banner',
+                'file_path' => 'public/blogs/menjadi-sukses-dengan-memaksimalkan-pengembangan-diri/'
             ],
         ]);
     }

@@ -28,7 +28,7 @@ class UserCommentSeeder extends Seeder
             [
                 'content' => 'Wihh mantep bgt ya. keren nih!',
                 'user_id' => 1,
-                'event_id' => 2,
+                'event_id' => 1,
             ],
 
         ]);

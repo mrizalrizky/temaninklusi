@@ -114,6 +114,8 @@ class EventController extends Controller
             //   ->where('show_flag', false);
         })->firstOrFail();
 
+        // $event->description = preg_replace('~[\r\n]+~', '<br><br>', $event->description);
+
         return view('pages.events.event-detail', compact('event'));
     }
 
@@ -257,7 +259,7 @@ class EventController extends Controller
         $titleSlug = Str::slug($requestData['title'], '-');
         unset($requestData[$fileType]);
         $fileName = $fileType . '.' . $requestFile->getClientOriginalExtension();
-        Storage::putFileAs('public/events/' . $titleSlug, $requestFile, $fileName);
+        Storage::putFileAs('public/events/' . $titleSlug . '/', $requestFile, $fileName);
         $requestData[$fileType] = $fileName;
         return $requestData;
     }
@@ -392,6 +394,7 @@ class EventController extends Controller
                 'event_banner_file_id'   => $bannerFileData->id ?? null,
                 'event_license_file_id'  => $eventLicenseFileData->id ?? null,
                 'event_proposal_file_id' => $eventProposalFileData->id ?? null,
+                'disability_event_flag'  => count($request->disability_categories) > 0 ? true : false,
                 'show_flag'              => false,
                 'created_by'             => Auth::user()->username,
             ]);

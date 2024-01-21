@@ -16,14 +16,14 @@ class ArticleCategorySeeder extends Seeder
     {
         DB::table('article_categories')->insert([
             [
-                'label' => 'Olahraga',
+                'label' => 'Pengembangan Diri',
             ],
-            [
-                'label' => 'Teknologi',
-            ],
-            [
-                'label' => 'Edukasi'
-            ]
+            // [
+            //     'label' => 'Teknologi',
+            // ],
+            // [
+            //     'label' => 'Edukasi'
+            // ]
         ]);
     }
 }
