@@ -210,6 +210,7 @@ label.mandatory::after {
     --bs-btn-disabled-bg: var(--bs-btn-bg);
     --bs-btn-disabled-border-color: var(--bs-btn-bg);
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    border-radius: 0.9375rem !important;
 }
 
 .btn-secondary {
