@@ -90,7 +90,7 @@
                     data-bs-title="Anda tidak dapat melakukan cancel karena data Anda sudah terdata!">
                     <button type="button" class="btn btn-sm border-0 rounded-pill py-2 btn-disabled pe-none"
                         style="max-width: 18rem" disabled>
-                        Cancel
+                        Batal
                     </button>
                 </span>
             @endif

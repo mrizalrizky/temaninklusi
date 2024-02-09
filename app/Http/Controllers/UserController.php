@@ -42,28 +42,39 @@ class UserController extends Controller
             $rules['password_confirmation'] = 'same:newPassword';
         }
 
-        $request->validate($rules);
+        if (Hash::check($request['oldPassword'], Auth::user()->password)) {
+            $request->validate($rules);
 
-        $data = $request->all();
+            $data = $request->all();
 
-        return redirect()->back()->with('profileModal', $data);
+            return redirect()->back()->with('profileModal', $data);
+        } else {
+            return redirect()->back()->with('action-failed', 'Kata sandi yang anda masukkan salah! Silahkan coba lagi');
+        }
+
     }
 
     public function update(Request $request) {
-        if (Hash::check($request['oldPassword'], Auth::user()->password)) {
-            User::where('id', Auth::user()->id)->update([
-                'name' => $request->name,
-                'username' => $request->username,
-                'password' => Hash::make($request['newPassword']),
-            ]);
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request['newPassword']),
+        ]);
+        // if (Hash::check($request['oldPassword'], Auth::user()->password)) {
+        //     User::where('id', Auth::user()->id)->update([
+        //         'name' => $request->name,
+        //         'username' => $request->username,
+        //         'password' => Hash::make($request['newPassword']),
+        //     ]);
 
-            return redirect()->back()->with('action-success', 'Data anda berhasil diganti!');
-        } else {
-            return redirect()->back()->with('action-failed', 'Password yang anda masukkan salah! Silahkan coba lagi');
-        }
+        //     return redirect()->back()->with('action-success', 'Data anda berhasil diganti!');
+        // } else {
+        return redirect()->back()->with('action-success', 'Data anda berhasil diganti!');
+        // }
     }
 
-    public function banUser($id) {
+    public function ban($id) {
         try {
             $user = User::findOrFail($id);
             $user->update([
@@ -76,7 +87,7 @@ class UserController extends Controller
         };
     }
 
-    public function unbanUser($id) {
+    public function unban($id) {
         try {
             $user = User::findOrFail($id);
             $user->update([

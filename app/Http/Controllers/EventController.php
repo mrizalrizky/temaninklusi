@@ -218,7 +218,7 @@ class EventController extends Controller
                 $q->where('slug', $slug);
             })->firstOrFail();
 
-            $this->validateData($request);
+            // $this->validateData($request);
 
             if ($request->event_banner) {
                 $currentFile = File::find($event->file_id);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Mail\Email;
+use Illuminate\Support\Facades\Artisan;
 // use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -19,6 +20,10 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 */
 
 Route::get('/', [\App\Http\Controllers\EventController::class, 'showNewestEvents'])->name('index');
+
+Route::get('/link-storage', function (){
+    Artisan::call('storage:link');
+});
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -88,8 +93,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'can:is-admin'], function () 
 
     Route::prefix('manage-user')->group(function () {
         Route::get('/', [\App\Http\Controllers\AdminController::class, 'showManageUser'])->name('admin.manage-user');
-        Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'banUser'])->name('admin.ban');
-        Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unbanUser'])->name('admin.unban');
+        Route::put('/ban/{id}', [\App\Http\Controllers\UserController::class, 'ban'])->name('admin.ban');
+        Route::put('/unban/{id}', [\App\Http\Controllers\UserController::class, 'unban'])->name('admin.unban');
     });
 
     Route::prefix('manage-event')->group(function () {
