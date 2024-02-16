@@ -15,7 +15,9 @@ use Illuminate\Support\Str;
 class ArticleController extends Controller
 {
     public function index() {
-        $articles = Article::latest()->paginate(3);
+        $articles = Article::where([
+            'show_flag' => true,
+        ])->latest()->paginate(3);
 
         return view('pages.blogs.blog', compact('articles'));
     }
@@ -74,7 +76,7 @@ class ArticleController extends Controller
             ]);
 
             Article::create([
-                'file_id' => $fileData->id,
+                'banner_file_id' => $fileData->id,
                 'article_category_id' => $request->article_category,
                 'title' => $request->title,
                 'content' => $request->content,
@@ -127,7 +129,7 @@ class ArticleController extends Controller
             $this->validateData($request);
 
             if ($request->article_banner) {
-                $currentFile = File::find($article->file_id);
+                $currentFile = File::find($article->banner_file_id);
                 $currentFile->update([
                     'file_name' => $request->article_banner,
                     'file_path' => '/blogs/' . $slug ,

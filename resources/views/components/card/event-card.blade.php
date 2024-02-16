@@ -1,6 +1,6 @@
 <div class="col-12 col-md-4 position-relative">
     @if ($event->disability_event_flag)
-        <img src="{{ $event->disabilityCategories[0]->icon_path ?? '' }}" class="disability-icon position-absolute" alt="">
+        <img src="{{ asset($event->disabilityCategories[0]->icon_path) ?? '' }}" class="disability-icon position-absolute" alt="">
     @endif
     <a href="{{ route('event.index') }}/{{ $event->eventDetail->slug }}">
         <div class="card">

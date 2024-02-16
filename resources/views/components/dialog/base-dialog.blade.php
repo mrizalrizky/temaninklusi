@@ -13,7 +13,7 @@
                 <form action="{{ $action }}" method="POST">
                     @csrf
                     @method($method)
-                    <button type="submit" class="badge btn btn-primary">{{ $submitTitle }}</button>
+                    <button type="submit" class="badge btn btn-primary" style="border-radius: 0.35rem !important">{{ $submitTitle }}</button>
                     {{ $slot }}
                 </form>
             </div>

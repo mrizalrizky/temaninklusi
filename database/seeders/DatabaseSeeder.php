@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DisabilityCategorySeeder::class);
         $this->call(MasterOrganizerSeeder::class);
         $this->call(EventSeeder::class);
-        $this->call(UserCommentSeeder::class);
+        // $this->call(UserCommentSeeder::class);
         $this->call(EventDisabilityCategorySeeder::class);
 
 

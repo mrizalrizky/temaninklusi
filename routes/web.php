@@ -35,7 +35,7 @@ Route::prefix('blogs')->group(function () {
     Route::post('/upload/validate', [App\Http\Controllers\ArticleController::class, 'validateData'])->name('blog.validate');
     Route::post('/upload', [App\Http\Controllers\ArticleController::class, 'create'])->name('blog.create');
     Route::get('/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('blog.details')->middleware('check.article.access');
-    Route::delete('/{slug}', [App\Http\Controllers\EventController::class, 'delete'])->name('blog.delete');
+    Route::delete('/{slug}', [App\Http\Controllers\ArticleController::class, 'delete'])->name('blog.delete');
     Route::get('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'edit'])->name('blog.edit');
     Route::put('/{slug}/edit', [App\Http\Controllers\ArticleController::class, 'update'])->name('blog.update');
 

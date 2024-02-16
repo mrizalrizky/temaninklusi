@@ -4,7 +4,7 @@
         @can('is-admin')
             <div class="d-flex justify-content-end my-2">
                 <div class="d-flex gap-2 my-2">
-                    <a href="{{ route('blog.edit', $article->slug) }}" class="badge btn btn-primary">Edit</a>
+                    <a href="{{ route('blog.edit', $article->slug) }}" class="badge btn btn-primary" style="border-radius: 0.35rem !important">Edit</a>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#deleteArticleModal"
                         class="badge btn btn-danger">Delete</button>
                 </div>

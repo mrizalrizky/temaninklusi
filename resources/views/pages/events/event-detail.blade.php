@@ -7,7 +7,7 @@
                 @can('is-admin')
                     @if ($event->isWaitingApproval())
                         <div class="d-flex gap-2 my-2">
-                            <button type="button" class="badge btn btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="badge btn btn-primary" style="border-radius: 0.35rem !important" data-bs-toggle="modal"
                                 data-bs-target="#approveEventModal">Approve</button>
                             <button type="button" class="badge btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#rejectEventModal">Reject</button>
@@ -15,7 +15,7 @@
                     @else
                         <div class="d-flex gap-2 my-2">
                             <a href="{{ route('event.edit', $event->eventDetail->slug) }}"
-                                class="badge btn btn-primary">Edit</a>
+                                class="badge btn btn-primary" style="border-radius: 0.35rem !important">Edit</a>
                             <button type="button" data-bs-toggle="modal" data-bs-target="#deleteEventModal"
                                 class="badge btn btn-danger">Delete</button>
                         </div>
