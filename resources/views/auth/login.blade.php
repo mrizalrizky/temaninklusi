@@ -11,15 +11,6 @@
                     <form enctype="multipart/form-data" action="{{ route('login') }}" method="POST"
                         class="border rounded-custom p-4 p-x-custom-2">
                         @csrf
-                        @if (session()->has('failed'))
-                            <div class="alert alert-danger d-flex alert-dismissible fade show">
-                                <i data-feather="alert-triangle"style="margin-right: 0.5em; width: 1.2em"></i>
-                                <p class="m-0">{{ session()->get('failed') }}</p>
-                                <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
-                                    data-bs-dismiss="alert" aria-label="close"></button>
-                            </div>
-                        @enderror
-
                         <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" name="email" :label="true">
                             @error('email')
                                 <div class="invalid-feedback">
@@ -47,8 +38,8 @@
                             <button type="submit" class="btn btn-primary w-100 rounded-custom">Login</button>
                         </div>
                         <div class="px-4 text-center">
-                            <a href="{{ route('register') }}" class="text-decoration-none text-primary"><small>Belum
-                                    punya akun?, Yuk <b>daftar</b> dulu</small></a>
+                            <a href="{{ route('register') }}" class="text-decoration-none text-primary">
+                                <small>Belum punya akun? Yuk <b>daftar</b> dulu</small></a>
                         </div>
                     </form>
             </div>
