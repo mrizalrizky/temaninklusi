@@ -13,7 +13,7 @@ class EventListItem extends Component
      */
     public $icon;
     public $label;
-    public function __construct($icon = '', $label = '')
+    public function __construct($icon = null, $label = '')
     {
         $this->icon = $icon;
         $this->label = $label;
