@@ -42,7 +42,7 @@
                 </div>
             @endif
         </section>
-        @dd(Storage::disk('public'), Storage::disk('public')->url($event[0]->eventBanner->file_path . $event[0]->eventBanner->file_name))
+
 
         <x-banner title="Yuk upload event di {{ config('app.name') }}!" image="{{ asset('assets/img/asd.svg') }}"/>
     </div>
