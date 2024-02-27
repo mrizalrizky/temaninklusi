@@ -9,11 +9,11 @@
     </div>
 
     <ul class="d-grid gap-3 p-0 justify-content-center justify-content-md-start">
-        {{-- <x-listitem.event-list-item icon="iconamoon:category-fill">
+        <x-listitem.event-list-item icon="iconamoon:category-fill">
             <small class="m-0 fw-bold">
                 {{ $event->eventCategory->label ?? '-' }}
             </small>
-        </x-listitem.event-list-item> --}}
+        </x-listitem.event-list-item>
         @if ($event->disability_event_flag)
         <x-listitem.event-list-item icon=''>
             <img src="{{ $event->disabilityCategories[0]->icon_path ?? asset('assets/icons/disability_categories/disabilitas-fisik.svg')}}" alt="">
@@ -22,7 +22,7 @@
             </small>
         </x-listitem.event-list-item>
         @endif
-        {{-- <x-listitem.event-list-item icon="bi:calendar-date-fill">
+        <x-listitem.event-list-item icon="bi:calendar-date-fill">
             <small class="m-0 fw-bold">
                 {{ $event->eventDetail->start_date->format('d M Y') ?? '-' }} -
                 {{ $event->eventDetail->end_date->format('d M Y') ?? '-' }}
@@ -53,7 +53,7 @@
             @else
             <small>Kuota sudah penuh</small>
             @endif
-        </x-listitem.event-list-item> --}}
+        </x-listitem.event-list-item>
     </ul>
 
     <span class="d-flex justify-content-center align-items-center flex-column gap-3 w-full">
