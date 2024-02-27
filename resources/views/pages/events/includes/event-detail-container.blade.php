@@ -47,7 +47,7 @@
         <x-listitem.event-list-item icon="bi:people-fill">
             @if (count($event->registeredByUsers) < $event->eventDetail->quota)
             <small class="m-0 fw-bold">
-                {{ count($event->registeredByUsers) ?? '-' }}
+                {{ count($event->registeredByUsers) ?? '-' }} /
                 {{ $event->eventDetail->quota + count($event->registeredByUsers) ?? '-' }} Peserta
             </small>
             @else
