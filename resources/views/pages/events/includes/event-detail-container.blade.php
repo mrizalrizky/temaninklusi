@@ -16,7 +16,7 @@
         </x-listitem.event-list-item>
         @if ($event->disability_event_flag)
         <x-listitem.event-list-item icon=''>
-            <img src="{{ $event->disabilityCategories[0]->icon_path ?? asset('assets/icons/disability_categories/disabilitas-fisik.svg')}}" alt="">
+            <img src="{{ asset($event->disabilityCategories[0]->icon_path) ?? '' }}" alt="">
             <small class="m-0 fw-bold">
                 Ramah untuk Disabilitas {{ $event->disabilityCategories[0]->label ?? '-' }}
             </small>
