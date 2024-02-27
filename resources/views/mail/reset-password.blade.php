@@ -9,8 +9,9 @@
         <br>
         <p>
             <a href="{{ $urlReset }}"
-                style="background-color: #01676c; padding: .8rem 1rem; border-radius: 5px; color: white; text-decoration: none"
-                href="">Reset password</a>
+                style="background-color: #01676c; padding: .8rem 1rem; border-radius: 5px; color: white; text-decoration: none">
+                Reset password
+            </a>
         </p>
         <p style="margin-top: .5rem; font-weight: bold; font-size: .75rem; color: #6b7280">Note: Link berikut hanya dapat
             digunakan dalam 15 menit sebanyak 1 kali!</p>
