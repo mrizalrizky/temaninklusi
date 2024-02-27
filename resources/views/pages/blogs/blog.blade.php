@@ -5,7 +5,7 @@
     @can('is-admin')
     <div class="d-flex justify-content-end mt-2">
         <a href="{{ route('blog.show-add') }}"
-        class="badge btn btn-primary">+ Add Blog</a>
+        class="badge btn btn-primary" style="border-radius: 0.35rem !important">+ Add Blog</a>
     </div>
     @endcan
     <div class="text-center my-4">

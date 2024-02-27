@@ -25,7 +25,7 @@ class UsersSeeder extends Seeder
                 'phone_number' => '081123845112',
             ],
             [
-                'name' => 'Test User Member',
+                'name' => 'Rizal Rizky',
                 'username' => "user",
                 'password' => Hash::make("useruser"),
                 'email' => "temuinklusi.id@gmail.com",

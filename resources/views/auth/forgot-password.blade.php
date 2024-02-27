@@ -11,14 +11,6 @@
                     <form enctype="multipart/form-data" action="{{ route('generate.forgot-password') }}" method="POST"
                         class="border rounded-4 p-4 p-x-custom-2 w-100">
                         @csrf
-                        @if (session()->has('failed'))
-                            <div class="alert alert-danger d-flex alert-dismissible fade show">
-                                <i data-feather="alert-triangle"style="margin-right: 0.5em; width: 1.2em"></i>
-                                <p class="m-0">{{ session()->get('failed') }}</p>
-                                <button type="button" class="btn-close ms-auto" style="width: 1.2em !important"
-                                    data-bs-dismiss="alert" aria-label="close"></button>
-                            </div>
-                        @enderror
 
                         <x-form.base-form-input class="mb-4" title="Alamat Email" type="email" value="{{ old('email') }}" name="email" :label="true" placeholder="Janedoe@gmail.com">
                             @error('email')

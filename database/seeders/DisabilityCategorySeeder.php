@@ -17,7 +17,7 @@ class DisabilityCategorySeeder extends Seeder
         DB::table('disability_categories')->insert([
             [
                 'label' => 'Fisik',
-                'icon_path' => asset('assets/icons/disability_categories/disabilitas-fisik.svg')
+                'icon_path' => 'assets/icons/disability_categories/disabilitas-fisik.svg'
             ],
         ]);
     }

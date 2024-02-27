@@ -33,7 +33,7 @@ class ResetPasswordController extends Controller
 
         $user = $user = User::where('email', $request->email);
 
-        if ($user->get()->count() < 1) return redirect()->back()->with('action-failed','Email yang dimasukan tidak valid');
+        if ($user->get()->count() < 1) return redirect()->back()->with('action-failed','Email yang dimasukan tidak valid!');
 
         $resetToken = Str::random(30);
         $expiredResetToken = Carbon::now()->addMinute(15);

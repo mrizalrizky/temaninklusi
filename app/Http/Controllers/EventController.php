@@ -161,7 +161,7 @@ class EventController extends Controller
                             'user_id'  => Auth::user()->id,
                             'event_id' => $event->id,
                         ]);
-                        $message = "Anda berhasil terdaftar ke dalam event ini! Silahkan menunggu informasi selanjutnya";
+                        $message = "Anda berhasil terdaftar ke dalam event ini!";
                     } else {
                         $message = 'Anda sudah terdaftar ke dalam event ini!';
                     }
