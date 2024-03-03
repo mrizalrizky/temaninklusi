@@ -114,7 +114,7 @@ class EventController extends Controller
             //   ->where('show_flag', false);
         })->firstOrFail();
 
-        // $event->description = preg_replace('~[\r\n]+~', '<br><br>', $event->description);
+        $event->description = preg_replace('~[\r\n]+~', '<br><br>', $event->description);
 
         return view('pages.events.event-detail', compact('event'));
     }

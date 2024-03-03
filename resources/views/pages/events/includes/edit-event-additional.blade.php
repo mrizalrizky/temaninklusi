@@ -5,7 +5,7 @@
         </label>
         <div class="d-block">
             <div class="form-check form-check-inline">
-                <input type="text" type="hidden" name="event_license_flag" value="{{ $event->event_license_flag }}">
+                <input type="hidden" name="event_license_flag" value="{{ $event->event_license_flag }}">
                 <input class="form-check-input py-2" type="radio" name="event_license_flag" value="0"
                     id="license_false" onchange="displayNewField()" {!! $data
                         ? ($data['event_license_flag'] == 0

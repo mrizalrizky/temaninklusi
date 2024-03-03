@@ -1,7 +1,8 @@
 <section class="d-flex flex-column gap-4">
     <div class="form-group">
-        <label for="event_license_flag" class="text-primary fw-bold mb-2">Apakah event kamu sudah memiliki izin atau
-            lisensi?</label>
+        <label for="event_license_flag" class="text-primary fw-bold mb-2">
+            Apakah event kamu sudah memiliki izin atau lisensi?
+        </label>
         <div class="d-block">
             <div class="form-check form-check-inline">
                 <input class="form-check-input py-2" type="radio" name="event_license_flag" value="0"
