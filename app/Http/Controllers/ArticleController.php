@@ -59,7 +59,7 @@ class ArticleController extends Controller
 
         if ($articleBannerFile) {
             $imageName = 'article_banner' . '.' . $articleBannerFile->getClientOriginalExtension();
-            Storage::putFileAs('public/blogs/' . $titleSlug, $articleBannerFile, $imageName);
+            Storage::putFileAs('public/blogs/' . $titleSlug . '/', $articleBannerFile, $imageName);
             $data['article_banner'] = $imageName;
         }
         return redirect()->back()->with('articleModal', $data);
